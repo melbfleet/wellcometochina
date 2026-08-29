@@ -147,7 +147,7 @@ const teamData = [
   {
     name: 'Sarah Chen',
     role: 'Founder & CEO',
-    bio1: 'Sarah founded Wayseek with a passion for authentic travel experiences.',
+    bio1: 'Sarah founded Wellcometochina with a passion for authentic travel experiences.',
     bio2: 'With 10 years of experience in China travel, she leads the team with vision and expertise.',
     quote: 'Travel is not about the destination, it\'s about the journey and the people you meet.',
     image: '/manus-storage/sarah-chen.jpg',

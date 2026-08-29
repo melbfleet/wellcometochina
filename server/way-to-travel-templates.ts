@@ -225,7 +225,7 @@ const GROUPS: WayToTravelTemplateGroup[] = [
         name: "Signature Experiences",
         slug: "signature-experiences",
         title: "Rare access, thoughtfully arranged",
-        description: "Distinctive WaySeekChina moments created through local knowledge, trusted relationships and a belief that meaningful access matters more than spectacle.",
+        description: "Distinctive Wellcometochina moments created through local knowledge, trusted relationships and a belief that meaningful access matters more than spectacle.",
         duration: "Tailor-made",
         labels: ["Signature", "Private Access", "Culture"],
         blocks: [

@@ -84,7 +84,7 @@ export default function WhyUs() {
       : [];
 
     return [
-      { isCover: true, title: 'WHY US?', subtitle: 'What sets us apart', description: `${dbSlides.length} reasons to book\nwith WaySeekChina`, backgroundColor: homeSettings?.backgroundColor || '#12334c' },
+      { isCover: true, title: 'WHY US?', subtitle: 'What sets us apart', description: `${dbSlides.length} reasons to book\nwith Wellcometochina`, backgroundColor: homeSettings?.backgroundColor || '#12334c' },
       ...dbSlides,
     ];
   }, [dbSections, homeSettings?.backgroundColor]);

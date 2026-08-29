@@ -49,7 +49,7 @@ const tables = [
 ];
 
 let output = `-- ============================================================
--- Wayseek China Travel - 完整数据导出
+-- Wellcometochina - 完整数据导出
 -- 数据库: u932753542_wayseekchina
 -- 用户: u932753542_wayseekmark
 -- 生成时间: ${new Date().toISOString()}

@@ -269,7 +269,7 @@ export default function Home() {
             {heroLogoLoaded && (
               <img
                 src={activeLogo || ''}
-                alt="Wayseek 未远"
+                alt="Wellcometochina"
                 style={{ height: 'clamp(60px, 12vw, 160px)', width: 'auto', maxWidth: '60vw', objectFit: 'contain' }}
                 onLoad={() => setHeroLogoLoaded(true)}
                 onError={() => setHeroLogoLoaded(false)}
@@ -278,7 +278,7 @@ export default function Home() {
             {!heroLogoLoaded && activeLogo && (
               <img
                 src={activeLogo}
-                alt="Wayseek 未远"
+                alt="Wellcometochina"
                 style={{ height: 'clamp(60px, 12vw, 160px)', width: 'auto', maxWidth: '60vw', objectFit: 'contain', display: 'none' }}
                 onLoad={() => setHeroLogoLoaded(true)}
                 onError={() => setHeroLogoLoaded(false)}

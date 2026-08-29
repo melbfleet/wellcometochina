@@ -1,4 +1,4 @@
-# Wayseek 中国之旅 - 全站迁移与 CMS 构建
+# Wellcometochina - 全站迁移与 CMS 构建
 
 ## 阶段 1：源仓库分析与迁移规划
 

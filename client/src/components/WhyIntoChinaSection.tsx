@@ -55,7 +55,7 @@ export default function WhyIntoChinaSection() {
         {/* Section Title */}
         <div className="flex flex-col items-center justify-center" style={{marginBottom: '32px'}}>
           <h2 className="font-display text-3xl md:text-4xl text-black text-center uppercase font-semibold" style={{fontSize: '28px', fontFamily: 'Lato, sans-serif', letterSpacing: '0.05em'}}>
-            WHY WAYSEEK?
+            WHY WELCOMETOCHINA?
           </h2>
           <div className="w-16 h-px bg-black mt-6"></div>
         </div>

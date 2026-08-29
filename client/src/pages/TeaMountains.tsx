@@ -1,6 +1,6 @@
 /*
  * Tea Mountains of Ya'an — Experience Detail Page
- * Design: Wayseek luxury travel, clean white editorial layout
+ * Design: Wellcometochina luxury travel, clean white editorial layout
  * Reference: Black Tomato experience detail page structure
  * Font: Playfair Display (headings), system sans (body)
  */

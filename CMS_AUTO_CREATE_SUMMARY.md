@@ -1,7 +1,7 @@
 # CMS 自动创建功能实现总结
 
 ## 概述
-为 Wayseek China Travel 网站实现了 CMS 表单的自动创建功能。当管理面板访问不存在的数据库记录时，系统会自动创建默认记录，确保应用不会因为缺失数据而崩溃。
+为 Wellcometochina 网站实现了 CMS 表单的自动创建功能。当管理面板访问不存在的数据库记录时，系统会自动创建默认记录，确保应用不会因为缺失数据而崩溃。
 
 ## 修改的文件
 
@@ -129,7 +129,7 @@ export async function getXXX() {
 
 ### 本地测试
 ```bash
-cd /home/ubuntu/wayseek-china-travel-webdev
+cd /home/ubuntu/wellcometochina
 pnpm install
 npx vitest run server/db-cms.test.ts
 ```
@@ -164,4 +164,4 @@ git checkout <previous-commit-hash>
 
 ## 总结
 
-此次修改确保了 Wayseek China Travel 网站的 CMS 系统更加健壮和用户友好。管理员不再需要担心缺失的数据库记录会导致应用崩溃，系统会自动处理这些边界情况。
+此次修改确保了 Wellcometochina 网站的 CMS 系统更加健壮和用户友好。管理员不再需要担心缺失的数据库记录会导致应用崩溃，系统会自动处理这些边界情况。

@@ -53,8 +53,8 @@ export default function Footer() {
               {/* Email */}
               <div>
                 <p className="text-sm font-light mb-2 text-white/80">✉️ Email:</p>
-                <a href="mailto:info@wayseekchina.com" className="text-sm text-white/70 hover:text-[#D4AF37] transition-colors">
-                  info@wayseekchina.com
+                <a href="mailto:info@wellcometochina.com" className="text-sm text-white/70 hover:text-[#D4AF37] transition-colors">
+                  info@wellcometochina.com
                 </a>
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function Footer() {
         {/* Bottom Copyright */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white/40 tracking-wide">
-            WAYSEEKCHINA | COPYRIGHT 2026 | ALL RIGHTS RESERVED
+            WELCOMETOCHINA | COPYRIGHT 2026 | ALL RIGHTS RESERVED
           </p>
           <div className="flex gap-8 text-xs text-white/40">
             <a href="#" className="hover:text-white/70 transition-colors tracking-wide">TERMS & CONDITIONS</a>

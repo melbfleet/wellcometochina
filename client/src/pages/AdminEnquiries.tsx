@@ -68,7 +68,7 @@ function buildEmailHtml(data: Enquiry) {
           <table width="100%" cellpadding="0" cellspacing="0" border="0" style="height:65px">
             <tr>
               <td style="width:130px;padding-left:20px;vertical-align:middle">
-                <img src="${logoUrl}" alt="Wayseek" style="height:44px;width:auto;display:block">
+                <img src="${logoUrl}" alt="Wellcometochina" style="height:44px;width:auto;display:block">
               </td>
               <td style="text-align:center;vertical-align:middle">
                 <span style="color:#ffffff;font-size:18px;letter-spacing:0.15em;text-transform:uppercase">NEW ENQUIRY</span>

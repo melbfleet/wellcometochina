@@ -385,7 +385,7 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
               {logoLoaded && (
                 <img
                   src={logoUrl}
-                  alt="Wayseek 未远"
+                  alt="Wellcometochina"
                   className="group-hover:opacity-70 transition-opacity"
                   style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
                   onLoad={() => setLogoLoaded(true)}
@@ -395,7 +395,7 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
               {!logoLoaded && logoUrl && (
                 <img
                   src={logoUrl}
-                  alt="Wayseek 未远"
+                  alt="Wellcometochina"
                   className="group-hover:opacity-70 transition-opacity"
                   style={{ height: '40px', width: 'auto', objectFit: 'contain', display: 'none' }}
                   onLoad={() => setLogoLoaded(true)}
