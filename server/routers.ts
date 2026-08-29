@@ -21,6 +21,7 @@ import {
 import { storagePut, UPLOADS_ROOT, storageDelete } from "./storage";
 import { generateStaticPages, generateNavData, clearStaticCache, STATIC_CACHE_DIR } from "./staticGenerator";
 import { createWayToTravelStarterContent } from "./way-to-travel-templates";
+import { getContactSettings, updateContactSettings } from "./db-contact-settings";
 import {
   listTags, createTag, updateTag, deleteTag,
   listCities, getCityById, createCity, updateCity, deleteCity, reorderCity, listCitiesWithExperiences,
@@ -96,6 +97,31 @@ const tagInput = z.object({
   name: z.string().min(1),
   type: z.enum(["city", "experience_type", "other"]).default("other"),
   color: z.string().default("#888888"),
+});
+
+const officeHourInput = z.object({
+  day: z.string().trim().min(1).max(80),
+  hours: z.string().trim().min(1).max(160),
+});
+
+const socialLinkInput = z.object({
+  platform: z.string().trim().min(1).max(80),
+  url: z.string().trim().max(512).refine(
+    value => value === "" || /^https?:\/\//i.test(value),
+    "Social links must start with http:// or https://",
+  ),
+  isVisible: z.boolean(),
+});
+
+const contactSettingsInput = z.object({
+  addressLabel: z.string().trim().max(160),
+  address: z.string().trim().max(2000),
+  email: z.union([z.literal(""), z.string().trim().email().max(320)]),
+  phone: z.string().trim().max(64),
+  phoneAvailabilityText: z.string().trim().max(255),
+  officeHours: z.array(officeHourInput).max(31),
+  officeHoursNote: z.string().trim().max(255),
+  socialLinks: z.array(socialLinkInput).max(30),
 });
 
 const cityInput = z.object({
@@ -1551,6 +1577,17 @@ export const appRouter = router({
       if (!db) return [];
       return db.select().from(enquiries).orderBy(desc(enquiries.createdAt));
     }),
+  }),
+
+  // ─── Public contact details / footer social links ────────────────────────
+  siteContact: router({
+    get: publicProcedure.query(async () => getContactSettings()),
+    update: publicProcedure
+      .input(contactSettingsInput)
+      .mutation(async ({ ctx, input }) => {
+        await requireAdmin(ctx);
+        return updateContactSettings(input);
+      }),
   }),
 
   // ─── Homepage Management ──────────────────────────────────────────────────

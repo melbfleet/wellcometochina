@@ -35,6 +35,34 @@ export const enquiries = mysqlTable("enquiries", {
 export type Enquiry = typeof enquiries.$inferSelect;
 export type InsertEnquiry = typeof enquiries.$inferInsert;
 
+export type OfficeHour = {
+  day: string;
+  hours: string;
+};
+
+export type SocialLink = {
+  platform: string;
+  url: string;
+  isVisible: boolean;
+};
+
+// ─── Site-wide public contact information (single row) ──────────────────────
+export const siteContactSettings = mysqlTable("site_contact_settings", {
+  id: int("id").primaryKey().default(1),
+  addressLabel: varchar("addressLabel", { length: 160 }).notNull(),
+  address: text("address").notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  phone: varchar("phone", { length: 64 }).notNull(),
+  phoneAvailabilityText: varchar("phoneAvailabilityText", { length: 255 }).notNull(),
+  officeHours: json("officeHours").$type<OfficeHour[]>().notNull(),
+  officeHoursNote: varchar("officeHoursNote", { length: 255 }).notNull(),
+  socialLinks: json("socialLinks").$type<SocialLink[]>().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SiteContactSettings = typeof siteContactSettings.$inferSelect;
+export type InsertSiteContactSettings = typeof siteContactSettings.$inferInsert;
+
 // ─── CMS: Tags (global tags for stories/videos/itineraries) ──────────────────
 export const tags = mysqlTable("tags", {
   id: int("id").autoincrement().primaryKey(),

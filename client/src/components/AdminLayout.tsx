@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import {
-  LayoutDashboard, MapPin, Compass, Map, Route as RouteIcon, Tag, Mail, LogOut, Menu, X, ChevronRight, Images, Info, Home,
+  LayoutDashboard, MapPin, Compass, Map, Route as RouteIcon, Tag, Mail, LogOut, Menu, X, ChevronRight, Images, Info, Home, ContactRound,
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { label: "Way to Travel", path: "/admin/ways-to-travel", icon: RouteIcon },
   { label: "Itinerary",    path: "/admin/itineraries",  icon: Map },
   { label: "About",        path: "/admin/about",        icon: Info },
+  { label: "Contact Information", path: "/admin/contact-information", icon: ContactRound },
   { label: "Enquiries",    path: "/admin/enquiries",    icon: Mail },
   { label: "Tags",         path: "/admin/tags",         icon: Tag },
 ];

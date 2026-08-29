@@ -272,6 +272,13 @@ const COUNTRIES = [
 ];
 
 export default function Contact() {
+  const { data: contactSettings } = trpc.siteContact.get.useQuery();
+  const publicPhone = contactSettings?.phone ?? '';
+  const phoneHref = publicPhone.replace(/[^\d+]/g, '');
+  const phoneAvailabilityText = contactSettings?.phoneAvailabilityText ?? '';
+  const officeHours = contactSettings?.officeHours ?? [];
+  const officeHoursNote = contactSettings?.officeHoursNote ?? '';
+
   const [formData, setFormData] = useState({
     destination: '',
     month: '',
@@ -740,11 +747,11 @@ export default function Contact() {
                 <div className="w-full flex flex-col items-center px-8 pt-6 pb-4">
                   <Phone className="w-6 h-6 text-[#1a1a1a] mb-2" />
                   <h3 className="font-bold uppercase tracking-widest text-sm mb-2 text-[#1a1a1a]">Call Us Today</h3>
-                  <a href="tel:+8613008122836" className="font-bold text-lg hover:underline block mb-2" style={{color:'#e0457b', fontFamily: 'Brandon Grotesque', letterSpacing: '0.12em'}}>
-                    +86 130 0812 2836
-                  </a>
+                  {publicPhone && (
+                    <a href={`tel:${phoneHref}`} className="font-bold text-lg hover:underline block mb-2" style={{color:'#e0457b', fontFamily: 'Brandon Grotesque', letterSpacing: '0.12em'}}>{publicPhone}</a>
+                  )}
                   <p className="text-sm text-[#666666]" style={{letterSpacing: '0.03em'}}>
-                    We're open at 9.00am
+                    {phoneAvailabilityText}
                   </p>
                 </div>
 
@@ -758,22 +765,16 @@ export default function Contact() {
                   <Clock className="w-6 h-6 text-[#1a1a1a] mb-3" strokeWidth={1.2} />
                   <h3 className="font-bold uppercase tracking-widest text-sm mb-4 text-[#1a1a1a]">Office Hours</h3>
                   <div className="space-y-[15px] w-full">
-                    {[
-                      ['Monday', '2:00pm - 5:30pm'],
-                      ['Tuesday', '9:00am - 11:00pm'],
-                      ['Wednesday', '9:00am - 11:00pm'],
-                      ['Thursday', '9:00am - 11:00pm'],
-                      ['Friday', '9:00am - 11:00pm'],
-                      ['Saturday', 'Closed'],
-                      ['Sunday', 'Closed'],
-                    ].map(([day, hours]) => (
-                      <p key={day} className="text-[#333333] text-center text-[15px]" style={{letterSpacing: '0.06em'}}>
-                        <span className="font-bold">{day}:</span>{' '}
-                        <span className="font-normal">{hours}</span>
+                    {officeHours.map((entry, index) => (
+                      <p key={`${entry.day}-${index}`} className="text-[#333333] text-center text-[15px]" style={{letterSpacing: '0.06em'}}>
+                        <span className="font-bold">{entry.day}:</span>{' '}
+                        <span className="font-normal">{entry.hours}</span>
                       </p>
                     ))}
                   </div>
-                  <p className="text-[#999999] mt-4" style={{fontSize:'15px', letterSpacing: '0.06em'}}>(excluding national holidays)</p>
+                  {officeHoursNote && (
+                    <p className="text-[#999999] mt-4" style={{fontSize:'15px', letterSpacing: '0.06em'}}>{officeHoursNote}</p>
+                  )}
                 </div>
               </div>
             </div>
