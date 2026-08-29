@@ -49,31 +49,37 @@ import ItineraryDetail from "./pages/ItineraryDetail";
 import { trpc } from "@/lib/trpc";
 
 function SiteBranding() {
-  const { data: assets } = trpc.media.getHomepageAssets.useQuery();
+  const { data: assets, isLoading } = trpc.media.getHomepageAssets.useQuery();
   const icon = assets?.icon;
 
   React.useEffect(() => {
+    if (isLoading) return;
+
     const definitions = [
-      { id: "site-favicon", rel: "icon" },
-      { id: "site-apple-touch-icon", rel: "apple-touch-icon" },
+      { id: "site-favicon", rel: "icon", fallbackHref: "/favicon.ico", sizes: "any" },
+      { id: "site-apple-touch-icon", rel: "apple-touch-icon", fallbackHref: "/apple-touch-icon.png", sizes: "180x180" },
     ];
+
+    const version = icon
+      ? new Date(icon.updatedAt || icon.createdAt || Date.now()).getTime() || icon.id
+      : null;
+    const iconHref = icon?.url
+      ? `${icon.url}${icon.url.includes("?") ? "&" : "?"}v=${version}`
+      : null;
 
     for (const definition of definitions) {
       let link = document.getElementById(definition.id) as HTMLLinkElement | null;
-      if (!icon?.url) {
-        link?.remove();
-        continue;
-      }
       if (!link) {
         link = document.createElement("link");
         link.id = definition.id;
         link.rel = definition.rel;
         document.head.appendChild(link);
       }
-      link.href = icon.url;
+      link.href = iconHref || definition.fallbackHref;
+      link.sizes.value = definition.sizes;
       if (definition.rel === "icon") link.type = icon.mimeType || "image/png";
     }
-  }, [icon?.url, icon?.mimeType]);
+  }, [icon?.id, icon?.url, icon?.mimeType, icon?.createdAt, icon?.updatedAt, isLoading]);
 
   return null;
 }

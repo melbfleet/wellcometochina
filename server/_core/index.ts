@@ -16,6 +16,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { UPLOADS_ROOT } from "../storage.js";
 import { backfillEntityTags } from "../db-cms";
+import { getActiveHomepageAsset } from "../db-media";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -39,6 +40,23 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+
+  // Serve the CMS-selected site icon from stable URLs that browsers and
+  // search engines request before the React application has loaded.
+  app.get(["/favicon.ico", "/apple-touch-icon.png", "/apple-touch-icon-precomposed.png"], async (_req, res) => {
+    res.set("Cache-Control", "no-cache, no-store, must-revalidate");
+    try {
+      const icon = await getActiveHomepageAsset("icon");
+      if (!icon?.url) return res.status(204).end();
+      const rawVersion = new Date(icon.updatedAt || icon.createdAt || Date.now()).getTime();
+      const version = Number.isFinite(rawVersion) ? rawVersion : icon.id;
+      const separator = icon.url.includes("?") ? "&" : "?";
+      return res.redirect(302, `${icon.url}${separator}v=${version}`);
+    } catch (error) {
+      console.error("[Site Icon] Failed to load active icon:", error);
+      return res.status(204).end();
+    }
+  });
 
   try {
     const { created } = await backfillEntityTags();

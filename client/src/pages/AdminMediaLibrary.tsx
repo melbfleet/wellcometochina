@@ -183,10 +183,14 @@ function HomepageAssetsTab() {
   const { data: ctas = [], isLoading: ctasLoading } = trpc.media.listByType.useQuery({ assetType: "cta" });
   const { data: pageBgs = [], isLoading: pageBgsLoading } = trpc.media.listByType.useQuery({ assetType: "page_bg" });
 
-  const invalidate = () => { utils.media.listByType.invalidate(); utils.media.list.invalidate(); };
+  const invalidate = () => {
+    utils.media.listByType.invalidate();
+    utils.media.list.invalidate();
+    utils.media.getHomepageAssets.invalidate();
+  };
 
   const uploadMut = trpc.media.upload.useMutation({ onSuccess: invalidate });
-  const setActiveMut = trpc.media.setActive.useMutation({ onSuccess: () => utils.media.listByType.invalidate() });
+  const setActiveMut = trpc.media.setActive.useMutation({ onSuccess: invalidate });
   const updateSortMut = trpc.media.updateSortOrder.useMutation({ onSuccess: () => utils.media.listByType.invalidate() });
   const updateOpacityMut = trpc.media.updateOpacity.useMutation({ onSuccess: () => utils.media.listByType.invalidate() });
   const replaceMut = trpc.media.replace.useMutation({ onSuccess: invalidate });
@@ -236,7 +240,7 @@ function HomepageAssetsTab() {
       <div style={sectionStyle}>
         <div style={sectionTitle}>Site Icon</div>
         <p style={{ margin: "-6px 0 16px", color: "#888", fontSize: 12, lineHeight: 1.6 }}>
-          Used for the browser tab and search engine favicon. A square PNG is recommended.
+          Used for browser tabs, bookmarks, mobile home screens and search engine favicons. A transparent square PNG (at least 180×180, ideally 512×512) is recommended.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 16 }}>
           {iconsLoading ? <div style={{ color: "#aaa", fontSize: 13 }}>Loading...</div> : icons.length === 0 ? <div style={{ color: "#aaa", fontSize: 13 }}>No site icons uploaded yet.</div> : (icons as MediaAsset[]).map((icon) => (
