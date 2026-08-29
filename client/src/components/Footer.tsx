@@ -1,4 +1,4 @@
-import { Youtube, Facebook, Instagram, Linkedin, ExternalLink } from 'lucide-react';
+import { Youtube, Facebook, Instagram } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useEffect, useState } from 'react';
 
@@ -13,26 +13,15 @@ export default function Footer() {
   const logoUrl = homepageAssets?.logo?.url || '';
   const [logoLoaded, setLogoLoaded] = useState(false);
 
-  const addressLabel = contactSettings?.addressLabel ?? '';
-  const address = contactSettings?.address ?? '';
-  const email = contactSettings?.email ?? '';
-  const socialLinks = (contactSettings?.socialLinks ?? []).filter(link => link.isVisible && link.url.trim());
-
-  const socialIcon = (platform: string) => {
-    switch (platform.trim().toLowerCase()) {
-      case 'youtube': return <Youtube size={20} />;
-      case 'instagram': return <Instagram size={20} />;
-      case 'facebook': return <Facebook size={20} />;
-      case 'linkedin': return <Linkedin size={20} />;
-      case 'tiktok':
-        return (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-          </svg>
-        );
-      default: return <ExternalLink size={20} />;
-    }
-  };
+  const addressLabel = contactSettings?.addressLabel || 'Address Chengdu';
+  const address = contactSettings?.address || '26th Floor, No. 1-2 Hangkong Road,\nWuhou District, Chengdu, Sichuan';
+  const email = contactSettings?.email || 'info@wellcometochina.com';
+  const configuredSocialUrl = (platform: string, officialUrl: string) =>
+    contactSettings?.socialLinks.find(link => link.platform === platform)?.url.trim() || officialUrl;
+  const youtubeUrl = configuredSocialUrl('YouTube', 'https://youtube.com');
+  const tiktokUrl = configuredSocialUrl('TikTok', 'https://tiktok.com');
+  const instagramUrl = configuredSocialUrl('Instagram', 'https://instagram.com');
+  const facebookUrl = configuredSocialUrl('Facebook', 'https://facebook.com');
 
   useEffect(() => {
     setLogoLoaded(false);
@@ -65,18 +54,14 @@ export default function Footer() {
             <div className="space-y-6">
               {/* Address */}
               <div>
-                {addressLabel && <p className="text-sm font-light mb-2 text-white/80">📍 {addressLabel}:</p>}
+                <p className="text-sm font-light mb-2 text-white/80">📍 {addressLabel}:</p>
                 <p className="text-sm leading-relaxed text-white/70 whitespace-pre-line">{address}</p>
               </div>
               
               {/* Email */}
               <div>
-                {email && (
-                  <>
-                    <p className="text-sm font-light mb-2 text-white/80">✉️ Email:</p>
-                    <a href={`mailto:${email}`} className="text-sm text-white/70 hover:text-[#D4AF37] transition-colors">{email}</a>
-                  </>
-                )}
+                <p className="text-sm font-light mb-2 text-white/80">✉️ Email:</p>
+                <a href={`mailto:${email}`} className="text-sm text-white/70 hover:text-[#D4AF37] transition-colors">{email}</a>
               </div>
             </div>
           </div>
@@ -84,20 +69,21 @@ export default function Footer() {
           {/* Social Media Column */}
           <div>
             <h4 className="text-sm font-light tracking-[0.2em] uppercase mb-8 text-white/60">SOCIAL MEDIA</h4>
-            <div className="flex gap-6 flex-wrap">
-              {socialLinks.map((link, index) => (
-                <a
-                  key={`${link.platform}-${index}`}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/60 hover:text-[#D4AF37] transition-colors"
-                  aria-label={link.platform}
-                  title={link.platform}
-                >
-                  {socialIcon(link.platform)}
-                </a>
-              ))}
+            <div className="flex gap-6">
+              <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#D4AF37] transition-colors" aria-label="YouTube">
+                <Youtube size={20} />
+              </a>
+              <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#D4AF37] transition-colors" aria-label="TikTok">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+              </a>
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#D4AF37] transition-colors" aria-label="Instagram">
+                <Instagram size={20} />
+              </a>
+              <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#D4AF37] transition-colors" aria-label="Facebook">
+                <Facebook size={20} />
+              </a>
             </div>
           </div>
         </div>

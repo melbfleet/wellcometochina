@@ -105,12 +105,12 @@ const officeHourInput = z.object({
 });
 
 const socialLinkInput = z.object({
-  platform: z.string().trim().min(1).max(80),
+  platform: z.enum(["YouTube", "TikTok", "Instagram", "Facebook"]),
   url: z.string().trim().max(512).refine(
     value => value === "" || /^https?:\/\//i.test(value),
     "Social links must start with http:// or https://",
   ),
-  isVisible: z.boolean(),
+  isVisible: z.literal(true),
 });
 
 const contactSettingsInput = z.object({

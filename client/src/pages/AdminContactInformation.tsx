@@ -7,7 +7,8 @@ import { trpc } from '@/lib/trpc';
 const ACCENT = '#F5569B';
 
 type OfficeHour = { day: string; hours: string };
-type SocialLink = { platform: string; url: string; isVisible: boolean };
+type SocialPlatform = 'YouTube' | 'TikTok' | 'Instagram' | 'Facebook';
+type SocialLink = { platform: SocialPlatform; url: string; isVisible: true };
 type ContactForm = {
   addressLabel: string;
   address: string;
@@ -19,15 +20,30 @@ type ContactForm = {
   socialLinks: SocialLink[];
 };
 
+const SOCIAL_PLATFORMS = [
+  { platform: 'YouTube', defaultUrl: 'https://youtube.com' },
+  { platform: 'TikTok', defaultUrl: 'https://tiktok.com' },
+  { platform: 'Instagram', defaultUrl: 'https://instagram.com' },
+  { platform: 'Facebook', defaultUrl: 'https://facebook.com' },
+] as const;
+
 const DEFAULT_FORM: ContactForm = {
-  addressLabel: '',
-  address: '',
-  email: '',
-  phone: '',
-  phoneAvailabilityText: '',
-  officeHours: [],
-  officeHoursNote: '',
-  socialLinks: [],
+  addressLabel: 'Address Chengdu',
+  address: '26th Floor, No. 1-2 Hangkong Road,\nWuhou District, Chengdu, Sichuan',
+  email: 'info@wellcometochina.com',
+  phone: '+86 130 0812 2836',
+  phoneAvailabilityText: "We're open at 9.00am",
+  officeHours: [
+    { day: 'Monday', hours: '2:00pm - 5:30pm' },
+    { day: 'Tuesday', hours: '9:00am - 11:00pm' },
+    { day: 'Wednesday', hours: '9:00am - 11:00pm' },
+    { day: 'Thursday', hours: '9:00am - 11:00pm' },
+    { day: 'Friday', hours: '9:00am - 11:00pm' },
+    { day: 'Saturday', hours: 'Closed' },
+    { day: 'Sunday', hours: 'Closed' },
+  ],
+  officeHoursNote: '(excluding national holidays)',
+  socialLinks: SOCIAL_PLATFORMS.map(({ platform }) => ({ platform, url: '', isVisible: true })),
 };
 
 const labelStyle: React.CSSProperties = {
@@ -75,7 +91,11 @@ export default function AdminContactInformation() {
       phoneAvailabilityText: data.phoneAvailabilityText,
       officeHours: [...data.officeHours],
       officeHoursNote: data.officeHoursNote,
-      socialLinks: [...data.socialLinks],
+      socialLinks: SOCIAL_PLATFORMS.map(({ platform }) => ({
+        platform,
+        url: data.socialLinks.find(link => link.platform === platform)?.url || '',
+        isVisible: true,
+      })),
     });
   }, [data]);
 
@@ -172,20 +192,15 @@ export default function AdminContactInformation() {
               </div>
             </Section>
 
-            <Section title="Social Media" description="Visible links appear in the footer. Unknown platform names use a generic external-link icon.">
+            <Section title="Social Media" description="The original four footer icons stay fixed. Leave a field blank to use that platform's official homepage.">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {form.socialLinks.map((entry, index) => (
-                  <div key={index} style={{ display: 'grid', gridTemplateColumns: 'minmax(130px, 0.55fr) minmax(220px, 1.45fr) 90px 36px', gap: '10px', alignItems: 'center' }}>
-                    <input aria-label={`Platform ${index + 1}`} style={inputStyle} value={entry.platform} onChange={event => updateSocialLink(index, { platform: event.target.value })} placeholder="Platform" />
-                    <input aria-label={`URL ${index + 1}`} style={inputStyle} value={entry.url} onChange={event => updateSocialLink(index, { url: event.target.value })} placeholder="https://..." />
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '7px', color: '#666', fontSize: '12px', cursor: 'pointer' }}>
-                      <input type="checkbox" checked={entry.isVisible} onChange={event => updateSocialLink(index, { isVisible: event.target.checked })} /> Visible
-                    </label>
-                    <button aria-label={`Remove ${entry.platform}`} type="button" onClick={() => updateField('socialLinks', form.socialLinks.filter((_, entryIndex) => entryIndex !== index))} style={{ border: 0, background: 'transparent', color: '#b44', cursor: 'pointer', padding: '8px' }}><Trash2 size={16} /></button>
+                {SOCIAL_PLATFORMS.map(({ platform, defaultUrl }, index) => (
+                  <div key={platform} style={{ display: 'grid', gridTemplateColumns: '140px minmax(220px, 1fr)', gap: '14px', alignItems: 'center' }}>
+                    <span style={{ color: '#444', fontSize: '13px', fontWeight: 600 }}>{platform}</span>
+                    <input aria-label={`${platform} URL`} style={inputStyle} value={form.socialLinks[index]?.url || ''} onChange={event => updateSocialLink(index, { url: event.target.value, isVisible: true })} placeholder={`Default: ${defaultUrl}`} />
                   </div>
                 ))}
               </div>
-              <button type="button" onClick={() => updateField('socialLinks', [...form.socialLinks, { platform: '', url: '', isVisible: true }])} style={{ display: 'flex', alignItems: 'center', gap: '7px', marginTop: '14px', padding: '9px 14px', border: '1px solid #ddd', background: '#fff', color: '#555', cursor: 'pointer', fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase' }}><Plus size={13} /> Add social link</button>
             </Section>
           </>
         )}

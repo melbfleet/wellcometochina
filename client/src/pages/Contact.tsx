@@ -273,11 +273,19 @@ const COUNTRIES = [
 
 export default function Contact() {
   const { data: contactSettings } = trpc.siteContact.get.useQuery();
-  const publicPhone = contactSettings?.phone ?? '';
+  const publicPhone = contactSettings?.phone || '+86 130 0812 2836';
   const phoneHref = publicPhone.replace(/[^\d+]/g, '');
-  const phoneAvailabilityText = contactSettings?.phoneAvailabilityText ?? '';
-  const officeHours = contactSettings?.officeHours ?? [];
-  const officeHoursNote = contactSettings?.officeHoursNote ?? '';
+  const phoneAvailabilityText = contactSettings?.phoneAvailabilityText || "We're open at 9.00am";
+  const officeHours = contactSettings?.officeHours?.length ? contactSettings.officeHours : [
+    { day: 'Monday', hours: '2:00pm - 5:30pm' },
+    { day: 'Tuesday', hours: '9:00am - 11:00pm' },
+    { day: 'Wednesday', hours: '9:00am - 11:00pm' },
+    { day: 'Thursday', hours: '9:00am - 11:00pm' },
+    { day: 'Friday', hours: '9:00am - 11:00pm' },
+    { day: 'Saturday', hours: 'Closed' },
+    { day: 'Sunday', hours: 'Closed' },
+  ];
+  const officeHoursNote = contactSettings?.officeHoursNote || '(excluding national holidays)';
 
   const [formData, setFormData] = useState({
     destination: '',
@@ -747,9 +755,7 @@ export default function Contact() {
                 <div className="w-full flex flex-col items-center px-8 pt-6 pb-4">
                   <Phone className="w-6 h-6 text-[#1a1a1a] mb-2" />
                   <h3 className="font-bold uppercase tracking-widest text-sm mb-2 text-[#1a1a1a]">Call Us Today</h3>
-                  {publicPhone && (
-                    <a href={`tel:${phoneHref}`} className="font-bold text-lg hover:underline block mb-2" style={{color:'#e0457b', fontFamily: 'Brandon Grotesque', letterSpacing: '0.12em'}}>{publicPhone}</a>
-                  )}
+                  <a href={`tel:${phoneHref}`} className="font-bold text-lg hover:underline block mb-2" style={{color:'#e0457b', fontFamily: 'Brandon Grotesque', letterSpacing: '0.12em'}}>{publicPhone}</a>
                   <p className="text-sm text-[#666666]" style={{letterSpacing: '0.03em'}}>
                     {phoneAvailabilityText}
                   </p>

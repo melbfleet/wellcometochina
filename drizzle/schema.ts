@@ -49,13 +49,13 @@ export type SocialLink = {
 // ─── Site-wide public contact information (single row) ──────────────────────
 export const siteContactSettings = mysqlTable("site_contact_settings", {
   id: int("id").primaryKey().default(1),
-  addressLabel: varchar("addressLabel", { length: 160 }).notNull(),
+  addressLabel: varchar("addressLabel", { length: 160 }).notNull().default("Address Chengdu"),
   address: text("address").notNull(),
   email: varchar("email", { length: 320 }).notNull(),
   phone: varchar("phone", { length: 64 }).notNull(),
-  phoneAvailabilityText: varchar("phoneAvailabilityText", { length: 255 }).notNull(),
+  phoneAvailabilityText: varchar("phoneAvailabilityText", { length: 255 }).notNull().default("We're open at 9.00am"),
   officeHours: json("officeHours").$type<OfficeHour[]>().notNull(),
-  officeHoursNote: varchar("officeHoursNote", { length: 255 }).notNull(),
+  officeHoursNote: varchar("officeHoursNote", { length: 255 }).notNull().default("(excluding national holidays)"),
   socialLinks: json("socialLinks").$type<SocialLink[]>().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
