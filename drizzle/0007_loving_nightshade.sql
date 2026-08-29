@@ -1,0 +1,1 @@
+ALTER TABLE `homepage_sponsors` ADD `backgroundTexture` varchar(512);

@@ -1,0 +1,69 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1779536757539,
+      "tag": "0000_woozy_omega_flight",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1779537003077,
+      "tag": "0001_moaning_iron_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1779613789161,
+      "tag": "0002_living_wasp",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1779620141621,
+      "tag": "0003_fresh_squirrel_girl",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1779621122126,
+      "tag": "0004_uneven_corsair",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1779622554120,
+      "tag": "0005_bent_wonder_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1779625710558,
+      "tag": "0006_lumpy_siren",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1779669131888,
+      "tag": "0007_loving_nightshade",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1779766206148,
+      "tag": "0008_classy_zarek",
+      "breakpoints": true
+    }
+  ]
+}

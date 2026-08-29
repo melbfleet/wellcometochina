@@ -1,0 +1,1983 @@
+{
+  "videos": [],
+  "video_tags": [],
+  "users": [
+    {
+      "id": 1,
+      "openId": "bTppMWpCtatNnfvtsGoRZX",
+      "name": "healleflore660",
+      "email": "healleflore660@outlook.com",
+      "loginMethod": "email",
+      "role": "admin",
+      "createdAt": "2026-05-21T07:10:14.000Z",
+      "updatedAt": "2026-05-23T12:40:48.000Z",
+      "lastSignedIn": "2026-05-23T12:40:46.000Z"
+    },
+    {
+      "id": 3840008,
+      "openId": "HnfrcbSj7LPucWu7xqvWWS",
+      "name": "Lacey McClure",
+      "email": "lacemcclure2369@gmail.com",
+      "loginMethod": "google",
+      "role": "user",
+      "createdAt": "2026-05-23T12:25:30.000Z",
+      "updatedAt": "2026-05-23T12:27:41.000Z",
+      "lastSignedIn": "2026-05-23T12:27:41.000Z"
+    }
+  ],
+  "tags": [
+    {
+      "id": 30001,
+      "name": "Cultural Heritage",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:56:59.000Z"
+    },
+    {
+      "id": 30002,
+      "name": "Nature & Wildlife",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:56:59.000Z"
+    },
+    {
+      "id": 30003,
+      "name": "Culinary Journey",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:56:59.000Z"
+    },
+    {
+      "id": 30004,
+      "name": "Adventure",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:56:59.000Z"
+    },
+    {
+      "id": 30005,
+      "name": "Spiritual Retreat",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:56:59.000Z"
+    },
+    {
+      "id": 30006,
+      "name": "Ancient History",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:57:00.000Z"
+    },
+    {
+      "id": 30007,
+      "name": "Luxury Stay",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:57:00.000Z"
+    },
+    {
+      "id": 30008,
+      "name": "Photography",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:57:00.000Z"
+    },
+    {
+      "id": 30009,
+      "name": "Family Friendly",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:57:00.000Z"
+    },
+    {
+      "id": 30010,
+      "name": "Off the Beaten Path",
+      "type": "other",
+      "color": "#888888",
+      "createdAt": "2026-05-23T08:57:01.000Z"
+    }
+  ],
+  "story_tags": [],
+  "stories": [],
+  "media_assets": [
+    {
+      "id": 60001,
+      "url": "/uploads/media/I5yufQ-Lw5cBJPFZMb1xW_75e68570.jpg",
+      "storageKey": "media/I5yufQ-Lw5cBJPFZMb1xW_75e68570.jpg",
+      "filename": "004ecc3f4bb41300ac803c02c8f95bc3f395e4d2659671e5851a8f41cc030f2b.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 396825,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-22T12:19:23.000Z",
+      "updatedAt": "2026-05-22T12:19:23.000Z"
+    },
+    {
+      "id": 60002,
+      "url": "/uploads/media/QxQs-19aNhG365xxgjeWI_78047d06.jpg",
+      "storageKey": "media/QxQs-19aNhG365xxgjeWI_78047d06.jpg",
+      "filename": "690d92f1c461c9397e088f556af921d48070c66d87295771682227817c332cb8.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 882774,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-22T12:19:39.000Z",
+      "updatedAt": "2026-05-22T12:19:39.000Z"
+    },
+    {
+      "id": 60003,
+      "url": "/uploads/media/2SIyIbTeUzScCOGVCCGRp_9f5feb90.jpg",
+      "storageKey": "media/2SIyIbTeUzScCOGVCCGRp_9f5feb90.jpg",
+      "filename": "2.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 7343267,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-22T12:20:17.000Z",
+      "updatedAt": "2026-05-22T12:20:17.000Z"
+    },
+    {
+      "id": 60004,
+      "url": "/uploads/media/6FNBrzvKZVoLIRQTN4NTk_8d5e09f9.jpg",
+      "storageKey": "media/6FNBrzvKZVoLIRQTN4NTk_8d5e09f9.jpg",
+      "filename": "6b8f9eb5bba049e2545202b2aea68570e1f267986f8e8966ab7320161dcd799d.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 819140,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-22T12:28:13.000Z",
+      "updatedAt": "2026-05-22T12:28:13.000Z"
+    },
+    {
+      "id": 60005,
+      "url": "/uploads/media/hYfLgfMthjMNCsAzNHiEQ_76f293f0.jpg",
+      "storageKey": "media/hYfLgfMthjMNCsAzNHiEQ_76f293f0.jpg",
+      "filename": "6b8f9eb5bba049e2545202b2aea68570e1f267986f8e8966ab7320161dcd799d.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 819140,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-22T12:29:42.000Z",
+      "updatedAt": "2026-05-22T12:29:42.000Z"
+    },
+    {
+      "id": 90001,
+      "url": "/uploads/media/XFCbzzgMUKurFc1ki4-5g_35f1a8a9.jpg",
+      "storageKey": "media/XFCbzzgMUKurFc1ki4-5g_35f1a8a9.jpg",
+      "filename": "8ec4134a4fe3240465f8e0f2415112ab6bc06d857cb972f0b83d1f10fba1b215.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 723277,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T01:42:15.000Z",
+      "updatedAt": "2026-05-23T01:42:15.000Z"
+    },
+    {
+      "id": 90002,
+      "url": "/uploads/media/psBFZ6MOiaWwnHVHzs8sp_2a0a5136.jpg",
+      "storageKey": "media/psBFZ6MOiaWwnHVHzs8sp_2a0a5136.jpg",
+      "filename": "0fb556aecd88dc1177454add18443bddda05c2df2a01f683ba9833462e3d1b5f.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 302457,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T01:42:30.000Z",
+      "updatedAt": "2026-05-23T01:42:30.000Z"
+    },
+    {
+      "id": 90003,
+      "url": "/uploads/media/ppBpPcQC-gvizPlUSmypp_23ff9134.jpg",
+      "storageKey": "media/ppBpPcQC-gvizPlUSmypp_23ff9134.jpg",
+      "filename": "3b5421b6fe82be8db521ac3097707c35077632d5944f0e790d0f68fccc5d55ac.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 751956,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T01:42:51.000Z",
+      "updatedAt": "2026-05-23T01:42:51.000Z"
+    },
+    {
+      "id": 120001,
+      "url": "/uploads/media/Bf5PtGAA2R3Wf27vQOxU2_900a9b2b.jpg",
+      "storageKey": "media/Bf5PtGAA2R3Wf27vQOxU2_900a9b2b.jpg",
+      "filename": "timg (5).jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 214540,
+      "source": "recommendation",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T02:12:39.000Z",
+      "updatedAt": "2026-05-23T02:12:39.000Z"
+    },
+    {
+      "id": 150001,
+      "url": "/uploads/media/9p5ap4RdM6EUbhaM5Ny1y_90b5dd37.jpg",
+      "storageKey": "media/9p5ap4RdM6EUbhaM5Ny1y_90b5dd37.jpg",
+      "filename": "19.11 (11).jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 445080,
+      "source": "recommendation",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T02:24:13.000Z",
+      "updatedAt": "2026-05-23T02:24:13.000Z"
+    },
+    {
+      "id": 150002,
+      "url": "/uploads/media/Y4j7MJ4K7tf4hfhET_-N__47b1d780.jpg",
+      "storageKey": "media/Y4j7MJ4K7tf4hfhET_-N__47b1d780.jpg",
+      "filename": "19.11 (11).jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 445080,
+      "source": "recommendation",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T02:25:04.000Z",
+      "updatedAt": "2026-05-23T02:25:04.000Z"
+    },
+    {
+      "id": 180001,
+      "url": "/uploads/media/UwJKinUf_OkEth8lxnrKR_9e6920c0.jpg",
+      "storageKey": "media/UwJKinUf_OkEth8lxnrKR_9e6920c0.jpg",
+      "filename": "92cc7f131ea1b380a60fc1915eaa276765181ca33c69f6a3c431707067ac62a9.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 276583,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T02:39:56.000Z",
+      "updatedAt": "2026-05-23T02:39:56.000Z"
+    },
+    {
+      "id": 180002,
+      "url": "/uploads/media/qlmxDs84TDmwibDi9BTgG_3d97dca1.jpg",
+      "storageKey": "media/qlmxDs84TDmwibDi9BTgG_3d97dca1.jpg",
+      "filename": "53be86bb5ef761aa84a0b3fb4bbbb5fa4a22a72de580d12f8f5758456eafb692.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 545992,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T02:40:15.000Z",
+      "updatedAt": "2026-05-23T02:40:15.000Z"
+    },
+    {
+      "id": 180003,
+      "url": "/uploads/media/fr9Km-xBIWcH1M-CiwZl3_77790435.jpg",
+      "storageKey": "media/fr9Km-xBIWcH1M-CiwZl3_77790435.jpg",
+      "filename": "71ac0d7cd36d332d6276b8e1b77fea3c6fabcb3acbeb140f6be205fcbb3ecaf6.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 573546,
+      "source": "experience_detail",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T02:40:33.000Z",
+      "updatedAt": "2026-05-23T02:40:33.000Z"
+    },
+    {
+      "id": 180004,
+      "url": "/uploads/media/lTlGg3WfwFV7lBwPvxqzw_11126385.jpg",
+      "storageKey": "media/lTlGg3WfwFV7lBwPvxqzw_11126385.jpg",
+      "filename": "timg (6).jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 475307,
+      "source": "recommendation",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T02:40:51.000Z",
+      "updatedAt": "2026-05-23T02:40:51.000Z"
+    },
+    {
+      "id": 210001,
+      "url": "/uploads/media/x9QmzlqE5_7Q5lGXO4Vj4_92b97fd4.jpg",
+      "storageKey": "media/x9QmzlqE5_7Q5lGXO4Vj4_92b97fd4.jpg",
+      "filename": "0a21909d0f5fa9ec26370d3d2edfb407184300717e88061b01510e54705e1131.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 373991,
+      "source": "city",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T07:37:03.000Z",
+      "updatedAt": "2026-05-23T07:37:03.000Z"
+    },
+    {
+      "id": 210002,
+      "url": "/uploads/media/XEEwG55DlpzLp9543lW7j_a3d75f19.jpg",
+      "storageKey": "media/XEEwG55DlpzLp9543lW7j_a3d75f19.jpg",
+      "filename": "4b0392be5989d064a775664cd689a570a8d043a7d45a9add955b6c2433508b37.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 791348,
+      "source": "city",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T07:37:21.000Z",
+      "updatedAt": "2026-05-23T07:37:21.000Z"
+    },
+    {
+      "id": 210003,
+      "url": "/uploads/media/Q_10QWAWmkt36q-7NdUZv_c8fa1eae.jpg",
+      "storageKey": "media/Q_10QWAWmkt36q-7NdUZv_c8fa1eae.jpg",
+      "filename": "3da36ee84b289ca5dc2ecdadb7f69525b971fd8f6a3dc2387d83acf7fe2c6a99.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 568160,
+      "source": "city",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "general",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T07:37:41.000Z",
+      "updatedAt": "2026-05-23T07:37:41.000Z"
+    },
+    {
+      "id": 240001,
+      "url": "/uploads/media/P5YUUT0gNZSFeyI2DaRCg_b941c1d1.jpg",
+      "storageKey": "media/P5YUUT0gNZSFeyI2DaRCg_b941c1d1.jpg",
+      "filename": "9f07970e56e2c04373d6fc7fa6e52f79.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 40933,
+      "source": "logo",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "logo",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:48:20.000Z",
+      "updatedAt": "2026-05-23T09:48:20.000Z"
+    },
+    {
+      "id": 270001,
+      "url": "/uploads/media/9a-q511VWv0lnoXgWzAUN_d86ebd3a.png",
+      "storageKey": "media/9a-q511VWv0lnoXgWzAUN_d86ebd3a.png",
+      "filename": "buried.png",
+      "mimeType": "image/png",
+      "fileSize": 50665,
+      "source": "cta",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "cta",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:53:46.000Z",
+      "updatedAt": "2026-05-23T09:53:46.000Z"
+    },
+    {
+      "id": 270002,
+      "url": "/uploads/media/3zUzTZQbXbqBzfAeuJUKw_de91df9d.jpg",
+      "storageKey": "media/3zUzTZQbXbqBzfAeuJUKw_de91df9d.jpg",
+      "filename": "8076545a6da18976fe12f89d5bea6e546738a2a49f6c282171f2c0f942f6ff6a.jpg",
+      "mimeType": "image/jpeg",
+      "fileSize": 1043621,
+      "source": "banner",
+      "sourceId": null,
+      "sourceLabel": null,
+      "sourceUrl": null,
+      "assetType": "banner",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:55:11.000Z",
+      "updatedAt": "2026-05-23T09:55:11.000Z"
+    }
+  ],
+  "itinerary_tags": [],
+  "itineraries": [],
+  "images": [
+    {
+      "id": 1,
+      "filename": "1da4ce4cee575ddc09d621a8432428ded6204714c9ea3f5b48b70a8fc363ce98.jpg",
+      "storagePath": "/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg",
+      "fileSize": 661729,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-22T00:02:55.000Z"
+    },
+    {
+      "id": 30001,
+      "filename": "91c25cbdab597876f8556003fe7e3ff4295203be72ebcb50bec44638f304bcf5.jpg",
+      "storagePath": "/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg",
+      "fileSize": 420240,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-22T12:19:07.000Z"
+    },
+    {
+      "id": 30002,
+      "filename": "004ecc3f4bb41300ac803c02c8f95bc3f395e4d2659671e5851a8f41cc030f2b.jpg",
+      "storagePath": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "fileSize": 396825,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-22T12:19:12.000Z"
+    },
+    {
+      "id": 30003,
+      "filename": "3b5421b6fe82be8db521ac3097707c35077632d5944f0e790d0f68fccc5d55ac.jpg",
+      "storagePath": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "fileSize": 751956,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-22T12:19:19.000Z"
+    },
+    {
+      "id": 60001,
+      "filename": "zebra-chobe-national-park-botswana-1.avif",
+      "storagePath": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "fileSize": 24976,
+      "mimeType": "image/avif",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T01:03:21.000Z"
+    },
+    {
+      "id": 90001,
+      "filename": "3da36ee84b289ca5dc2ecdadb7f69525b971fd8f6a3dc2387d83acf7fe2c6a99.jpg",
+      "storagePath": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "fileSize": 568160,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T01:40:39.000Z"
+    },
+    {
+      "id": 90002,
+      "filename": "微信图片_20260421192444_128_34.jpg",
+      "storagePath": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "fileSize": 1883474,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T01:41:08.000Z"
+    },
+    {
+      "id": 90003,
+      "filename": "微信图片_20260421192448_131_34.jpg",
+      "storagePath": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "fileSize": 703441,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T01:41:39.000Z"
+    },
+    {
+      "id": 90004,
+      "filename": "微信图片_20260421192446_130_34.jpg",
+      "storagePath": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "fileSize": 319960,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T01:41:50.000Z"
+    },
+    {
+      "id": 120001,
+      "filename": "133d5e802d7cd88b1ed20ce9f9f640122f0e4f9a8d59ebd8fed925b1280f9d7c.jpg",
+      "storagePath": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "fileSize": 524340,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T02:39:02.000Z"
+    },
+    {
+      "id": 120002,
+      "filename": "69fb9d9b8cb74d88ebeea9e89578630762487ac68098b67fd764d3bedf707343.jpg",
+      "storagePath": "/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg",
+      "fileSize": 704221,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T02:39:15.000Z"
+    },
+    {
+      "id": 120003,
+      "filename": "3.jpg",
+      "storagePath": "/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg",
+      "fileSize": 1566301,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T02:39:24.000Z"
+    },
+    {
+      "id": 120004,
+      "filename": "8ec4134a4fe3240465f8e0f2415112ab6bc06d857cb972f0b83d1f10fba1b215.jpg",
+      "storagePath": "/uploads/images/_uqowkOmMPRArusd2o9UC-1779503976250.jpg",
+      "fileSize": 723277,
+      "mimeType": "image/jpeg",
+      "category": "other",
+      "description": null,
+      "uploadedBy": "admin",
+      "createdAt": "2026-05-23T02:39:36.000Z"
+    }
+  ],
+  "experiences": [
+    {
+      "id": 240001,
+      "typeId": 60001,
+      "name": "Panda Encounter",
+      "slug": "panda-encounter",
+      "when": "Year-round, best March–May",
+      "price": "From $850 per person",
+      "duration": "Half day (4 hours)",
+      "gallery": "[\"/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg\",\"/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg\",\"/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg\",\"/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg\",\"/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif\",\"/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg\"]",
+      "description": "Step into the misty bamboo groves before the crowds arrive for an exclusive private encounter with China's most beloved creatures. Your expert guide will share intimate knowledge of panda behavior and conservation efforts.",
+      "ctaBgColor": "#1a1a1a",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:01.000Z",
+      "updatedAt": "2026-05-23T09:02:58.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg",
+      "recommendationTitle": "Meet China's Gentle Giants",
+      "recommendationDescription": "An unforgettable private encounter with giant pandas in their natural habitat.",
+      "cityDisplayImage": "/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg",
+      "title": "A Private Morning with the Giant Pandas of Chengdu"
+    },
+    {
+      "id": 240002,
+      "typeId": 60001,
+      "name": "Terracotta Warriors",
+      "slug": "terracotta-warriors",
+      "when": "Year-round",
+      "price": "From $1,200 per person",
+      "duration": "Evening (3 hours)",
+      "gallery": "[\"/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg\",\"/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg\",\"/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg\",\"/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif\",\"/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg\",\"/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg\"]",
+      "description": "Experience the awe-inspiring Terracotta Army in complete solitude. After the last tourist has departed, you will have exclusive access to walk among the 8,000 silent soldiers of Emperor Qin Shi Huang's eternal guard.",
+      "ctaBgColor": "#1a1a1a",
+      "isActive": 1,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:03.000Z",
+      "updatedAt": "2026-05-23T09:02:58.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg",
+      "recommendationTitle": "Alone with 8,000 Warriors",
+      "recommendationDescription": "Private after-hours access to one of the world's greatest archaeological wonders.",
+      "cityDisplayImage": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "title": "After-Hours Private Access to the Terracotta Army of Xi'an"
+    },
+    {
+      "id": 240003,
+      "typeId": 60002,
+      "name": "Li River Cruise",
+      "slug": "li-river-cruise",
+      "when": "October–April (dry season)",
+      "price": "From $650 per person",
+      "duration": "Full day (8 hours)",
+      "gallery": "[\"/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg\",\"/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg\",\"/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif\",\"/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg\",\"/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg\",\"/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg\"]",
+      "description": "Glide silently through the ethereal karst landscape of Guilin as dawn breaks over the limestone peaks. Your private bamboo raft carries you through scenes that have inspired Chinese painters and poets for millennia.",
+      "ctaBgColor": "#1a1a1a",
+      "isActive": 1,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:05.000Z",
+      "updatedAt": "2026-05-23T09:02:58.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "recommendationTitle": "Floating Through a Chinese Painting",
+      "recommendationDescription": "A serene private cruise through Guilin's legendary karst landscape at sunrise.",
+      "cityDisplayImage": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "title": "A Private Sunrise Cruise Along the Legendary Li River"
+    },
+    {
+      "id": 240004,
+      "typeId": 60002,
+      "name": "Forbidden City",
+      "slug": "forbidden-city-dawn",
+      "when": "Year-round",
+      "price": "From $950 per person",
+      "duration": "Morning (3 hours)",
+      "gallery": "[\"/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg\",\"/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif\",\"/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg\",\"/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg\",\"/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg\",\"/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg\"]",
+      "description": "Walk the golden corridors of the world's largest palace complex in the golden light of dawn, accompanied by a scholar-guide who will unlock the secrets of five centuries of imperial life.",
+      "ctaBgColor": "#1a1a1a",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:07.000Z",
+      "updatedAt": "2026-05-23T09:32:49.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "recommendationTitle": "The Emperor's Palace at Dawn",
+      "recommendationDescription": "Exclusive early morning access to Beijing's magnificent Forbidden City.",
+      "cityDisplayImage": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "title": "Exclusive Dawn Access to the Forbidden City Before the Gates Open"
+    },
+    {
+      "id": 240005,
+      "typeId": 60003,
+      "name": "Tea Ceremony",
+      "slug": "tea-ceremony-hangzhou",
+      "when": "March–May (spring harvest)",
+      "price": "From $480 per person",
+      "duration": "Half day (4 hours)",
+      "gallery": "[\"/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif\",\"/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg\",\"/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg\",\"/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg\",\"/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg\",\"/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg\"]",
+      "description": "Journey to the misty hillsides above West Lake where Longjing tea has been cultivated for over a thousand years. A tea master will guide you through the meditative art of Chinese tea ceremony in a private pavilion.",
+      "ctaBgColor": "#c12525",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:08.000Z",
+      "updatedAt": "2026-05-23T09:34:42.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "recommendationTitle": "The Art of Chinese Tea",
+      "recommendationDescription": "A meditative tea ceremony experience in Hangzhou's legendary Longjing gardens.",
+      "cityDisplayImage": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "title": "A Master Tea Ceremony in the Ancient Tea Gardens of Hangzhou"
+    },
+    {
+      "id": 240006,
+      "typeId": 60003,
+      "name": "Silk Road Journey",
+      "slug": "silk-road-journey",
+      "when": "May–October",
+      "price": "From $1,800 per person",
+      "duration": "2 days / 1 night",
+      "gallery": "[\"/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg\",\"/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg\",\"/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg\",\"/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg\",\"/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg\",\"/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg\"]",
+      "description": "Follow in the footsteps of Marco Polo across the vast Gobi Desert as the setting sun paints the dunes in shades of gold and crimson. A private camel caravan leads you to a luxury desert camp for a night under the stars.",
+      "ctaBgColor": "#9f2323",
+      "isActive": 1,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:10.000Z",
+      "updatedAt": "2026-05-23T09:41:03.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "recommendationTitle": "Into the Heart of the Silk Road",
+      "recommendationDescription": "A private camel caravan journey through the Gobi Desert to a luxury desert camp.",
+      "cityDisplayImage": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "title": "Tracing the Ancient Silk Road Through the Gobi Desert at Dusk"
+    },
+    {
+      "id": 240007,
+      "typeId": 60004,
+      "name": "Yangtze Gorges",
+      "slug": "yangtze-gorges",
+      "when": "April–October",
+      "price": "From $2,400 per person",
+      "duration": "3 days / 2 nights",
+      "gallery": "[\"/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg\",\"/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg\",\"/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg\",\"/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg\",\"/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg\",\"/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg\"]",
+      "description": "Navigate the dramatic Three Gorges aboard a private vessel, exploring ancient cliff temples, hanging coffins, and the engineering marvel of the Three Gorges Dam with an expert historian as your guide.",
+      "ctaBgColor": "#1a1a1a",
+      "isActive": 1,
+      "sortOrder": 6,
+      "createdAt": "2026-05-23T08:57:11.000Z",
+      "updatedAt": "2026-05-23T09:02:59.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "recommendationTitle": "The Mighty Yangtze Revealed",
+      "recommendationDescription": "A private expedition through China's most dramatic river gorges.",
+      "cityDisplayImage": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "title": "A Private Expedition Through the Three Gorges of the Yangtze River"
+    },
+    {
+      "id": 240008,
+      "typeId": 60004,
+      "name": "Kung Fu Temple",
+      "slug": "shaolin-kung-fu",
+      "when": "Year-round",
+      "price": "From $1,100 per person",
+      "duration": "Full day (8 hours)",
+      "gallery": "[\"/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg\",\"/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg\",\"/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg\",\"/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg\",\"/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg\",\"/uploads/images/_uqowkOmMPRArusd2o9UC-1779503976250.jpg\"]",
+      "description": "Train alongside Shaolin monks in the birthplace of Chinese martial arts. Your private retreat includes dawn meditation, kung fu instruction from a senior master, and a tour of the ancient temple complex.",
+      "ctaBgColor": "#1a1a1a",
+      "isActive": 1,
+      "sortOrder": 7,
+      "createdAt": "2026-05-23T08:57:13.000Z",
+      "updatedAt": "2026-05-23T09:02:59.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "recommendationTitle": "The Way of the Shaolin Warrior",
+      "recommendationDescription": "A private kung fu training retreat at the legendary Shaolin Temple.",
+      "cityDisplayImage": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "title": "A Private Kung Fu Retreat at the Shaolin Temple of Henan"
+    },
+    {
+      "id": 240009,
+      "typeId": 60005,
+      "name": "Tibetan Monastery",
+      "slug": "tibetan-monastery",
+      "when": "May–October",
+      "price": "From $1,500 per person",
+      "duration": "Full day (10 hours)",
+      "gallery": "[\"/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg\",\"/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg\",\"/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg\",\"/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg\",\"/uploads/images/_uqowkOmMPRArusd2o9UC-1779503976250.jpg\",\"/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg\"]",
+      "description": "Join Tibetan monks for their pre-dawn prayers in a remote monastery perched above the clouds. Your private guide will interpret the ancient rituals and share the profound spiritual traditions of Tibetan Buddhism.",
+      "ctaBgColor": "#1a1a1a",
+      "isActive": 1,
+      "sortOrder": 8,
+      "createdAt": "2026-05-23T08:57:14.000Z",
+      "updatedAt": "2026-05-23T09:02:59.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "recommendationTitle": "Above the Clouds with the Monks",
+      "recommendationDescription": "A private dawn pilgrimage to a remote Tibetan monastery for morning prayers.",
+      "cityDisplayImage": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "title": "A Sacred Dawn Pilgrimage to a Remote Tibetan Monastery"
+    },
+    {
+      "id": 240010,
+      "typeId": 60005,
+      "name": "Water Town",
+      "slug": "suzhou-water-town",
+      "when": "April–May, September–November",
+      "price": "From $580 per person",
+      "duration": "Half day (5 hours)",
+      "gallery": "[\"/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg\",\"/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg\",\"/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg\",\"/uploads/images/_uqowkOmMPRArusd2o9UC-1779503976250.jpg\",\"/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg\",\"/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg\"]",
+      "description": "Drift through the labyrinthine canals of Suzhou in a private gondola, passing under ancient stone bridges and alongside whitewashed walls draped in wisteria. Your scholar-guide will reveal the stories behind every garden and temple.",
+      "ctaBgColor": "#1a1a1a",
+      "isActive": 1,
+      "sortOrder": 9,
+      "createdAt": "2026-05-23T08:57:16.000Z",
+      "updatedAt": "2026-05-23T09:03:00.000Z",
+      "cityId": null,
+      "recommendationImage": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "recommendationTitle": "Venice of the East",
+      "recommendationDescription": "A private gondola journey through the enchanting canals of ancient Suzhou.",
+      "cityDisplayImage": "/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg",
+      "title": "A Private Gondola Journey Through the Ancient Water Towns of Suzhou"
+    }
+  ],
+  "experience_types": [
+    {
+      "id": 60001,
+      "name": "Cultural & Heritage",
+      "coverImage": "/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:02:56.000Z",
+      "updatedAt": "2026-05-23T09:02:56.000Z"
+    },
+    {
+      "id": 60002,
+      "name": "Nature & Adventure",
+      "coverImage": "/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T09:02:56.000Z",
+      "updatedAt": "2026-05-23T09:02:56.000Z"
+    },
+    {
+      "id": 60003,
+      "name": "Culinary Journeys",
+      "coverImage": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T09:02:56.000Z",
+      "updatedAt": "2026-05-23T09:02:56.000Z"
+    },
+    {
+      "id": 60004,
+      "name": "Spiritual & Wellness",
+      "coverImage": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T09:02:56.000Z",
+      "updatedAt": "2026-05-23T09:02:56.000Z"
+    },
+    {
+      "id": 60005,
+      "name": "Silk Road & History",
+      "coverImage": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "sortOrder": 4,
+      "createdAt": "2026-05-23T09:02:57.000Z",
+      "updatedAt": "2026-05-23T09:02:57.000Z"
+    }
+  ],
+  "experience_tags": [
+    {
+      "id": 1,
+      "experienceId": 240001,
+      "tagId": 30001
+    },
+    {
+      "id": 2,
+      "experienceId": 240001,
+      "tagId": 30002
+    },
+    {
+      "id": 3,
+      "experienceId": 240001,
+      "tagId": 30003
+    },
+    {
+      "id": 4,
+      "experienceId": 240002,
+      "tagId": 30002
+    },
+    {
+      "id": 5,
+      "experienceId": 240002,
+      "tagId": 30003
+    },
+    {
+      "id": 6,
+      "experienceId": 240002,
+      "tagId": 30004
+    },
+    {
+      "id": 7,
+      "experienceId": 240003,
+      "tagId": 30003
+    },
+    {
+      "id": 8,
+      "experienceId": 240003,
+      "tagId": 30004
+    },
+    {
+      "id": 9,
+      "experienceId": 240003,
+      "tagId": 30005
+    },
+    {
+      "id": 10,
+      "experienceId": 240004,
+      "tagId": 30004
+    },
+    {
+      "id": 11,
+      "experienceId": 240004,
+      "tagId": 30005
+    },
+    {
+      "id": 12,
+      "experienceId": 240004,
+      "tagId": 30006
+    },
+    {
+      "id": 13,
+      "experienceId": 240005,
+      "tagId": 30005
+    },
+    {
+      "id": 14,
+      "experienceId": 240005,
+      "tagId": 30006
+    },
+    {
+      "id": 15,
+      "experienceId": 240005,
+      "tagId": 30007
+    },
+    {
+      "id": 16,
+      "experienceId": 240006,
+      "tagId": 30006
+    },
+    {
+      "id": 17,
+      "experienceId": 240006,
+      "tagId": 30007
+    },
+    {
+      "id": 18,
+      "experienceId": 240006,
+      "tagId": 30008
+    },
+    {
+      "id": 19,
+      "experienceId": 240007,
+      "tagId": 30007
+    },
+    {
+      "id": 20,
+      "experienceId": 240007,
+      "tagId": 30008
+    },
+    {
+      "id": 21,
+      "experienceId": 240007,
+      "tagId": 30009
+    },
+    {
+      "id": 22,
+      "experienceId": 240008,
+      "tagId": 30008
+    },
+    {
+      "id": 23,
+      "experienceId": 240008,
+      "tagId": 30009
+    },
+    {
+      "id": 24,
+      "experienceId": 240008,
+      "tagId": 30010
+    },
+    {
+      "id": 25,
+      "experienceId": 240009,
+      "tagId": 30009
+    },
+    {
+      "id": 26,
+      "experienceId": 240009,
+      "tagId": 30010
+    },
+    {
+      "id": 27,
+      "experienceId": 240009,
+      "tagId": 30001
+    },
+    {
+      "id": 28,
+      "experienceId": 240010,
+      "tagId": 30010
+    },
+    {
+      "id": 29,
+      "experienceId": 240010,
+      "tagId": 30001
+    },
+    {
+      "id": 30,
+      "experienceId": 240010,
+      "tagId": 30002
+    }
+  ],
+  "experience_labels": [
+    {
+      "id": 120005,
+      "experienceId": 240004,
+      "label": "Adventure"
+    }
+  ],
+  "experience_details": [
+    {
+      "id": 240001,
+      "experienceId": 240001,
+      "description": "Panda Encounter detail 1: Step into the misty bamboo groves before the crowds arrive for an exclusive private encounter with C...",
+      "imageUrl": "/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:02.000Z"
+    },
+    {
+      "id": 240002,
+      "experienceId": 240001,
+      "description": "Panda Encounter detail 2: Step into the misty bamboo groves before the crowds arrive for an exclusive private encounter with C...",
+      "imageUrl": "/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:02.000Z"
+    },
+    {
+      "id": 240003,
+      "experienceId": 240001,
+      "description": "Panda Encounter detail 3: Step into the misty bamboo groves before the crowds arrive for an exclusive private encounter with C...",
+      "imageUrl": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:02.000Z"
+    },
+    {
+      "id": 240004,
+      "experienceId": 240002,
+      "description": "Terracotta Warriors detail 1: Experience the awe-inspiring Terracotta Army in complete solitude. After the last tourist has depart...",
+      "imageUrl": "/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:04.000Z"
+    },
+    {
+      "id": 240005,
+      "experienceId": 240002,
+      "description": "Terracotta Warriors detail 2: Experience the awe-inspiring Terracotta Army in complete solitude. After the last tourist has depart...",
+      "imageUrl": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:04.000Z"
+    },
+    {
+      "id": 240006,
+      "experienceId": 240002,
+      "description": "Terracotta Warriors detail 3: Experience the awe-inspiring Terracotta Army in complete solitude. After the last tourist has depart...",
+      "imageUrl": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:04.000Z"
+    },
+    {
+      "id": 240007,
+      "experienceId": 240003,
+      "description": "Li River Cruise detail 1: Glide silently through the ethereal karst landscape of Guilin as dawn breaks over the limestone peak...",
+      "imageUrl": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:05.000Z"
+    },
+    {
+      "id": 240008,
+      "experienceId": 240003,
+      "description": "Li River Cruise detail 2: Glide silently through the ethereal karst landscape of Guilin as dawn breaks over the limestone peak...",
+      "imageUrl": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:05.000Z"
+    },
+    {
+      "id": 240009,
+      "experienceId": 240003,
+      "description": "Li River Cruise detail 3: Glide silently through the ethereal karst landscape of Guilin as dawn breaks over the limestone peak...",
+      "imageUrl": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:06.000Z"
+    },
+    {
+      "id": 240019,
+      "experienceId": 240007,
+      "description": "Yangtze Gorges detail 1: Navigate the dramatic Three Gorges aboard a private vessel, exploring ancient cliff temples, hanging...",
+      "imageUrl": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:11.000Z"
+    },
+    {
+      "id": 240020,
+      "experienceId": 240007,
+      "description": "Yangtze Gorges detail 2: Navigate the dramatic Three Gorges aboard a private vessel, exploring ancient cliff temples, hanging...",
+      "imageUrl": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:12.000Z"
+    },
+    {
+      "id": 240021,
+      "experienceId": 240007,
+      "description": "Yangtze Gorges detail 3: Navigate the dramatic Three Gorges aboard a private vessel, exploring ancient cliff temples, hanging...",
+      "imageUrl": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:12.000Z"
+    },
+    {
+      "id": 240022,
+      "experienceId": 240008,
+      "description": "Kung Fu Temple detail 1: Train alongside Shaolin monks in the birthplace of Chinese martial arts. Your private retreat includ...",
+      "imageUrl": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:13.000Z"
+    },
+    {
+      "id": 240023,
+      "experienceId": 240008,
+      "description": "Kung Fu Temple detail 2: Train alongside Shaolin monks in the birthplace of Chinese martial arts. Your private retreat includ...",
+      "imageUrl": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:13.000Z"
+    },
+    {
+      "id": 240024,
+      "experienceId": 240008,
+      "description": "Kung Fu Temple detail 3: Train alongside Shaolin monks in the birthplace of Chinese martial arts. Your private retreat includ...",
+      "imageUrl": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:14.000Z"
+    },
+    {
+      "id": 240025,
+      "experienceId": 240009,
+      "description": "Tibetan Monastery detail 1: Join Tibetan monks for their pre-dawn prayers in a remote monastery perched above the clouds. Your p...",
+      "imageUrl": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:15.000Z"
+    },
+    {
+      "id": 240026,
+      "experienceId": 240009,
+      "description": "Tibetan Monastery detail 2: Join Tibetan monks for their pre-dawn prayers in a remote monastery perched above the clouds. Your p...",
+      "imageUrl": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:15.000Z"
+    },
+    {
+      "id": 240027,
+      "experienceId": 240009,
+      "description": "Tibetan Monastery detail 3: Join Tibetan monks for their pre-dawn prayers in a remote monastery perched above the clouds. Your p...",
+      "imageUrl": "/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:15.000Z"
+    },
+    {
+      "id": 240028,
+      "experienceId": 240010,
+      "description": "Water Town detail 1: Drift through the labyrinthine canals of Suzhou in a private gondola, passing under ancient stone br...",
+      "imageUrl": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:16.000Z"
+    },
+    {
+      "id": 240029,
+      "experienceId": 240010,
+      "description": "Water Town detail 2: Drift through the labyrinthine canals of Suzhou in a private gondola, passing under ancient stone br...",
+      "imageUrl": "/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:16.000Z"
+    },
+    {
+      "id": 240030,
+      "experienceId": 240010,
+      "description": "Water Town detail 3: Drift through the labyrinthine canals of Suzhou in a private gondola, passing under ancient stone br...",
+      "imageUrl": "/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:17.000Z"
+    },
+    {
+      "id": 270004,
+      "experienceId": 240004,
+      "description": "Forbidden City detail 1: Walk the golden corridors of the world's largest palace complex in the golden light of dawn, accompa...",
+      "imageUrl": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:32:50.000Z"
+    },
+    {
+      "id": 270005,
+      "experienceId": 240004,
+      "description": "Forbidden City detail 2: Walk the golden corridors of the world's largest palace complex in the golden light of dawn, accompa...",
+      "imageUrl": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T09:32:50.000Z"
+    },
+    {
+      "id": 270006,
+      "experienceId": 240004,
+      "description": "Forbidden City detail 3: Walk the golden corridors of the world's largest palace complex in the golden light of dawn, accompa...",
+      "imageUrl": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T09:32:50.000Z"
+    },
+    {
+      "id": 270007,
+      "experienceId": 240005,
+      "description": "Tea Ceremony detail 1: Journey to the misty hillsides above West Lake where Longjing tea has been cultivated for over a tho...",
+      "imageUrl": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:34:44.000Z"
+    },
+    {
+      "id": 270008,
+      "experienceId": 240005,
+      "description": "Tea Ceremony detail 2: Journey to the misty hillsides above West Lake where Longjing tea has been cultivated for over a tho...",
+      "imageUrl": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T09:34:44.000Z"
+    },
+    {
+      "id": 270009,
+      "experienceId": 240005,
+      "description": "Tea Ceremony detail 3: Journey to the misty hillsides above West Lake where Longjing tea has been cultivated for over a tho...",
+      "imageUrl": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T09:34:44.000Z"
+    },
+    {
+      "id": 270010,
+      "experienceId": 240006,
+      "description": "Silk Road Journey detail 1: Follow in the footsteps of Marco Polo across the vast Gobi Desert as the setting sun paints the dune...",
+      "imageUrl": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:41:03.000Z"
+    },
+    {
+      "id": 270011,
+      "experienceId": 240006,
+      "description": "Silk Road Journey detail 2: Follow in the footsteps of Marco Polo across the vast Gobi Desert as the setting sun paints the dune...",
+      "imageUrl": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T09:41:03.000Z"
+    },
+    {
+      "id": 270012,
+      "experienceId": 240006,
+      "description": "Silk Road Journey detail 3: Follow in the footsteps of Marco Polo across the vast Gobi Desert as the setting sun paints the dune...",
+      "imageUrl": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T09:41:03.000Z"
+    }
+  ],
+  "enquiries": [],
+  "city_what_to_see": [
+    {
+      "id": 30001,
+      "cityId": 150004,
+      "experienceId": 240004,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:05:15.000Z",
+      "updatedAt": "2026-05-23T09:05:15.000Z"
+    },
+    {
+      "id": 30002,
+      "cityId": 150004,
+      "experienceId": 240006,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T09:05:19.000Z",
+      "updatedAt": "2026-05-23T09:05:19.000Z"
+    },
+    {
+      "id": 30003,
+      "cityId": 150004,
+      "experienceId": 240005,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T09:05:23.000Z",
+      "updatedAt": "2026-05-23T09:05:23.000Z"
+    },
+    {
+      "id": 30004,
+      "cityId": 150003,
+      "experienceId": 240003,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T09:16:20.000Z",
+      "updatedAt": "2026-05-23T09:16:20.000Z"
+    },
+    {
+      "id": 30005,
+      "cityId": 150003,
+      "experienceId": 240005,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T09:16:22.000Z",
+      "updatedAt": "2026-05-23T09:16:22.000Z"
+    },
+    {
+      "id": 30006,
+      "cityId": 150003,
+      "experienceId": 240004,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T09:16:28.000Z",
+      "updatedAt": "2026-05-23T09:16:28.000Z"
+    },
+    {
+      "id": 30007,
+      "cityId": 150003,
+      "experienceId": 240006,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T09:16:32.000Z",
+      "updatedAt": "2026-05-23T09:16:32.000Z"
+    }
+  ],
+  "city_experiences": [
+    {
+      "id": 120001,
+      "cityId": 150001,
+      "experienceId": 240001,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:18.000Z",
+      "updatedAt": "2026-05-23T08:57:18.000Z"
+    },
+    {
+      "id": 120002,
+      "cityId": 150001,
+      "experienceId": 240002,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:18.000Z",
+      "updatedAt": "2026-05-23T08:57:18.000Z"
+    },
+    {
+      "id": 120003,
+      "cityId": 150001,
+      "experienceId": 240003,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:19.000Z",
+      "updatedAt": "2026-05-23T08:57:19.000Z"
+    },
+    {
+      "id": 120004,
+      "cityId": 150001,
+      "experienceId": 240004,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:19.000Z",
+      "updatedAt": "2026-05-23T08:57:19.000Z"
+    },
+    {
+      "id": 120005,
+      "cityId": 150002,
+      "experienceId": 240002,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:19.000Z",
+      "updatedAt": "2026-05-23T08:57:19.000Z"
+    },
+    {
+      "id": 120006,
+      "cityId": 150002,
+      "experienceId": 240003,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:19.000Z",
+      "updatedAt": "2026-05-23T08:57:19.000Z"
+    },
+    {
+      "id": 120007,
+      "cityId": 150002,
+      "experienceId": 240004,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:20.000Z",
+      "updatedAt": "2026-05-23T08:57:20.000Z"
+    },
+    {
+      "id": 120008,
+      "cityId": 150002,
+      "experienceId": 240005,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:20.000Z",
+      "updatedAt": "2026-05-23T08:57:20.000Z"
+    },
+    {
+      "id": 120009,
+      "cityId": 150003,
+      "experienceId": 240003,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:20.000Z",
+      "updatedAt": "2026-05-23T08:57:20.000Z"
+    },
+    {
+      "id": 120010,
+      "cityId": 150003,
+      "experienceId": 240004,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:21.000Z",
+      "updatedAt": "2026-05-23T08:57:21.000Z"
+    },
+    {
+      "id": 120011,
+      "cityId": 150003,
+      "experienceId": 240005,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:21.000Z",
+      "updatedAt": "2026-05-23T08:57:21.000Z"
+    },
+    {
+      "id": 120012,
+      "cityId": 150003,
+      "experienceId": 240006,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:21.000Z",
+      "updatedAt": "2026-05-23T08:57:21.000Z"
+    },
+    {
+      "id": 120013,
+      "cityId": 150004,
+      "experienceId": 240004,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:21.000Z",
+      "updatedAt": "2026-05-23T08:57:21.000Z"
+    },
+    {
+      "id": 120014,
+      "cityId": 150004,
+      "experienceId": 240005,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:22.000Z",
+      "updatedAt": "2026-05-23T08:57:22.000Z"
+    },
+    {
+      "id": 120015,
+      "cityId": 150004,
+      "experienceId": 240006,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:22.000Z",
+      "updatedAt": "2026-05-23T08:57:22.000Z"
+    },
+    {
+      "id": 120016,
+      "cityId": 150004,
+      "experienceId": 240007,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:22.000Z",
+      "updatedAt": "2026-05-23T08:57:22.000Z"
+    },
+    {
+      "id": 120017,
+      "cityId": 150005,
+      "experienceId": 240005,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:23.000Z",
+      "updatedAt": "2026-05-23T08:57:23.000Z"
+    },
+    {
+      "id": 120018,
+      "cityId": 150005,
+      "experienceId": 240006,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:23.000Z",
+      "updatedAt": "2026-05-23T08:57:23.000Z"
+    },
+    {
+      "id": 120019,
+      "cityId": 150005,
+      "experienceId": 240007,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:23.000Z",
+      "updatedAt": "2026-05-23T08:57:23.000Z"
+    },
+    {
+      "id": 120020,
+      "cityId": 150005,
+      "experienceId": 240008,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:23.000Z",
+      "updatedAt": "2026-05-23T08:57:23.000Z"
+    },
+    {
+      "id": 120021,
+      "cityId": 150006,
+      "experienceId": 240006,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:24.000Z",
+      "updatedAt": "2026-05-23T08:57:24.000Z"
+    },
+    {
+      "id": 120022,
+      "cityId": 150006,
+      "experienceId": 240007,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:24.000Z",
+      "updatedAt": "2026-05-23T08:57:24.000Z"
+    },
+    {
+      "id": 120023,
+      "cityId": 150006,
+      "experienceId": 240008,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:24.000Z",
+      "updatedAt": "2026-05-23T08:57:24.000Z"
+    },
+    {
+      "id": 120024,
+      "cityId": 150006,
+      "experienceId": 240009,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:24.000Z",
+      "updatedAt": "2026-05-23T08:57:24.000Z"
+    },
+    {
+      "id": 120025,
+      "cityId": 150007,
+      "experienceId": 240007,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:25.000Z",
+      "updatedAt": "2026-05-23T08:57:25.000Z"
+    },
+    {
+      "id": 120026,
+      "cityId": 150007,
+      "experienceId": 240008,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:25.000Z",
+      "updatedAt": "2026-05-23T08:57:25.000Z"
+    },
+    {
+      "id": 120027,
+      "cityId": 150007,
+      "experienceId": 240009,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:25.000Z",
+      "updatedAt": "2026-05-23T08:57:25.000Z"
+    },
+    {
+      "id": 120028,
+      "cityId": 150007,
+      "experienceId": 240010,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:25.000Z",
+      "updatedAt": "2026-05-23T08:57:25.000Z"
+    },
+    {
+      "id": 120029,
+      "cityId": 150008,
+      "experienceId": 240008,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:26.000Z",
+      "updatedAt": "2026-05-23T08:57:26.000Z"
+    },
+    {
+      "id": 120030,
+      "cityId": 150008,
+      "experienceId": 240009,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:26.000Z",
+      "updatedAt": "2026-05-23T08:57:26.000Z"
+    },
+    {
+      "id": 120031,
+      "cityId": 150008,
+      "experienceId": 240010,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:26.000Z",
+      "updatedAt": "2026-05-23T08:57:26.000Z"
+    },
+    {
+      "id": 120032,
+      "cityId": 150008,
+      "experienceId": 240001,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:27.000Z",
+      "updatedAt": "2026-05-23T08:57:27.000Z"
+    },
+    {
+      "id": 120033,
+      "cityId": 150009,
+      "experienceId": 240009,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:27.000Z",
+      "updatedAt": "2026-05-23T08:57:27.000Z"
+    },
+    {
+      "id": 120034,
+      "cityId": 150009,
+      "experienceId": 240010,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:27.000Z",
+      "updatedAt": "2026-05-23T08:57:27.000Z"
+    },
+    {
+      "id": 120035,
+      "cityId": 150009,
+      "experienceId": 240001,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:27.000Z",
+      "updatedAt": "2026-05-23T08:57:27.000Z"
+    },
+    {
+      "id": 120036,
+      "cityId": 150009,
+      "experienceId": 240002,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:28.000Z",
+      "updatedAt": "2026-05-23T08:57:28.000Z"
+    },
+    {
+      "id": 120037,
+      "cityId": 150010,
+      "experienceId": 240010,
+      "displayImage": null,
+      "sortOrder": 0,
+      "createdAt": "2026-05-23T08:57:28.000Z",
+      "updatedAt": "2026-05-23T08:57:28.000Z"
+    },
+    {
+      "id": 120038,
+      "cityId": 150010,
+      "experienceId": 240001,
+      "displayImage": null,
+      "sortOrder": 1,
+      "createdAt": "2026-05-23T08:57:28.000Z",
+      "updatedAt": "2026-05-23T08:57:28.000Z"
+    },
+    {
+      "id": 120039,
+      "cityId": 150010,
+      "experienceId": 240002,
+      "displayImage": null,
+      "sortOrder": 2,
+      "createdAt": "2026-05-23T08:57:29.000Z",
+      "updatedAt": "2026-05-23T08:57:29.000Z"
+    },
+    {
+      "id": 120040,
+      "cityId": 150010,
+      "experienceId": 240003,
+      "displayImage": null,
+      "sortOrder": 3,
+      "createdAt": "2026-05-23T08:57:29.000Z",
+      "updatedAt": "2026-05-23T08:57:29.000Z"
+    }
+  ],
+  "cities": [
+    {
+      "id": 150001,
+      "name": "Beijing",
+      "slug": "beijing",
+      "description": null,
+      "coverImage": "/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg",
+      "sortOrder": 0,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:18.000Z",
+      "updatedAt": "2026-05-23T08:57:18.000Z",
+      "introductionTitle": "The Imperial Heart of China",
+      "introductionDescription": "Where five millennia of civilization converge in a single extraordinary city. Beijing's imperial grandeur, from the Forbidden City to the Summer Palace, is matched only by its vibrant contemporary culture and world-class cuisine.",
+      "cityCardImage": "/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "culinaryTravelLargeTitle": "Peking Duck & Imperial Cuisine",
+      "culinaryTravelLargeDescription": "Beijing's culinary heritage is as rich as its history. From the legendary Peking duck roasted in ancient wood-fired ovens to the delicate flavors of imperial court cuisine, every meal in Beijing is a journey through time.",
+      "culinaryTravelSmall1Image": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "culinaryTravelSmall1Title": "Hutong Street Food",
+      "culinaryTravelSmall1Description": "Wander the ancient hutong alleyways and discover Beijing's vibrant street food culture.",
+      "culinaryTravelSmall2Image": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "culinaryTravelSmall2Title": "Tea House Traditions",
+      "culinaryTravelSmall2Description": "Experience the meditative ritual of Chinese tea in a traditional Beijing tea house.",
+      "ctaBgColor": "#8B0000"
+    },
+    {
+      "id": 150002,
+      "name": "Shanghai",
+      "slug": "shanghai",
+      "description": null,
+      "coverImage": "/uploads/images/e4AcnD7XR--G51CWN1AQ8-1779452346990.jpg",
+      "sortOrder": 1,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:19.000Z",
+      "updatedAt": "2026-05-23T08:57:19.000Z",
+      "introductionTitle": "Where East Meets West in Spectacular Style",
+      "introductionDescription": "Shanghai is China's most cosmopolitan city, a dazzling fusion of Art Deco grandeur and futuristic skylines, ancient temples and Michelin-starred restaurants, traditional silk markets and cutting-edge fashion.",
+      "cityCardImage": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "culinaryTravelLargeTitle": "Shanghai's Legendary Xiaolongbao",
+      "culinaryTravelLargeDescription": "The soup dumpling is Shanghai's most beloved culinary creation. Learn the art of making these delicate parcels of broth and pork from a master chef in a private cooking class.",
+      "culinaryTravelSmall1Image": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "culinaryTravelSmall1Title": "The Bund Dining",
+      "culinaryTravelSmall1Description": "Dine with a view of Shanghai's iconic skyline at the finest restaurants along the historic Bund.",
+      "culinaryTravelSmall2Image": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "culinaryTravelSmall2Title": "French Concession Markets",
+      "culinaryTravelSmall2Description": "Explore the artisan food markets of the charming French Concession neighborhood.",
+      "ctaBgColor": "#1a3a5c"
+    },
+    {
+      "id": 150003,
+      "name": "Chengdu",
+      "slug": "chengdu",
+      "description": null,
+      "coverImage": "/uploads/images/uXoEyvd-lgXF0ZzDI9llu-1779452352803.jpg",
+      "sortOrder": 2,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:20.000Z",
+      "updatedAt": "2026-05-23T09:16:36.000Z",
+      "introductionTitle": "The Land of Abundance and Ancient Wisdom",
+      "introductionDescription": "Chengdu moves at its own unhurried pace. This ancient capital of Sichuan province is home to the world's most beloved bears, the most complex cuisine in China, and a culture that prizes leisure, pleasure, and the art of living well.",
+      "cityCardImage": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "culinaryTravelLargeTitle": "The Mala Revolution",
+      "culinaryTravelLargeDescription": "Sichuan cuisine is China's most celebrated culinary tradition, built on the magical combination of mala — the numbing heat of Sichuan peppercorns and the fire of dried chilies. Discover its secrets with a private chef.",
+      "culinaryTravelSmall1Image": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "culinaryTravelSmall1Title": "Hot Pot Mastery",
+      "culinaryTravelSmall1Description": "Master the art of Chengdu's legendary hot pot with a private cooking class and market tour.",
+      "culinaryTravelSmall2Image": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "culinaryTravelSmall2Title": "Teahouse Culture",
+      "culinaryTravelSmall2Description": "Spend a lazy afternoon in a traditional Chengdu teahouse, watching the world go by.",
+      "ctaBgColor": "#2d5a27"
+    },
+    {
+      "id": 150004,
+      "name": "Xi'an",
+      "slug": "xian",
+      "description": null,
+      "coverImage": "/uploads/images/QmAevUdCPOC225T9H7aX4-1779452358962.jpg",
+      "sortOrder": 3,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:21.000Z",
+      "updatedAt": "2026-05-23T09:22:33.000Z",
+      "introductionTitle": "The Ancient Capital Where History Breathes",
+      "introductionDescription": "Xi'an was the starting point of the Silk Road and the capital of thirteen Chinese dynasties. Today, the city's ancient city walls, Muslim Quarter, and the extraordinary Terracotta Army make it one of China's most compelling destinations.",
+      "cityCardImage": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "culinaryTravelLargeImage": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "culinaryTravelLargeTitle": "The Flavors of the Silk Road",
+      "culinaryTravelLargeDescription": "Xi'an's cuisine reflects its position at the crossroads of Chinese and Central Asian cultures. The Muslim Quarter's night market is a sensory feast of lamb skewers, hand-pulled noodles, and pomegranate juice.",
+      "culinaryTravelSmall1Image": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "culinaryTravelSmall1Title": "Biangbiang Noodles",
+      "culinaryTravelSmall1Description": "Learn to make Xi'an's famous belt-wide noodles with a master noodle maker.",
+      "culinaryTravelSmall2Image": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "culinaryTravelSmall2Title": "Muslim Quarter Night Market",
+      "culinaryTravelSmall2Description": "Explore the vibrant night market of Xi'an's historic Muslim Quarter.",
+      "ctaBgColor": "#8B6914"
+    },
+    {
+      "id": 150005,
+      "name": "Guilin",
+      "slug": "guilin",
+      "description": null,
+      "coverImage": "/uploads/images/QC1FzfD-cTnnX7qwv1Zu7-1779498201551.avif",
+      "sortOrder": 4,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:22.000Z",
+      "updatedAt": "2026-05-23T08:57:22.000Z",
+      "introductionTitle": "The Most Beautiful Landscape Under Heaven",
+      "introductionDescription": "For centuries, Chinese poets and painters have declared Guilin's scenery the finest in the world. The dramatic karst limestone peaks rising from the Li River's mirror-still waters create a landscape of almost supernatural beauty.",
+      "cityCardImage": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "culinaryTravelLargeTitle": "River Banquet",
+      "culinaryTravelLargeDescription": "Dine on the banks of the Li River as the karst peaks glow in the setting sun. Fresh river fish, bamboo shoots, and local herbs form the basis of Guilin's distinctive cuisine.",
+      "culinaryTravelSmall1Image": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "culinaryTravelSmall1Title": "Rice Noodle Breakfast",
+      "culinaryTravelSmall1Description": "Start the day with Guilin's famous rice noodles at a local breakfast spot.",
+      "culinaryTravelSmall2Image": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "culinaryTravelSmall2Title": "Bamboo Wine Ceremony",
+      "culinaryTravelSmall2Description": "Taste the unique bamboo wine of the Li River valley in a traditional ceremony.",
+      "ctaBgColor": "#1a5c3a"
+    },
+    {
+      "id": 150006,
+      "name": "Hangzhou",
+      "slug": "hangzhou",
+      "description": null,
+      "coverImage": "/uploads/images/dTbC2wX89AK1vzExDbNs0-1779500439250.jpg",
+      "sortOrder": 5,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:23.000Z",
+      "updatedAt": "2026-05-23T08:57:23.000Z",
+      "introductionTitle": "Paradise on Earth, Framed by West Lake",
+      "introductionDescription": "Marco Polo called Hangzhou the finest and most splendid city in the world. The city's legendary West Lake, surrounded by tea gardens, silk workshops, and ancient temples, continues to enchant visitors from around the globe.",
+      "cityCardImage": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "culinaryTravelLargeTitle": "Longjing Tea & Hangzhou Cuisine",
+      "culinaryTravelLargeDescription": "Hangzhou's cuisine is delicate, refined, and deeply connected to the seasons. The city's famous Longjing tea, grown on the hillsides above West Lake, is the finest green tea in China.",
+      "culinaryTravelSmall1Image": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "culinaryTravelSmall1Title": "West Lake Fish",
+      "culinaryTravelSmall1Description": "Taste the legendary sweet and sour West Lake fish at a lakeside restaurant.",
+      "culinaryTravelSmall2Image": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "culinaryTravelSmall2Title": "Tea Plantation Breakfast",
+      "culinaryTravelSmall2Description": "Enjoy breakfast among the Longjing tea terraces with views over West Lake.",
+      "ctaBgColor": "#2d4a6b"
+    },
+    {
+      "id": 150007,
+      "name": "Suzhou",
+      "slug": "suzhou",
+      "description": null,
+      "coverImage": "/uploads/images/ZjWsoAd7iml74u-1wh22G-1779500468786.jpg",
+      "sortOrder": 6,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:25.000Z",
+      "updatedAt": "2026-05-23T08:57:25.000Z",
+      "introductionTitle": "The Garden City of Silk and Stone",
+      "introductionDescription": "Suzhou's classical gardens are UNESCO World Heritage masterpieces of landscape design, where every rock, pond, and pavilion has been placed with philosophical precision. The city's canals, silk factories, and ancient temples complete the picture.",
+      "cityCardImage": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "culinaryTravelLargeTitle": "The Subtle Art of Suzhou Cuisine",
+      "culinaryTravelLargeDescription": "Suzhou cuisine is the most refined in the Yangtze Delta, characterized by its delicate sweetness, precise knife work, and seasonal ingredients sourced from the surrounding lakes and gardens.",
+      "culinaryTravelSmall1Image": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "culinaryTravelSmall1Title": "Hairy Crab Season",
+      "culinaryTravelSmall1Description": "Experience the annual hairy crab festival, Suzhou's most celebrated culinary event.",
+      "culinaryTravelSmall2Image": "/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg",
+      "culinaryTravelSmall2Title": "Canal-Side Dining",
+      "culinaryTravelSmall2Description": "Dine in a restored canal-side pavilion in the heart of Suzhou's ancient quarter.",
+      "ctaBgColor": "#4a2d6b"
+    },
+    {
+      "id": 150008,
+      "name": "Lhasa",
+      "slug": "lhasa",
+      "description": null,
+      "coverImage": "/uploads/images/b7usrQbyMwNaNoBRvIS0e-1779500499457.jpg",
+      "sortOrder": 7,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:26.000Z",
+      "updatedAt": "2026-05-23T08:57:26.000Z",
+      "introductionTitle": "The Roof of the World, Home of the Gods",
+      "introductionDescription": "Lhasa sits at 3,650 metres above sea level, where the air is thin and the light is extraordinary. The Potala Palace, Jokhang Temple, and the Barkhor circuit create a spiritual landscape unlike anywhere else on earth.",
+      "cityCardImage": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "culinaryTravelLargeTitle": "Tibetan Cuisine & Butter Tea",
+      "culinaryTravelLargeDescription": "Tibetan cuisine is built for survival at altitude — hearty, warming, and deeply nourishing. Tsampa barley flour, yak butter tea, and momo dumplings are the foundations of a culinary tradition shaped by the harsh plateau environment.",
+      "culinaryTravelSmall1Image": "/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg",
+      "culinaryTravelSmall1Title": "Yak Butter Tea Ceremony",
+      "culinaryTravelSmall1Description": "Participate in the traditional Tibetan butter tea ceremony with a local family.",
+      "culinaryTravelSmall2Image": "/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg",
+      "culinaryTravelSmall2Title": "Monastery Kitchen",
+      "culinaryTravelSmall2Description": "Learn to make traditional Tibetan momo dumplings in a monastery kitchen.",
+      "ctaBgColor": "#8B1a1a"
+    },
+    {
+      "id": 150009,
+      "name": "Zhangjiajie",
+      "slug": "zhangjiajie",
+      "description": null,
+      "coverImage": "/uploads/images/_zxpua5YuYzth-3UEXbE0-1779500510106.jpg",
+      "sortOrder": 8,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:27.000Z",
+      "updatedAt": "2026-05-23T08:57:27.000Z",
+      "introductionTitle": "The Floating Mountains That Inspired Avatar",
+      "introductionDescription": "The towering sandstone pillars of Zhangjiajie rise from a sea of clouds like something from another world. These extraordinary formations, draped in ancient forest, inspired the floating mountains of the film Avatar.",
+      "cityCardImage": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg",
+      "culinaryTravelLargeTitle": "Wild Mountain Cuisine",
+      "culinaryTravelLargeDescription": "Zhangjiajie's cuisine draws on the abundant wild ingredients of the surrounding mountains — fern shoots, wild mushrooms, river fish, and the distinctive smoked meats of the Tujia people.",
+      "culinaryTravelSmall1Image": "/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg",
+      "culinaryTravelSmall1Title": "Tujia Minority Feast",
+      "culinaryTravelSmall1Description": "Experience an authentic Tujia minority feast with traditional music and dance.",
+      "culinaryTravelSmall2Image": "/uploads/images/_uqowkOmMPRArusd2o9UC-1779503976250.jpg",
+      "culinaryTravelSmall2Title": "Mountain Foraging",
+      "culinaryTravelSmall2Description": "Join a local guide for a morning foraging walk in the mountain forests.",
+      "ctaBgColor": "#2d5a27"
+    },
+    {
+      "id": 150010,
+      "name": "Yunnan",
+      "slug": "yunnan",
+      "description": null,
+      "coverImage": "/uploads/images/1YJDVo779Psa8W1Bzbj3e-1779503941967.jpg",
+      "sortOrder": 9,
+      "isActive": 1,
+      "createdAt": "2026-05-23T08:57:28.000Z",
+      "updatedAt": "2026-05-23T08:57:28.000Z",
+      "introductionTitle": "A Kingdom of Diversity at the Edge of the World",
+      "introductionDescription": "Yunnan province is China's most biodiverse region, home to 26 of China's 56 ethnic minorities, the world's deepest gorge, ancient tea horse trading routes, and landscapes that range from tropical rainforest to Himalayan glaciers.",
+      "cityCardImage": "/uploads/images/nxQxGb-PTYmygntbpbKIo-1779503955650.jpg",
+      "culinaryTravelLargeImage": "/uploads/images/7nZRmKUw5qhujNig1lLmU-1779503964554.jpg",
+      "culinaryTravelLargeTitle": "The Crossroads of Asian Flavors",
+      "culinaryTravelLargeDescription": "Yunnan's cuisine reflects its extraordinary diversity — from the flower-petal salads of the Bai people to the spicy fish dishes of the Dai, the mushroom feasts of Kunming to the yak cheese of the Tibetan borderlands.",
+      "culinaryTravelSmall1Image": "/uploads/images/_uqowkOmMPRArusd2o9UC-1779503976250.jpg",
+      "culinaryTravelSmall1Title": "Yunnan Mushroom Market",
+      "culinaryTravelSmall1Description": "Explore Kunming's legendary mushroom market, the most diverse in the world.",
+      "culinaryTravelSmall2Image": "/uploads/images/1DEa5FAc333dO57UEfic3-1779408174892.jpg",
+      "culinaryTravelSmall2Title": "Ancient Tea Horse Road",
+      "culinaryTravelSmall2Description": "Trace the ancient tea horse trading route through Yunnan's mountain villages.",
+      "ctaBgColor": "#6b2d4a"
+    }
+  ],
+  "__drizzle_migrations": [
+    {
+      "id": 1,
+      "hash": "a0156de60f38162ffcad7e919e4bdf0cbb333b242c078a62b3aa627e9e1008d9",
+      "created_at": 1779347318839
+    },
+    {
+      "id": 54208,
+      "hash": "f75632e76a302565ecb6d57057e6f1083ca2bf9c4bcd95f517582ff0d570e10f",
+      "created_at": 1779457711304
+    },
+    {
+      "id": 283978,
+      "hash": "266e4aff23e61e366fb8bf60d12f7ab77ac0818107470899e79a2ffc0b01de62",
+      "created_at": 1779501078303
+    },
+    {
+      "id": 411347,
+      "hash": "3bb120ca3f7baa89d17ce080dcf66ced24fce76a29d04e6b190f46dbef51b467",
+      "created_at": 1779520358938
+    },
+    {
+      "id": 454260,
+      "hash": "579805ec35d4d550e823aff50498b9e6d76cc0092ff74c1e25634039c21c8932",
+      "created_at": 1779523369585
+    },
+    {
+      "id": 683862,
+      "hash": "b2db36bd9e9527717fad85170d0f67e5d6aa77c0e6cb967730bf7aaa0d58ea38",
+      "created_at": 1779524180562
+    },
+    {
+      "id": 683863,
+      "hash": "2b043ab9d60041bc237e13af7a314730c99b8ae7b650fc7d95085898cc0041d7",
+      "created_at": 1779524210624
+    },
+    {
+      "id": 683864,
+      "hash": "b2db36bd9e9527717fad85170d0f67e5d6aa77c0e6cb967730bf7aaa0d58ea38",
+      "created_at": 1779524254618
+    },
+    {
+      "id": 713862,
+      "hash": "c3f6846314846d765e9ca24b721f0f1313489ce42c0d57b42cfd9c94062e02f9",
+      "created_at": 1779525159710
+    }
+  ]
+}

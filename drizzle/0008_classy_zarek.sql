@@ -1,0 +1,1 @@
+ALTER TABLE `cities` ADD `bannerTitle` varchar(300);

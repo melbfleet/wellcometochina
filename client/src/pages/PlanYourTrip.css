@@ -1,0 +1,59 @@
+/* 620px 临界值媒体查询 */
+@media (min-width: 620px) {
+  .plan-your-trip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .plan-your-trip-grid > div {
+    height: 250px;
+  }
+}
+
+@media (min-width: 900px) {
+  .way-to-travel-home-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .way-to-travel-home-grid > button {
+    height: 310px;
+  }
+}
+
+@media (min-width: 620px) and (max-width: 899px) {
+  .way-to-travel-home-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .way-to-travel-home-grid > button {
+    height: 250px;
+  }
+}
+
+@media (max-width: 619px) {
+  .plan-your-trip-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .plan-your-trip-grid > div {
+    aspect-ratio: 16 / 4;
+  }
+
+  .way-to-travel-home-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .way-to-travel-home-grid > button {
+    width: 100%;
+    aspect-ratio: 16 / 6;
+  }
+}

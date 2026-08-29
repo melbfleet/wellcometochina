@@ -1,0 +1,443 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=League+Gothic&family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Tea Mountains body: centered on wide screens */
+.tea-body {
+  max-width: 1906px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Detail row: left 50% text, right 50% image, centered, fixed gap */
+.tea-detail-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 24px;
+  margin-bottom: 32px;
+  max-width: 1906px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+
+/* Text column: 50%, text inner container centered */
+.tea-detail-text {
+  flex: 0 0 calc(50% - 12px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+}
+
+/* Inner text wrapper: fixed width, left-aligned text */
+.tea-detail-text-inner {
+  width: 480px;
+  max-width: 100%;
+  text-align: left;
+}
+
+/* When image is on the left (mirror layout), text container still centered */
+.tea-detail-row.mirror .tea-detail-text {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Image column: 50%, image fills 70% of this column, anchored to left */
+.tea-detail-img-wrap {
+  flex: 0 0 calc(50% - 12px);
+  min-width: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Image: height 480px, fills column width, max 853px (16:9) */
+.tea-detail-img {
+  height: 480px;
+  width: 100%;
+  max-width: 853px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 2px;
+}
+
+/* Mobile: single column, text on top, image below, centered */
+@media (max-width: 767px) {
+  .tea-body {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .tea-detail-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  /* On mobile, always show text first, image second */
+  .tea-detail-text {
+    flex: none;
+    width: 100%;
+    order: 1;
+    text-align: left;
+  }
+  .tea-detail-img-wrap {
+    flex: none;
+    width: 100%;
+    order: 2;
+    justify-content: center;
+  }
+  .tea-detail-img {
+    height: 280px;
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+  }
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --primary: #FFFFFF;
+  --primary-foreground: #000000;
+  --sidebar-primary: #FFFFFF;
+  --sidebar-primary-foreground: #000000;
+  --chart-1: #FFFFFF;
+  --chart-2: #E0E0E0;
+  --chart-3: #B0B0B0;
+  --chart-4: #808080;
+  --chart-5: #505050;
+  --radius: 0.65rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.08 0 0);
+  --card: oklch(0.98 0 0);
+  --card-foreground: oklch(0.08 0 0);
+  --popover: oklch(0.98 0 0);
+  --popover-foreground: oklch(0.08 0 0);
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0.08 0 0);
+  --muted: oklch(0.92 0 0);
+  --muted-foreground: oklch(0.4 0 0);
+  --accent: oklch(0.08 0 0);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.95 0 0);
+  --ring: oklch(0.08 0 0);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.08 0 0);
+  --sidebar-accent: oklch(0.08 0 0);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.9 0 0);
+  --sidebar-ring: oklch(0.08 0 0);
+}
+
+html {
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Lato', sans-serif;
+  --font-travel-condensed: 'League Gothic', 'Arial Narrow', Impact, sans-serif;
+  --font-travel-sans: 'Cabin', 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-travel-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+html {
+  overflow-x: clip;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.font-body {
+  font-family: var(--font-sans);
+}
+
+/* Custom Calendar Styles - 3DHM Inspired Hollow Design */
+.custom-calendar {
+  background: transparent !important;
+  border: none !important;
+  color: white !important;
+  font-family: var(--font-serif) !important;
+}
+
+.custom-calendar .react-calendar__navigation {
+  background: transparent !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.custom-calendar .react-calendar__navigation button {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  font-size: 1.125rem !important;
+  font-weight: 300 !important;
+  min-width: 44px !important;
+  padding: 0.5rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.custom-calendar .react-calendar__navigation button:hover {
+  background: rgba(212, 175, 55, 0.2) !important;
+  border-color: rgba(212, 175, 55, 0.5) !important;
+}
+
+.custom-calendar .react-calendar__navigation__label {
+  font-family: var(--font-serif) !important;
+  font-size: 1.25rem !important;
+  letter-spacing: 0.05em !important;
+}
+
+.custom-calendar .react-calendar__month-view__weekdays {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  padding-bottom: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.custom-calendar .react-calendar__month-view__weekdays__weekday {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 400 !important;
+  font-size: 0.875rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+.custom-calendar .react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none !important;
+}
+
+.custom-calendar .react-calendar__tile {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  padding: 1rem 0.5rem !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  margin: 2px !important;
+}
+
+.custom-calendar .react-calendar__tile:hover {
+  background: rgba(212, 175, 55, 0.2) !important;
+  border-color: rgba(212, 175, 55, 0.5) !important;
+}
+
+.custom-calendar .react-calendar__tile--active {
+  background: rgba(212, 175, 55, 0.4) !important;
+  border-color: #D4AF37 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.custom-calendar .react-calendar__tile--now {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.custom-calendar .react-calendar__tile--now:hover {
+  background: rgba(212, 175, 55, 0.25) !important;
+}
+
+.custom-calendar .react-calendar__tile:disabled {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  cursor: not-allowed !important;
+}
+
+.custom-calendar .react-calendar__month-view__days__day--neighboringMonth {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Hide scrollbars for draggable carousels */
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.overflow-x-auto {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Day card alternating layout */
+.day-card-row {
+  flex-direction: row;
+}
+.day-card-row-reverse {
+  flex-direction: row-reverse;
+}
+.day-card-responsive {
+  /* direction set inline via JS */
+}
+.day-card-img {
+  width: 45%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .day-card-row,
+  .day-card-row-reverse,
+  .day-card-responsive {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+  .day-card-img {
+    width: 100% !important;
+    height: 260px !important;
+    flex-shrink: 0;
+  }
+}
+
+/* Gallery strip scrollbar hide */
+.gallery-track::-webkit-scrollbar {
+  display: none;
+}
+.gallery-track {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Similar Experiences track scrollbar hide */
+.similar-track::-webkit-scrollbar {
+  display: none;
+}
+.similar-track {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Gallery image responsive height */
+.gallery-img-responsive {
+  height: 550px;
+}
+
+@media (max-width: 767px) {
+  .gallery-img-responsive {
+    height: 450px;
+  }
+}
+
+/* Gallery strip container responsive height */
+.gallery-strip-container {
+  height: 740px;
+}
+
+@media (max-width: 767px) {
+  .gallery-strip-container {
+    height: 640px;
+  }
+}
+
+/* Day section container: desktop right-aligned at 2/3, mobile centered */
+.day-section-container {
+  display: flex;
+  align-items: flex-start;
+  margin-left: auto;
+  margin-right: 33.33%;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+@media (max-width: 1023px) {
+  .day-section-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    padding: 0 16px;
+    justify-content: center;
+    gap: 24px;
+  }
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+/* Ripple animation for trip buttons */
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Scrollbar styling for similar-track */
+.similar-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.similar-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.similar-track::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.similar-track::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
