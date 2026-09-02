@@ -13,6 +13,7 @@ type DetailBlock = {
   title: string;
   description: string;
   imageUrl: string;
+  exploreUrl: string;
   sortOrder: number;
 };
 
@@ -20,12 +21,14 @@ function DetailBlockEditor({
   block,
   index,
   total,
+  isCompanyDisplay,
   onChange,
   onDelete,
 }: {
   block: DetailBlock;
   index: number;
   total: number;
+  isCompanyDisplay: boolean;
   onChange: (b: DetailBlock) => void;
   onDelete: () => void;
 }) {
@@ -70,6 +73,23 @@ function DetailBlockEditor({
             onBlur={e => { e.target.style.borderColor = "#ddd"; }}
           />
         </div>
+
+        {isCompanyDisplay && (
+          <div>
+            <label style={{ display: "block", fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#888", marginBottom: "8px" }}>Explore Link</label>
+            <input
+              value={block.exploreUrl}
+              onChange={e => onChange({ ...block, exploreUrl: e.target.value })}
+              placeholder="https://partner-company.com or /internal-page"
+              style={{ width: "100%", padding: "9px 12px", fontSize: "13px", background: "#f2f2f2", border: "1px solid #ddd", outline: "none", color: "#2d2d2d", boxSizing: "border-box" }}
+              onFocus={e => { e.target.style.borderColor = "#F5569B"; }}
+              onBlur={e => { e.target.style.borderColor = "#ddd"; }}
+            />
+            <p style={{ margin: "7px 0 0", color: "#aaa", fontSize: "11px", lineHeight: 1.5 }}>
+              This block's EXPLORE button will open this address. Leave blank to hide the button.
+            </p>
+          </div>
+        )}
 
         {/* Image */}
         <div>
@@ -416,10 +436,11 @@ export default function AdminWayToTravelEdit() {
   const [gallery, setGallery] = useState<string[]>([]);
   const [ctaBgColor, setCtaBgColor] = useState("#1a1a1a");
   const [isActive, setIsActive] = useState(true);
+  const [isCompanyDisplay, setIsCompanyDisplay] = useState(false);
   const [details, setDetails] = useState<DetailBlock[]>([
-    { title: "", description: "", imageUrl: "", sortOrder: 0 },
-    { title: "", description: "", imageUrl: "", sortOrder: 1 },
-    { title: "", description: "", imageUrl: "", sortOrder: 2 },
+    { title: "", description: "", imageUrl: "", exploreUrl: "", sortOrder: 0 },
+    { title: "", description: "", imageUrl: "", exploreUrl: "", sortOrder: 1 },
+    { title: "", description: "", imageUrl: "", exploreUrl: "", sortOrder: 2 },
   ]);
   const [labels, setLabels] = useState<string[]>([]);
   const [recommendationImage, setRecommendationImage] = useState("");
@@ -442,6 +463,7 @@ export default function AdminWayToTravelEdit() {
     setDescription(exp.description ?? "");
     setCtaBgColor((exp as any).ctaBgColor ?? "#1a1a1a");
     setIsActive(exp.isActive ?? true);
+    setIsCompanyDisplay((exp as any).isCompanyDisplay ?? false);
     // Gallery
     try {
       const g = JSON.parse((exp as any).gallery ?? "[]");
@@ -454,6 +476,7 @@ export default function AdminWayToTravelEdit() {
         title: d.title ?? "",
         description: d.description ?? "",
         imageUrl: d.imageUrl ?? "",
+        exploreUrl: d.exploreUrl ?? "",
         sortOrder: d.sortOrder ?? i,
       })));
     }
@@ -497,6 +520,7 @@ export default function AdminWayToTravelEdit() {
         recommendationImage: recommendationImage || undefined,
         recommendationTitle: recommendationTitle || undefined,
         recommendationDescription: recommendationDescription || undefined,
+        isCompanyDisplay,
         isActive,
       });
       await saveDetailsMut.mutateAsync({
@@ -505,6 +529,7 @@ export default function AdminWayToTravelEdit() {
           title: d.title || undefined,
           description: d.description || undefined,
           imageUrl: d.imageUrl || undefined,
+          exploreUrl: d.exploreUrl || undefined,
           sortOrder: i,
         })),
       });
@@ -518,7 +543,7 @@ export default function AdminWayToTravelEdit() {
   }
 
   function addDetailBlock() {
-    setDetails(prev => [...prev, { title: "", description: "", imageUrl: "", sortOrder: prev.length }]);
+    setDetails(prev => [...prev, { title: "", description: "", imageUrl: "", exploreUrl: "", sortOrder: prev.length }]);
   }
 
   function updateDetail(idx: number, block: DetailBlock) {
@@ -579,6 +604,24 @@ export default function AdminWayToTravelEdit() {
           >
             <Save size={14} />
             {saving ? "Saving..." : "Save All"}
+          </button>
+        </div>
+
+        {/* ── Display Mode ── */}
+        <div style={{ background: isCompanyDisplay ? "#f7f4ef" : "#fff", border: `1px solid ${isCompanyDisplay ? "#1a1a1a" : "#e8e8e8"}`, padding: "20px 22px", marginBottom: "24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px" }}>
+          <div>
+            <div style={{ color: "#1a1a1a", fontSize: "13px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>Company Display</div>
+            <p style={{ color: "#888", fontSize: "12px", lineHeight: 1.5, margin: "6px 0 0" }}>
+              Show only the alternating text and image blocks. Each block can have its own EXPLORE link.
+            </p>
+          </div>
+          <button
+            type="button"
+            aria-pressed={isCompanyDisplay}
+            onClick={() => setIsCompanyDisplay(current => !current)}
+            style={{ position: "relative", flex: "0 0 auto", width: "52px", height: "28px", padding: 0, border: 0, borderRadius: "14px", background: isCompanyDisplay ? "#1a1a1a" : "#ccc", cursor: "pointer", transition: "background 0.2s" }}
+          >
+            <span style={{ position: "absolute", top: "4px", left: isCompanyDisplay ? "28px" : "4px", width: "20px", height: "20px", borderRadius: "50%", background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.25)", transition: "left 0.2s" }} />
           </button>
         </div>
 
@@ -683,6 +726,7 @@ export default function AdminWayToTravelEdit() {
                 block={block}
                 index={idx}
                 total={details.length}
+                isCompanyDisplay={isCompanyDisplay}
                 onChange={b => updateDetail(idx, b)}
                 onDelete={() => removeDetail(idx)}
               />

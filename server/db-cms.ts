@@ -591,6 +591,34 @@ export async function getRecommendedExperiences(experienceId: number, limit = 8)
 }
 
 // ─── Way to Travel ──────────────────────────────────────────────────────────
+let wayToTravelCompanyColumnsPromise: Promise<void> | null = null;
+
+async function ensureWayToTravelCompanyDisplayColumns() {
+  if (wayToTravelCompanyColumnsPromise) return wayToTravelCompanyColumnsPromise;
+
+  wayToTravelCompanyColumnsPromise = (async () => {
+    const pool = await getPool();
+    if (!pool) throw new Error("DB unavailable");
+
+    const [itemColumns] = await pool.query("SHOW COLUMNS FROM `ways_to_travel`");
+    const itemColumnNames = new Set((itemColumns as any[]).map(column => column.Field));
+    if (!itemColumnNames.has("isCompanyDisplay")) {
+      await pool.execute("ALTER TABLE `ways_to_travel` ADD COLUMN `isCompanyDisplay` boolean NOT NULL DEFAULT false AFTER `recommendationDescription`");
+    }
+
+    const [detailColumns] = await pool.query("SHOW COLUMNS FROM `way_to_travel_details`");
+    const detailColumnNames = new Set((detailColumns as any[]).map(column => column.Field));
+    if (!detailColumnNames.has("exploreUrl")) {
+      await pool.execute("ALTER TABLE `way_to_travel_details` ADD COLUMN `exploreUrl` varchar(512) NULL AFTER `imageUrl`");
+    }
+  })().catch(error => {
+    wayToTravelCompanyColumnsPromise = null;
+    throw error;
+  });
+
+  return wayToTravelCompanyColumnsPromise;
+}
+
 export async function listWayToTravelTypes() {
   const db = await getDb();
   if (!db) return [];
@@ -664,6 +692,7 @@ export async function listWayToTravelTypesWithNav() {
 }
 
 export async function listWaysToTravel(includeInactive = false) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) return [];
   return includeInactive
@@ -672,12 +701,14 @@ export async function listWaysToTravel(includeInactive = false) {
 }
 
 export async function listWaysToTravelByType(typeId: number) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) return [];
   return db.select().from(waysToTravel).where(eq(waysToTravel.typeId, typeId)).orderBy(waysToTravel.sortOrder, waysToTravel.name);
 }
 
 export async function getWayToTravelById(id: number) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) return null;
   const rows = await db.select().from(waysToTravel).where(eq(waysToTravel.id, id)).limit(1);
@@ -685,6 +716,7 @@ export async function getWayToTravelById(id: number) {
 }
 
 export async function getWayToTravelBySlug(slug: string) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) return null;
   const rows = await db.select().from(waysToTravel).where(eq(waysToTravel.slug, slug)).limit(1);
@@ -692,6 +724,7 @@ export async function getWayToTravelBySlug(slug: string) {
 }
 
 export async function createWayToTravel(data: Omit<InsertWayToTravel, "slug"> & { slug?: string }) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
   const slug = data.slug || toSlug(data.name);
@@ -700,6 +733,7 @@ export async function createWayToTravel(data: Omit<InsertWayToTravel, "slug"> & 
 }
 
 export async function updateWayToTravel(id: number, data: Partial<InsertWayToTravel>) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
   await db.update(waysToTravel).set({ ...data, updatedAt: new Date() }).where(eq(waysToTravel.id, id));
@@ -720,6 +754,7 @@ export async function reorderWayToTravel(id: number, sortOrder: number) {
 }
 
 export async function listWayToTravelDetails(wayToTravelId: number) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) return [];
   return db.select().from(wayToTravelDetails)
@@ -729,8 +764,9 @@ export async function listWayToTravelDetails(wayToTravelId: number) {
 
 export async function replaceWayToTravelDetails(
   wayToTravelId: number,
-  details: Array<{ title?: string; description?: string; imageUrl?: string; sortOrder: number }>,
+  details: Array<{ title?: string; description?: string; imageUrl?: string; exploreUrl?: string; sortOrder: number }>,
 ) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
   await db.delete(wayToTravelDetails).where(eq(wayToTravelDetails.wayToTravelId, wayToTravelId));
@@ -740,6 +776,7 @@ export async function replaceWayToTravelDetails(
       title: detail.title ?? null,
       description: detail.description ?? null,
       imageUrl: detail.imageUrl ?? null,
+      exploreUrl: detail.exploreUrl ?? null,
       sortOrder: detail.sortOrder,
     })) satisfies InsertWayToTravelDetail[]);
   }
@@ -763,6 +800,7 @@ export async function replaceWayToTravelLabels(wayToTravelId: number, labels: st
 }
 
 export async function getRecommendedWaysToTravel(wayToTravelId: number, limit = 8) {
+  await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) return [];
   const currentLabels = await getWayToTravelLabels(wayToTravelId);

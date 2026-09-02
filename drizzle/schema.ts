@@ -240,6 +240,7 @@ export const waysToTravel = mysqlTable("ways_to_travel", {
   recommendationImage: varchar("recommendationImage", { length: 512 }),
   recommendationTitle: varchar("recommendationTitle", { length: 200 }),
   recommendationDescription: text("recommendationDescription"),
+  isCompanyDisplay: boolean("isCompanyDisplay").default(false).notNull(),
   isActive: boolean("isActive").default(true).notNull(),
   sortOrder: int("sortOrder").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -255,6 +256,7 @@ export const wayToTravelDetails = mysqlTable("way_to_travel_details", {
   title: varchar("title", { length: 255 }),
   description: text("description"),
   imageUrl: varchar("imageUrl", { length: 512 }),
+  exploreUrl: varchar("exploreUrl", { length: 512 }),
   sortOrder: int("sortOrder").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });

@@ -19,6 +19,61 @@ const EXP_ORANGE = '#cc5426';
 const EXP_GREEN = '#379c8a';
 const EXP_BLUE = '#1e6e9f';
 
+function CompanyExploreLink({ url }: { url?: string | null }) {
+  const href = url?.trim();
+  if (!href) return null;
+  const isExternal = /^https?:\/\//i.test(href);
+
+  return (
+    <a
+      href={href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+      style={{
+        position: 'relative',
+        display: 'inline-block',
+        overflow: 'hidden',
+        marginTop: 26,
+        padding: '13px 32px',
+        border: '2px solid #111',
+        background: '#111',
+        color: '#fff',
+        fontFamily: EXP_SANS,
+        fontSize: 13,
+        fontWeight: 700,
+        letterSpacing: '0.12em',
+        lineHeight: 1.4,
+        textDecoration: 'none',
+        textTransform: 'uppercase',
+        transition: 'background-color 0.25s ease, color 0.25s ease, transform 0.14s ease',
+      }}
+      onMouseEnter={event => {
+        event.currentTarget.style.backgroundColor = '#fff';
+        event.currentTarget.style.color = '#111';
+      }}
+      onMouseLeave={event => {
+        event.currentTarget.style.backgroundColor = '#111';
+        event.currentTarget.style.color = '#fff';
+        event.currentTarget.style.transform = 'scale(1)';
+      }}
+      onPointerDown={event => {
+        event.currentTarget.style.transform = 'scale(0.96)';
+        const link = event.currentTarget;
+        const ripple = document.createElement('span');
+        const diameter = Math.max(link.clientWidth, link.clientHeight);
+        const rect = link.getBoundingClientRect();
+        ripple.style.cssText = `position:absolute;width:${diameter}px;height:${diameter}px;left:${event.clientX - rect.left - diameter / 2}px;top:${event.clientY - rect.top - diameter / 2}px;background:rgba(255,255,255,0.38);border-radius:50%;transform:scale(0);animation:ripple 0.5s linear;pointer-events:none;`;
+        link.appendChild(ripple);
+        window.setTimeout(() => ripple.remove(), 600);
+      }}
+      onPointerUp={event => { event.currentTarget.style.transform = 'scale(1)'; }}
+      onPointerCancel={event => { event.currentTarget.style.transform = 'scale(1)'; }}
+    >
+      Explore
+    </a>
+  );
+}
+
 // ── Helper to convert type name to slug ──────────────────────────────────────
 function toSlug(str: string): string {
   return str
@@ -407,12 +462,14 @@ export default function WayToTravelDetail() {
   const details = (exp as any)?.details || [];
   const recommended = (exp as any)?.recommended || [];
   const labels: string[] = (exp as any)?.labels || [];
+  const isCompanyDisplay = Boolean((exp as any)?.isCompanyDisplay);
 
   return (
     <div style={{ fontFamily: EXP_SANS, background: '#fff', color: EXP_TEXT }}>
       <Navigation />
 
       {/* ── Header Info Block ── */}
+      {!isCompanyDisplay && (
       <div style={{ paddingTop: '55px', background: '#fff' }}>
         {/* Breadcrumb */}
         <p style={{ fontFamily: EXP_SANS, fontSize: 12, fontWeight: 600, letterSpacing: '0.85px', textTransform: 'uppercase', color: '#999', marginBottom: 0, textAlign: 'left', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', paddingTop: '20px', paddingBottom: '0' }}>
@@ -462,14 +519,15 @@ export default function WayToTravelDetail() {
           </div>
         </div>
       </div>
+      )}
 
       {/* ── Hero Carousel ── */}
-      {gallery.length > 0 && <HeroCarousel images={gallery} />}
+      {!isCompanyDisplay && gallery.length > 0 && <HeroCarousel images={gallery} />}
 
       {/* ── Body Content ── */}
-      <div className="tea-body">
+      <div className="tea-body" style={isCompanyDisplay ? { paddingTop: '96px' } : undefined}>
         {/* Intro / description */}
-        {(exp?.title || exp?.description) && (
+        {!isCompanyDisplay && (exp?.title || exp?.description) && (
           <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 24px', marginBottom: 48, textAlign: 'center', boxSizing: 'border-box' }}>
             {exp?.title && (
               <h2 style={{ fontFamily: EXP_DISPLAY, fontSize: 'clamp(34px, 4vw, 45px)', fontWeight: 400, lineHeight: 1, letterSpacing: '2.25px', color: '#000', margin: '0 0 18px', textTransform: 'uppercase' }}>
@@ -501,6 +559,7 @@ export default function WayToTravelDetail() {
                       <p style={{ fontSize: 17, lineHeight: 1.5, color: EXP_TEXT, fontWeight: 400, fontFamily: EXP_SANS, letterSpacing: '0.85px', margin: 0, whiteSpace: 'pre-line' }}>
                         {block.description}
                       </p>
+                      {isCompanyDisplay && <CompanyExploreLink url={block.exploreUrl} />}
                     </div>
                   </div>
                   {block.imageUrl && (
@@ -526,6 +585,7 @@ export default function WayToTravelDetail() {
                       <p style={{ fontSize: 17, lineHeight: 1.5, color: EXP_TEXT, fontWeight: 400, fontFamily: EXP_SANS, letterSpacing: '0.85px', margin: 0, whiteSpace: 'pre-line' }}>
                         {block.description}
                       </p>
+                      {isCompanyDisplay && <CompanyExploreLink url={block.exploreUrl} />}
                     </div>
                   </div>
                 </>
@@ -536,9 +596,10 @@ export default function WayToTravelDetail() {
       </div>
 
       {/* ── More Ways to Travel ── */}
-      {recommended.length > 0 && <SimilarCarousel items={recommended} bgImage={bgImage} />}
+      {!isCompanyDisplay && recommended.length > 0 && <SimilarCarousel items={recommended} bgImage={bgImage} />}
 
       {/* ── Bottom CTA ── */}
+      {!isCompanyDisplay && (
       <section style={{ position: 'relative', width: '100%', height: 'clamp(260px, 30vw, 275px)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', background: (exp as any)?.ctaBgColor || '#1a1a1a' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: ctaTexture ? `url(${ctaTexture})` : '', backgroundRepeat: 'repeat', backgroundSize: '420px 420px', opacity: ctaTextureOpacity, mixBlendMode: 'normal', filter: 'contrast(1.45) brightness(1.08)' }} />
         <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '28px', textAlign: 'center', padding: '0 24px' }}>
@@ -558,6 +619,7 @@ export default function WayToTravelDetail() {
           </Link>
         </div>
       </section>
+      )}
 
       <Footer />
     </div>

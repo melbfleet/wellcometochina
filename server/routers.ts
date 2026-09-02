@@ -182,6 +182,10 @@ const experienceInput = z.object({
   sortOrder: z.number().default(0),
 });
 
+const wayToTravelInput = experienceInput.extend({
+  isCompanyDisplay: z.boolean().default(false),
+});
+
 const experienceDetailInput = z.object({
   experienceId: z.number(),
   title: z.string().optional(),
@@ -194,6 +198,10 @@ const detailBlockSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
   imageUrl: z.string().optional(),
+  exploreUrl: z.string().trim().max(512).refine(
+    value => value === "" || value.startsWith("/") || /^https?:\/\//i.test(value),
+    "Explore links must start with /, http:// or https://",
+  ).optional(),
   sortOrder: z.number(),
 });
 
@@ -813,14 +821,14 @@ export const appRouter = router({
       }),
 
     createWayToTravel: publicProcedure
-      .input(experienceInput)
+      .input(wayToTravelInput)
       .mutation(async ({ ctx, input }) => {
         await requireAdmin(ctx);
         return createWayToTravel(input);
       }),
 
     updateWayToTravel: publicProcedure
-      .input(z.object({ id: z.number() }).merge(experienceInput.partial()))
+      .input(z.object({ id: z.number() }).merge(wayToTravelInput.partial()))
       .mutation(async ({ ctx, input }) => {
         await requireAdmin(ctx);
         const { id, ...data } = input;
@@ -867,6 +875,7 @@ export const appRouter = router({
           recommendationImage: source.recommendationImage ?? undefined,
           recommendationTitle: source.recommendationTitle ?? undefined,
           recommendationDescription: source.recommendationDescription ?? undefined,
+          isCompanyDisplay: source.isCompanyDisplay ?? false,
           isActive: false,
           sortOrder: 0,
         });
@@ -874,6 +883,7 @@ export const appRouter = router({
           title: detail.title ?? undefined,
           description: detail.description ?? undefined,
           imageUrl: detail.imageUrl ?? undefined,
+          exploreUrl: detail.exploreUrl ?? undefined,
           sortOrder: index,
         })));
         await replaceWayToTravelLabels(created.id, labels);
