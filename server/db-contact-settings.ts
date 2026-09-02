@@ -38,6 +38,7 @@ export const DEFAULT_CONTACT_SETTINGS: ContactSettingsInput = {
     { platform: "TikTok", url: "", isVisible: true },
     { platform: "Instagram", url: "", isVisible: true },
     { platform: "Facebook", url: "", isVisible: true },
+    { platform: "Xiaohongshu", url: "", isVisible: true },
   ],
 };
 

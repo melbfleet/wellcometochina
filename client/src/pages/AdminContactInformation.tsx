@@ -7,7 +7,7 @@ import { trpc } from '@/lib/trpc';
 const ACCENT = '#F5569B';
 
 type OfficeHour = { day: string; hours: string };
-type SocialPlatform = 'YouTube' | 'TikTok' | 'Instagram' | 'Facebook';
+type SocialPlatform = 'YouTube' | 'TikTok' | 'Instagram' | 'Facebook' | 'Xiaohongshu';
 type SocialLink = { platform: SocialPlatform; url: string; isVisible: true };
 type ContactForm = {
   addressLabel: string;
@@ -21,10 +21,11 @@ type ContactForm = {
 };
 
 const SOCIAL_PLATFORMS = [
-  { platform: 'YouTube', defaultUrl: 'https://youtube.com' },
-  { platform: 'TikTok', defaultUrl: 'https://tiktok.com' },
-  { platform: 'Instagram', defaultUrl: 'https://instagram.com' },
-  { platform: 'Facebook', defaultUrl: 'https://facebook.com' },
+  { platform: 'YouTube', label: 'YouTube', defaultUrl: 'https://youtube.com' },
+  { platform: 'TikTok', label: 'TikTok', defaultUrl: 'https://tiktok.com' },
+  { platform: 'Instagram', label: 'Instagram', defaultUrl: 'https://instagram.com' },
+  { platform: 'Facebook', label: 'Facebook', defaultUrl: 'https://facebook.com' },
+  { platform: 'Xiaohongshu', label: 'Xiaohongshu (小红书)', defaultUrl: 'https://www.xiaohongshu.com' },
 ] as const;
 
 const DEFAULT_FORM: ContactForm = {
@@ -192,11 +193,11 @@ export default function AdminContactInformation() {
               </div>
             </Section>
 
-            <Section title="Social Media" description="The original four footer icons stay fixed. Leave a field blank to use that platform's official homepage.">
+            <Section title="Social Media" description="Footer social icons stay fixed and Xiaohongshu appears last. Leave a field blank to use that platform's official homepage.">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {SOCIAL_PLATFORMS.map(({ platform, defaultUrl }, index) => (
+                {SOCIAL_PLATFORMS.map(({ platform, label, defaultUrl }, index) => (
                   <div key={platform} style={{ display: 'grid', gridTemplateColumns: '140px minmax(220px, 1fr)', gap: '14px', alignItems: 'center' }}>
-                    <span style={{ color: '#444', fontSize: '13px', fontWeight: 600 }}>{platform}</span>
+                    <span style={{ color: '#444', fontSize: '13px', fontWeight: 600 }}>{label}</span>
                     <input aria-label={`${platform} URL`} style={inputStyle} value={form.socialLinks[index]?.url || ''} onChange={event => updateSocialLink(index, { url: event.target.value, isVisible: true })} placeholder={`Default: ${defaultUrl}`} />
                   </div>
                 ))}

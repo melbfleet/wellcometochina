@@ -39,6 +39,7 @@ import AdminWayToTravelEdit from "./pages/AdminWayToTravelEdit";
 import AdminCityEdit from "./pages/AdminCityEdit";
 import AdminHomepage from "./pages/AdminHomepage";
 import AdminContactInformation from "./pages/AdminContactInformation";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
 import ExperienceCategoryPage from "./pages/ExperienceCategoryPage";
 import WaysToTravel from "./pages/WaysToTravel";
@@ -157,6 +158,7 @@ function App() {
           <SiteBranding />
           <Toaster />
           <Router />
+          <FloatingWhatsApp />
           </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

@@ -109,7 +109,7 @@ const officeHourInput = z.object({
 });
 
 const socialLinkInput = z.object({
-  platform: z.enum(["YouTube", "TikTok", "Instagram", "Facebook"]),
+  platform: z.enum(["YouTube", "TikTok", "Instagram", "Facebook", "Xiaohongshu"]),
   url: z.string().trim().max(512).refine(
     value => value === "" || /^https?:\/\//i.test(value),
     "Social links must start with http:// or https://",

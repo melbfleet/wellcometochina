@@ -2,6 +2,15 @@ import { Youtube, Facebook, Instagram } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useEffect, useState } from 'react';
 
+function XiaohongshuIcon() {
+  return (
+    <svg width="24" height="20" viewBox="0 0 32 24" fill="none" aria-hidden="true">
+      <rect x="1" y="2" width="30" height="20" rx="4" stroke="currentColor" strokeWidth="1.8" />
+      <text x="16" y="15.2" fill="currentColor" fontSize="8.2" fontWeight="700" textAnchor="middle" fontFamily="Arial, sans-serif">小红书</text>
+    </svg>
+  );
+}
+
 /**
  * Footer Component
  * Design: Minimalist footer with Brand, Contact and Social Media sections
@@ -22,6 +31,7 @@ export default function Footer() {
   const tiktokUrl = configuredSocialUrl('TikTok', 'https://tiktok.com');
   const instagramUrl = configuredSocialUrl('Instagram', 'https://instagram.com');
   const facebookUrl = configuredSocialUrl('Facebook', 'https://facebook.com');
+  const xiaohongshuUrl = configuredSocialUrl('Xiaohongshu', 'https://www.xiaohongshu.com');
 
   useEffect(() => {
     setLogoLoaded(false);
@@ -83,6 +93,9 @@ export default function Footer() {
               </a>
               <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#D4AF37] transition-colors" aria-label="Facebook">
                 <Facebook size={20} />
+              </a>
+              <a href={xiaohongshuUrl} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-[#D4AF37] transition-colors" aria-label="Xiaohongshu (小红书)">
+                <XiaohongshuIcon />
               </a>
             </div>
           </div>
