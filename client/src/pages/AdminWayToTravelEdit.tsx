@@ -526,6 +526,7 @@ export default function AdminWayToTravelEdit() {
       await saveDetailsMut.mutateAsync({
         wayToTravelId: expId,
         details: details.map((d, i) => ({
+          id: d.id,
           title: d.title || undefined,
           description: d.description || undefined,
           imageUrl: d.imageUrl || undefined,

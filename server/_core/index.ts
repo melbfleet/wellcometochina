@@ -17,6 +17,7 @@ import { serveStatic, setupVite } from "./vite";
 import { UPLOADS_ROOT } from "../storage.js";
 import { backfillEntityTags } from "../db-cms";
 import { getActiveHomepageAsset } from "../db-media";
+import { recordWayToTravelLinkClick } from "../db-link-clicks";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -114,6 +115,25 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   // OAuth routes removed - using admin password login only
+
+  // Count a company EXPLORE click before redirecting to the saved destination.
+  // The destination is loaded from the database rather than accepted from the
+  // request, preventing this endpoint from becoming an open redirect.
+  app.get("/api/way-to-travel-links/:detailId/click", async (req, res) => {
+    const detailId = Number(req.params.detailId);
+    if (!Number.isInteger(detailId) || detailId <= 0) {
+      return res.status(400).send("Invalid link");
+    }
+    try {
+      const result = await recordWayToTravelLinkClick(detailId);
+      if (!result) return res.status(404).send("Link not found");
+      res.set("Cache-Control", "no-store");
+      return res.redirect(302, result.targetUrl);
+    } catch (error) {
+      console.error("[Way to Travel Link] Failed to count click:", error);
+      return res.status(500).send("Unable to open link");
+    }
+  });
 
   // Serve pre-generated static pages from static-cache/ with priority over SPA
   // Admin and API routes always bypass this and use dynamic handling

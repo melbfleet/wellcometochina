@@ -264,6 +264,22 @@ export const wayToTravelDetails = mysqlTable("way_to_travel_details", {
 export type WayToTravelDetail = typeof wayToTravelDetails.$inferSelect;
 export type InsertWayToTravelDetail = typeof wayToTravelDetails.$inferInsert;
 
+// Aggregate click counts for company-display EXPLORE links. Rows are retained
+// even if a detail block is later removed, while the Dashboard lists only
+// links that still exist.
+export const wayToTravelLinkClicks = mysqlTable("way_to_travel_link_clicks", {
+  detailId: int("detailId").primaryKey(),
+  wayToTravelId: int("wayToTravelId").notNull(),
+  blockTitle: varchar("blockTitle", { length: 255 }),
+  targetUrl: varchar("targetUrl", { length: 512 }).notNull(),
+  clickCount: int("clickCount").default(0).notNull(),
+  lastClickedAt: timestamp("lastClickedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type WayToTravelLinkClick = typeof wayToTravelLinkClicks.$inferSelect;
+
 export const wayToTravelLabels = mysqlTable("way_to_travel_labels", {
   id: int("id").autoincrement().primaryKey(),
   wayToTravelId: int("wayToTravelId").notNull(),

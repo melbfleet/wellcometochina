@@ -1,4 +1,4 @@
-import { eq, desc, and, sql } from "drizzle-orm";
+import { eq, desc, and, sql, inArray } from "drizzle-orm";
 import { getDb, getPool } from "./db";
 import {
   cities, tags, experiences, experienceTags, experienceTypes, experienceDetails, experienceLabels,
@@ -593,7 +593,7 @@ export async function getRecommendedExperiences(experienceId: number, limit = 8)
 // ─── Way to Travel ──────────────────────────────────────────────────────────
 let wayToTravelCompanyColumnsPromise: Promise<void> | null = null;
 
-async function ensureWayToTravelCompanyDisplayColumns() {
+export async function ensureWayToTravelCompanyDisplayColumns() {
   if (wayToTravelCompanyColumnsPromise) return wayToTravelCompanyColumnsPromise;
 
   wayToTravelCompanyColumnsPromise = (async () => {
@@ -764,21 +764,53 @@ export async function listWayToTravelDetails(wayToTravelId: number) {
 
 export async function replaceWayToTravelDetails(
   wayToTravelId: number,
-  details: Array<{ title?: string; description?: string; imageUrl?: string; exploreUrl?: string; sortOrder: number }>,
+  details: Array<{ id?: number; title?: string; description?: string; imageUrl?: string; exploreUrl?: string; sortOrder: number }>,
 ) {
   await ensureWayToTravelCompanyDisplayColumns();
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
-  await db.delete(wayToTravelDetails).where(eq(wayToTravelDetails.wayToTravelId, wayToTravelId));
-  if (details.length > 0) {
-    await db.insert(wayToTravelDetails).values(details.map(detail => ({
-      wayToTravelId,
+
+  const existing = await db
+    .select({ id: wayToTravelDetails.id })
+    .from(wayToTravelDetails)
+    .where(eq(wayToTravelDetails.wayToTravelId, wayToTravelId));
+  const existingIds = new Set(existing.map(detail => detail.id));
+  const retainedIds = new Set<number>();
+
+  for (const detail of details) {
+    const values = {
       title: detail.title ?? null,
       description: detail.description ?? null,
       imageUrl: detail.imageUrl ?? null,
       exploreUrl: detail.exploreUrl ?? null,
       sortOrder: detail.sortOrder,
-    })) satisfies InsertWayToTravelDetail[]);
+    };
+
+    if (detail.id && existingIds.has(detail.id)) {
+      retainedIds.add(detail.id);
+      await db
+        .update(wayToTravelDetails)
+        .set(values)
+        .where(and(
+          eq(wayToTravelDetails.id, detail.id),
+          eq(wayToTravelDetails.wayToTravelId, wayToTravelId),
+        ));
+    } else {
+      await db.insert(wayToTravelDetails).values({
+        wayToTravelId,
+        ...values,
+      } satisfies InsertWayToTravelDetail);
+    }
+  }
+
+  const removedIds = existing.filter(detail => !retainedIds.has(detail.id)).map(detail => detail.id);
+  if (removedIds.length > 0) {
+    await db
+      .delete(wayToTravelDetails)
+      .where(and(
+        eq(wayToTravelDetails.wayToTravelId, wayToTravelId),
+        inArray(wayToTravelDetails.id, removedIds),
+      ));
   }
 }
 

@@ -19,14 +19,15 @@ const EXP_ORANGE = '#cc5426';
 const EXP_GREEN = '#379c8a';
 const EXP_BLUE = '#1e6e9f';
 
-function CompanyExploreLink({ url }: { url?: string | null }) {
+function CompanyExploreLink({ url, detailId }: { url?: string | null; detailId?: number | null }) {
   const href = url?.trim();
   if (!href) return null;
   const isExternal = /^https?:\/\//i.test(href);
+  const trackedHref = detailId ? `/api/way-to-travel-links/${detailId}/click` : href;
 
   return (
     <a
-      href={href}
+      href={trackedHref}
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
       style={{
@@ -559,7 +560,7 @@ export default function WayToTravelDetail() {
                       <p style={{ fontSize: 17, lineHeight: 1.5, color: EXP_TEXT, fontWeight: 400, fontFamily: EXP_SANS, letterSpacing: '0.85px', margin: 0, whiteSpace: 'pre-line' }}>
                         {block.description}
                       </p>
-                      {isCompanyDisplay && <CompanyExploreLink url={block.exploreUrl} />}
+                      {isCompanyDisplay && <CompanyExploreLink url={block.exploreUrl} detailId={block.id} />}
                     </div>
                   </div>
                   {block.imageUrl && (
@@ -585,7 +586,7 @@ export default function WayToTravelDetail() {
                       <p style={{ fontSize: 17, lineHeight: 1.5, color: EXP_TEXT, fontWeight: 400, fontFamily: EXP_SANS, letterSpacing: '0.85px', margin: 0, whiteSpace: 'pre-line' }}>
                         {block.description}
                       </p>
-                      {isCompanyDisplay && <CompanyExploreLink url={block.exploreUrl} />}
+                      {isCompanyDisplay && <CompanyExploreLink url={block.exploreUrl} detailId={block.id} />}
                     </div>
                   </div>
                 </>

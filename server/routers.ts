@@ -21,6 +21,7 @@ import {
 import { storagePut, UPLOADS_ROOT, storageDelete } from "./storage";
 import { generateStaticPages, generateNavData, clearStaticCache, STATIC_CACHE_DIR } from "./staticGenerator";
 import { getContactSettings, updateContactSettings } from "./db-contact-settings";
+import { getWayToTravelLinkClickStats } from "./db-link-clicks";
 import {
   HOMEPAGE_VISIBILITY_KEYS,
   getHomepageSectionVisibility,
@@ -195,11 +196,12 @@ const experienceDetailInput = z.object({
 });
 
 const detailBlockSchema = z.object({
+  id: z.number().int().positive().optional(),
   title: z.string().optional(),
   description: z.string().optional(),
   imageUrl: z.string().optional(),
   exploreUrl: z.string().trim().max(512).refine(
-    value => value === "" || value.startsWith("/") || /^https?:\/\//i.test(value),
+    value => value === "" || /^\/(?![\\/])/.test(value) || /^https?:\/\//i.test(value),
     "Explore links must start with /, http:// or https://",
   ).optional(),
   sortOrder: z.number(),
@@ -905,6 +907,11 @@ export const appRouter = router({
         await replaceWayToTravelLabels(input.wayToTravelId, input.labels);
         return { success: true };
       }),
+
+    getWayToTravelLinkClickStats: publicProcedure.query(async ({ ctx }) => {
+      await requireAdmin(ctx);
+      return getWayToTravelLinkClickStats();
+    }),
 
     // ── Team Members ───────────────────────────────────────────────────────
     listTeamMembers: publicProcedure.query(async ({ ctx }) => {

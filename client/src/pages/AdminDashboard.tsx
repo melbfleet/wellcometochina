@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import AdminLayout from "@/components/AdminLayout";
-import { MapPin, Compass, Map, Route as RouteIcon, Tag, Mail, ArrowRight, Home, Zap, X, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { MapPin, Compass, Map, Route as RouteIcon, Tag, Mail, ArrowRight, Home, Zap, X, CheckCircle, AlertCircle, Loader2, MousePointerClick, ExternalLink } from "lucide-react";
 
 const ACCENT = "#F5569B";
 const GREEN = "#3d9e8c";
@@ -202,6 +202,7 @@ export default function AdminDashboard() {
   const { data: itineraries = [] } = trpc.admin.listItineraries.useQuery();
   const { data: tags = [] } = trpc.admin.listTags.useQuery();
   const { data: enquiries = [] } = trpc.admin.listEnquiries.useQuery();
+  const { data: linkClickStats, isLoading: linkClickStatsLoading } = trpc.admin.getWayToTravelLinkClickStats.useQuery();
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [generating, setGenerating] = useState(false);
@@ -287,6 +288,67 @@ export default function AdminDashboard() {
           <StatCard icon={Map}     label="Itineraries" count={itineraries.length} path="/admin/itineraries" color="#6ec98b" />
           <StatCard icon={Tag}     label="Tags"        count={tags.length}        path="/admin/tags"        color="#c9896e" />
           <StatCard icon={Home}    label="Homepage"    count={undefined}          path="/admin/homepage"    color="#F5569B" />
+        </div>
+
+        {/* Company link click statistics */}
+        <div style={{ marginTop: "40px" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "20px", marginBottom: "16px" }}>
+            <div>
+              <h2 style={{ fontSize: "12px", letterSpacing: "0.15em", textTransform: "uppercase", color: "#888", margin: 0 }}>
+                Company Link Clicks
+              </h2>
+              <p style={{ color: "#aaa", fontSize: "12px", margin: "6px 0 0" }}>
+                Every click on a company-display EXPLORE button is counted once.
+              </p>
+            </div>
+            <div style={{ minWidth: "150px", background: "#fff", border: "1px solid #eee", padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px" }}>
+              <div style={{ width: "36px", height: "36px", background: "#8d7ac918", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <MousePointerClick size={17} style={{ color: "#8d7ac9" }} />
+              </div>
+              <div>
+                <div style={{ color: "#1a1a1a", fontSize: "24px", fontWeight: 300, lineHeight: 1 }}>
+                  {linkClickStatsLoading ? "—" : (linkClickStats?.totalClicks ?? 0).toLocaleString()}
+                </div>
+                <div style={{ color: "#999", fontSize: "9px", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "5px" }}>Total Clicks</div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ background: "#fff", border: "1px solid #eee", overflowX: "auto" }}>
+            {linkClickStatsLoading ? (
+              <div style={{ padding: "28px 20px", color: "#aaa", fontSize: "13px", textAlign: "center" }}>Loading link statistics...</div>
+            ) : !linkClickStats?.links.length ? (
+              <div style={{ padding: "28px 20px", color: "#aaa", fontSize: "13px", textAlign: "center" }}>No company EXPLORE links have been configured yet.</div>
+            ) : (
+              <table style={{ width: "100%", minWidth: "780px", borderCollapse: "collapse", textAlign: "left" }}>
+                <thead>
+                  <tr style={{ background: "#f7f7f7", borderBottom: "1px solid #e8e8e8" }}>
+                    {['Way to Travel', 'Detail Block', 'Target Link', 'Clicks', 'Last Click'].map(label => (
+                      <th key={label} style={{ padding: "11px 16px", color: "#888", fontSize: "10px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{label}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {linkClickStats.links.map((link, index) => (
+                    <tr key={link.detailId} style={{ background: index % 2 === 0 ? "#fff" : "#fafafa", borderBottom: index === linkClickStats.links.length - 1 ? "none" : "1px solid #eee" }}>
+                      <td style={{ padding: "13px 16px", color: "#222", fontSize: "13px", fontWeight: 500 }}>{link.wayToTravelName}</td>
+                      <td style={{ padding: "13px 16px", color: "#555", fontSize: "13px" }}>{link.blockTitle}</td>
+                      <td style={{ padding: "13px 16px", maxWidth: "280px" }}>
+                        <a href={link.targetUrl} target="_blank" rel="noopener noreferrer" title={link.targetUrl} style={{ display: "flex", alignItems: "center", gap: "6px", color: "#777", fontSize: "12px", textDecoration: "none", minWidth: 0 }}>
+                          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{link.targetUrl}</span>
+                          <ExternalLink size={12} style={{ flexShrink: 0 }} />
+                        </a>
+                      </td>
+                      <td style={{ padding: "13px 16px", color: "#1a1a1a", fontSize: "14px", fontWeight: 700 }}>{link.clickCount.toLocaleString()}</td>
+                      <td style={{ padding: "13px 16px", color: "#888", fontSize: "12px", whiteSpace: "nowrap" }}>
+                        {link.lastClickedAt ? new Date(link.lastClickedAt).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </div>
 
         {/* Recent enquiries */}
