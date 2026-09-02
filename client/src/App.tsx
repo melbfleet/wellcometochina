@@ -78,7 +78,7 @@ function SiteBranding() {
       }
       link.href = iconHref || definition.fallbackHref;
       link.sizes.value = definition.sizes;
-      if (definition.rel === "icon") link.type = icon.mimeType || "image/png";
+      if (definition.rel === "icon") link.type = icon?.mimeType || "image/png";
     }
   }, [icon?.id, icon?.url, icon?.mimeType, icon?.createdAt, icon?.updatedAt, isLoading]);
 
