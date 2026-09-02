@@ -1,10 +1,18 @@
-import { Link } from 'wouter';
 import { trpc } from '@/lib/trpc';
 
-export default function ReadyToStart() {
+type ReadyToStartProps = {
+  settings?: {
+    title?: string | null;
+    buttonText?: string | null;
+  } | null;
+};
+
+export default function ReadyToStart({ settings }: ReadyToStartProps) {
   const { data: homepageAssets } = trpc.media.getHomepageAssets.useQuery();
   const ctaBg = homepageAssets?.cta?.url;
   const textureOpacity = Math.max(0, Math.min(1, Number((homepageAssets?.cta as any)?.opacity ?? 28) / 100));
+  const title = settings?.title ?? 'So, ready to start?';
+  const buttonText = settings?.buttonText ?? 'Get in Touch';
 
   return (
     <section
@@ -59,10 +67,10 @@ export default function ReadyToStart() {
             lineHeight: 1.1,
           }}
         >
-          So, ready to start?
+          {title}
         </h2>
 
-        <Link href="/make-an-enquiry">
+        {buttonText && <a href="/make-an-enquiry">
           <button
             style={{
           backgroundColor: '#111111',
@@ -89,9 +97,9 @@ export default function ReadyToStart() {
         onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.95)')}
         onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
           >
-            Get in Touch
+            {buttonText}
           </button>
-        </Link>
+        </a>}
       </div>
     </section>
   );

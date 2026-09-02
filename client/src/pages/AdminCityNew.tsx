@@ -137,7 +137,6 @@ export default function AdminCityNew() {
     ctaBgColor: "#a84900",
     ctaTitle: "So, ready to start?",
     ctaButtonText: "Get in Touch",
-    ctaButtonUrl: "/make-an-enquiry",
     sortOrder: 0,
     isActive: true,
   });
@@ -502,7 +501,6 @@ export default function AdminCityNew() {
           <div style={{ display: "grid", gap: "16px", marginBottom: "20px" }}>
             <Field label="Title"><TextInput value={form.ctaTitle} onChange={v => set("ctaTitle", v)} placeholder="So, ready to start?" /></Field>
             <Field label="Button Text"><TextInput value={form.ctaButtonText} onChange={v => set("ctaButtonText", v)} placeholder="Get in Touch" /></Field>
-            <Field label="Button Link"><TextInput value={form.ctaButtonUrl} onChange={v => set("ctaButtonUrl", v)} placeholder="/make-an-enquiry or https://..." /></Field>
           </div>
           <Field label="Background Color">
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>

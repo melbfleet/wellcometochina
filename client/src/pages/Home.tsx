@@ -495,7 +495,7 @@ export default function Home() {
       {homepageData?.sectionVisibility?.why_us !== false && <WhyIntoChinaSection />}
 
       {/* Ready To Start CTA */}
-      {homepageData?.sectionVisibility?.ready_to_start !== false && <ReadyToStart />}
+      {homepageData?.sectionVisibility?.ready_to_start !== false && <ReadyToStart settings={homepageData?.cta} />}
 
       {/* Footer */}
       <Footer />

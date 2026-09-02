@@ -544,7 +544,7 @@ export default function ExperienceDetail() {
         <div style={{ position: 'absolute', inset: 0, backgroundImage: ctaTexture ? `url(${ctaTexture})` : '', backgroundRepeat: 'repeat', backgroundSize: '420px 420px', opacity: ctaTextureOpacity, mixBlendMode: 'normal', filter: 'contrast(1.45) brightness(1.08)' }} />
         <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '28px', textAlign: 'center', padding: '0 24px' }}>
           {((exp as any)?.ctaTitle ?? 'So, ready to start?') && <h2 style={{ fontFamily: EXP_DISPLAY, fontSize: '45px', fontWeight: 400, color: '#ffffff', letterSpacing: '2.25px', textTransform: 'uppercase', margin: 0, lineHeight: 1 }}>{(exp as any)?.ctaTitle ?? 'So, ready to start?'}</h2>}
-          {((exp as any)?.ctaButtonText ?? 'Get in Touch') && ((exp as any)?.ctaButtonUrl ?? '/make-an-enquiry') && <a href={(exp as any)?.ctaButtonUrl ?? '/make-an-enquiry'} target={/^https?:\/\//i.test((exp as any)?.ctaButtonUrl ?? '') ? '_blank' : undefined} rel="noopener noreferrer">
+          {((exp as any)?.ctaButtonText ?? 'Get in Touch') && <a href="/make-an-enquiry">
             <button
               style={{ backgroundColor: '#111111', color: '#ffffff', fontFamily: EXP_SANS, fontSize: '13px', fontWeight: 700, letterSpacing: '0.85px', lineHeight: 1.5, textTransform: 'uppercase', padding: '14px 36px', border: '2px solid #111111', cursor: 'pointer', transition: 'background-color 0.2s, color 0.2s, transform 0.1s' }}
               onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.color = '#111111'; }}

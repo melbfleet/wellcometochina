@@ -293,6 +293,24 @@ export default function AdminHomepage() {
     updateSectionVisibility.mutate({ sectionKey, isVisible: !isVisible });
   };
 
+  // ── Final CTA ────────────────────────────────────────────────────────────
+  const ctaQuery = trpc.homepage.getCta.useQuery();
+  const updateCta = trpc.homepage.updateCta.useMutation({
+    onSuccess: () => {
+      ctaQuery.refetch();
+      setCtaForm(null);
+      toast.success("CTA saved");
+    },
+    onError: error => toast.error(error.message || "Unable to save CTA"),
+  });
+  const [ctaForm, setCtaForm] = useState<{ title: string; buttonText: string } | null>(null);
+  const cta = ctaQuery.data;
+  const ctaEdit = ctaForm ?? {
+    title: cta?.title ?? "So, ready to start?",
+    buttonText: cta?.buttonText ?? "Get in Touch",
+  };
+  const setCta = (key: keyof typeof ctaEdit, value: string) => setCtaForm(form => ({ ...(form ?? ctaEdit), [key]: value }));
+
   // ── Way to Travel Homepage Section ───────────────────────────────────────
   const wayToTravelSectionQuery = trpc.homepage.getStorySection.useQuery({ sectionType: "way_to_travel" });
   const wayToTravelTypesQuery = trpc.admin.listWayToTravelTypes.useQuery();
@@ -872,12 +890,26 @@ export default function AdminHomepage() {
       />
 
       {/* ── Ready to Start CTA ────────────────────────────────────────────── */}
-      <VisibilityOnlySection
-        title="Ready to Start CTA"
-        description="Controls the final enquiry call-to-action section above the footer."
-        visible={sectionVisibility?.ready_to_start ?? true}
-        onToggle={() => toggleSectionVisibility("ready_to_start")}
-      />
+      <div style={{ ...cardStyle, marginBottom: 32 }}>
+        <SectionHeader
+          title="Ready to Start CTA"
+          visible={sectionVisibility?.ready_to_start ?? true}
+          onToggle={() => toggleSectionVisibility("ready_to_start")}
+        />
+        <Field label="Title">
+          <input style={inputStyle} value={ctaEdit.title} onChange={e => setCta("title", e.target.value)} />
+        </Field>
+        <Field label="Button Text">
+          <input style={inputStyle} value={ctaEdit.buttonText} onChange={e => setCta("buttonText", e.target.value)} />
+        </Field>
+        <button
+          style={{ ...btnPrimary, opacity: updateCta.isPending ? 0.6 : 1 }}
+          disabled={updateCta.isPending}
+          onClick={() => updateCta.mutate(ctaEdit)}
+        >
+          {updateCta.isPending ? "Saving..." : "Save CTA"}
+        </button>
+      </div>
 
       {/* ── Modals ────────────────────────────────────────────────────────────── */}
       {videoStoryModal !== null && (

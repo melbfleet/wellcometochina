@@ -22,6 +22,7 @@ import { storagePut, UPLOADS_ROOT, storageDelete } from "./storage";
 import { generateStaticPages, generateNavData, clearStaticCache, STATIC_CACHE_DIR } from "./staticGenerator";
 import { getContactSettings, updateContactSettings } from "./db-contact-settings";
 import { getWayToTravelLinkClickStats } from "./db-link-clicks";
+import { DEFAULT_HOMEPAGE_CTA, getHomepageCtaSettings, updateHomepageCtaSettings } from "./db-homepage-cta";
 import {
   HOMEPAGE_VISIBILITY_KEYS,
   getHomepageSectionVisibility,
@@ -129,11 +130,6 @@ const contactSettingsInput = z.object({
   socialLinks: z.array(socialLinkInput).max(30),
 });
 
-const ctaButtonUrlInput = z.string().trim().max(512).refine(
-  value => value === "" || /^\/(?![\\/])/.test(value) || /^https?:\/\//i.test(value),
-  "CTA links must start with /, http:// or https://",
-);
-
 const cityInput = z.object({
   name: z.string().min(1),
   slug: z.string().optional(),
@@ -160,7 +156,6 @@ const cityInput = z.object({
   ctaBgColor: z.string().optional(),
   ctaTitle: z.string().max(255).optional(),
   ctaButtonText: z.string().max(100).optional(),
-  ctaButtonUrl: ctaButtonUrlInput.optional(),
   sortOrder: z.number().default(0),
   isActive: z.boolean().default(true),
 });
@@ -185,7 +180,6 @@ const experienceInput = z.object({
   ctaBgColor: z.string().default("#1a1a1a"),
   ctaTitle: z.string().max(255).optional(),
   ctaButtonText: z.string().max(100).optional(),
-  ctaButtonUrl: ctaButtonUrlInput.optional(),
   recommendationImage: z.string().optional(),  // 推荐卡片预览图
   recommendationTitle: z.string().optional(),  // 推荐卡片标题
   recommendationDescription: z.string().optional(),  // 推荐卡片描述
@@ -705,7 +699,6 @@ export const appRouter = router({
           ctaBgColor: (src as any).ctaBgColor ?? '#1a1a1a',
           ctaTitle: (src as any).ctaTitle ?? 'So, ready to start?',
           ctaButtonText: (src as any).ctaButtonText ?? 'Get in Touch',
-          ctaButtonUrl: (src as any).ctaButtonUrl ?? '/make-an-enquiry',
           isActive: false,
           sortOrder: 0,
         }, []);
@@ -890,7 +883,6 @@ export const appRouter = router({
           ctaBgColor: source.ctaBgColor ?? "#1a1a1a",
           ctaTitle: source.ctaTitle ?? "So, ready to start?",
           ctaButtonText: source.ctaButtonText ?? "Get in Touch",
-          ctaButtonUrl: source.ctaButtonUrl ?? "/make-an-enquiry",
           recommendationImage: source.recommendationImage ?? undefined,
           recommendationTitle: source.recommendationTitle ?? undefined,
           recommendationDescription: source.recommendationDescription ?? undefined,
@@ -1627,7 +1619,7 @@ export const appRouter = router({
   homepage: router({
     // Public: get all homepage data for frontend rendering
     getAll: publicProcedure.query(async () => {
-      const [hero, intro, stories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility] = await Promise.all([
+      const [hero, intro, stories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility, cta] = await Promise.all([
         getHomepageHero(),
         getHomepageIntro(),
         listHomepageStories(),
@@ -1636,8 +1628,9 @@ export const appRouter = router({
         getHomepageStorySection("video"),
         getHomepageStorySection("way_to_travel"),
         getHomepageSectionVisibility(),
+        getHomepageCtaSettings(),
       ]);
-      return { hero, intro, stories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility };
+      return { hero, intro, stories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility, cta };
     }),
 
     // Public: Homepage data for frontend
@@ -1645,7 +1638,7 @@ export const appRouter = router({
       try {
         console.log('[homepage.getPublicData] Starting query...');
         
-        const [hero, intro, allStories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility] = await Promise.all([
+        const [hero, intro, allStories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility, cta] = await Promise.all([
           getHomepageHero().catch(e => {
             console.error('[homepage.getPublicData] getHomepageHero failed:', e.message);
             return null;
@@ -1683,6 +1676,10 @@ export const appRouter = router({
               ready_to_start: true,
             };
           }),
+          getHomepageCtaSettings().catch(e => {
+            console.error('[homepage.getPublicData] getHomepageCtaSettings failed:', e.message);
+            return { ...DEFAULT_HOMEPAGE_CTA, updatedAt: null };
+          }),
         ]);
         
         console.log('[homepage.getPublicData] All queries completed');
@@ -1700,6 +1697,7 @@ export const appRouter = router({
           videoSection,
           wayToTravelSection,
           sectionVisibility,
+          cta,
         };
       } catch (error) {
         console.error('[homepage.getPublicData] Unexpected error:', error);
@@ -1752,6 +1750,20 @@ export const appRouter = router({
       .mutation(async ({ ctx, input }) => {
         await requireAdmin(ctx);
         return updateHomepageSectionVisibility(input.sectionKey, input.isVisible);
+      }),
+
+    getCta: publicProcedure.query(async ({ ctx }) => {
+      await requireAdmin(ctx);
+      return getHomepageCtaSettings();
+    }),
+    updateCta: publicProcedure
+      .input(z.object({
+        title: z.string().max(255),
+        buttonText: z.string().max(100),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await requireAdmin(ctx);
+        return updateHomepageCtaSettings(input);
       }),
 
     // Admin: Stories

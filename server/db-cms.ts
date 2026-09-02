@@ -113,7 +113,6 @@ export async function ensureEditableCtaColumns() {
       const additions = [
         ["ctaTitle", "varchar(255) NULL DEFAULT 'So, ready to start?'"],
         ["ctaButtonText", "varchar(100) NULL DEFAULT 'Get in Touch'"],
-        ["ctaButtonUrl", "varchar(512) NULL DEFAULT '/make-an-enquiry'"],
       ] as const;
       for (const [column, definition] of additions) {
         if (!columns.has(column)) {
