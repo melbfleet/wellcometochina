@@ -314,6 +314,9 @@ export default function CityPage() {
 
   const cityName = city.name;
   const ctaBgColor = (city as any).ctaBgColor || '#a84900';
+  const ctaTitle = (city as any).ctaTitle ?? 'So, ready to start?';
+  const ctaButtonText = (city as any).ctaButtonText ?? 'Get in Touch';
+  const ctaButtonUrl = (city as any).ctaButtonUrl ?? '/make-an-enquiry';
   const ctaBgImage = (homepageAssets as any)?.cta?.url || null;
   const ctaTextureOpacity = Math.max(0, Math.min(1, Number((homepageAssets as any)?.cta?.opacity ?? 28) / 100));
 
@@ -686,20 +689,20 @@ export default function CityPage() {
       >
         <div style={{ position: 'absolute', inset: 0, backgroundImage: ctaBgImage ? `url(${ctaBgImage})` : '', backgroundSize: '420px 420px', backgroundRepeat: 'repeat', opacity: ctaTextureOpacity, mixBlendMode: 'normal', filter: 'contrast(1.45) brightness(1.08)' }} />
         <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', gap: '12px', textAlign: 'left', flex: 1 }}>
-          <h2 style={{ fontFamily: CITY_DISPLAY, fontSize: '45px', fontWeight: 400, color: '#ffffff', letterSpacing: '2.25px', textTransform: 'uppercase', margin: 0, lineHeight: 1 }}>
-            So, ready to start?
-          </h2>
+          {ctaTitle && <h2 style={{ fontFamily: CITY_DISPLAY, fontSize: '45px', fontWeight: 400, color: '#ffffff', letterSpacing: '2.25px', textTransform: 'uppercase', margin: 0, lineHeight: 1 }}>{ctaTitle}</h2>}
         </div>
+        {ctaButtonText && ctaButtonUrl && (
         <button
           style={{ position: 'relative', zIndex: 1, backgroundColor: '#111111', color: '#ffffff', fontFamily: CITY_SANS, fontSize: '13px', fontWeight: 700, letterSpacing: '0.85px', lineHeight: 1.5, textTransform: 'uppercase', padding: '14px 36px', border: '2px solid #111111', cursor: 'pointer', transition: 'background-color 0.2s, color 0.2s, transform 0.1s', whiteSpace: 'nowrap', marginLeft: '40px' }}
           onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.color = '#111111'; }}
           onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#111111'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.transform = 'scale(1)'; }}
           onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.95)')}
           onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
-          onClick={() => navigate('/make-an-enquiry')}
+          onClick={() => /^https?:\/\//i.test(ctaButtonUrl) ? window.open(ctaButtonUrl, '_blank', 'noopener,noreferrer') : navigate(ctaButtonUrl)}
         >
-          Get in Touch
+          {ctaButtonText}
         </button>
+        )}
       </section>
 
       {/* Other Popular Destinations */}

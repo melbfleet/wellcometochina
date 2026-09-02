@@ -129,6 +129,11 @@ const contactSettingsInput = z.object({
   socialLinks: z.array(socialLinkInput).max(30),
 });
 
+const ctaButtonUrlInput = z.string().trim().max(512).refine(
+  value => value === "" || /^\/(?![\\/])/.test(value) || /^https?:\/\//i.test(value),
+  "CTA links must start with /, http:// or https://",
+);
+
 const cityInput = z.object({
   name: z.string().min(1),
   slug: z.string().optional(),
@@ -153,6 +158,9 @@ const cityInput = z.object({
   culinaryTravelSmall2Description: z.string().optional(),
   // Call to Action
   ctaBgColor: z.string().optional(),
+  ctaTitle: z.string().max(255).optional(),
+  ctaButtonText: z.string().max(100).optional(),
+  ctaButtonUrl: ctaButtonUrlInput.optional(),
   sortOrder: z.number().default(0),
   isActive: z.boolean().default(true),
 });
@@ -175,6 +183,9 @@ const experienceInput = z.object({
   gallery: z.string().optional(),   // JSON array string
   description: z.string().optional(),
   ctaBgColor: z.string().default("#1a1a1a"),
+  ctaTitle: z.string().max(255).optional(),
+  ctaButtonText: z.string().max(100).optional(),
+  ctaButtonUrl: ctaButtonUrlInput.optional(),
   recommendationImage: z.string().optional(),  // 推荐卡片预览图
   recommendationTitle: z.string().optional(),  // 推荐卡片标题
   recommendationDescription: z.string().optional(),  // 推荐卡片描述
@@ -692,6 +703,9 @@ export const appRouter = router({
           gallery: src.gallery ?? undefined,
           description: src.description ?? undefined,
           ctaBgColor: (src as any).ctaBgColor ?? '#1a1a1a',
+          ctaTitle: (src as any).ctaTitle ?? 'So, ready to start?',
+          ctaButtonText: (src as any).ctaButtonText ?? 'Get in Touch',
+          ctaButtonUrl: (src as any).ctaButtonUrl ?? '/make-an-enquiry',
           isActive: false,
           sortOrder: 0,
         }, []);
@@ -874,6 +888,9 @@ export const appRouter = router({
           gallery: source.gallery ?? undefined,
           description: source.description ?? undefined,
           ctaBgColor: source.ctaBgColor ?? "#1a1a1a",
+          ctaTitle: source.ctaTitle ?? "So, ready to start?",
+          ctaButtonText: source.ctaButtonText ?? "Get in Touch",
+          ctaButtonUrl: source.ctaButtonUrl ?? "/make-an-enquiry",
           recommendationImage: source.recommendationImage ?? undefined,
           recommendationTitle: source.recommendationTitle ?? undefined,
           recommendationDescription: source.recommendationDescription ?? undefined,

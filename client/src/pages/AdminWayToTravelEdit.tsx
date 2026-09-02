@@ -435,6 +435,9 @@ export default function AdminWayToTravelEdit() {
   const [description, setDescription] = useState("");
   const [gallery, setGallery] = useState<string[]>([]);
   const [ctaBgColor, setCtaBgColor] = useState("#1a1a1a");
+  const [ctaTitle, setCtaTitle] = useState("So, ready to start?");
+  const [ctaButtonText, setCtaButtonText] = useState("Get in Touch");
+  const [ctaButtonUrl, setCtaButtonUrl] = useState("/make-an-enquiry");
   const [isActive, setIsActive] = useState(true);
   const [isCompanyDisplay, setIsCompanyDisplay] = useState(false);
   const [details, setDetails] = useState<DetailBlock[]>([
@@ -462,6 +465,9 @@ export default function AdminWayToTravelEdit() {
     setDuration(exp.duration ?? "");
     setDescription(exp.description ?? "");
     setCtaBgColor((exp as any).ctaBgColor ?? "#1a1a1a");
+    setCtaTitle((exp as any).ctaTitle ?? "So, ready to start?");
+    setCtaButtonText((exp as any).ctaButtonText ?? "Get in Touch");
+    setCtaButtonUrl((exp as any).ctaButtonUrl ?? "/make-an-enquiry");
     setIsActive(exp.isActive ?? true);
     setIsCompanyDisplay((exp as any).isCompanyDisplay ?? false);
     // Gallery
@@ -517,6 +523,9 @@ export default function AdminWayToTravelEdit() {
         description: description || undefined,
         gallery: JSON.stringify(gallery),
         ctaBgColor,
+        ctaTitle,
+        ctaButtonText,
+        ctaButtonUrl,
         recommendationImage: recommendationImage || undefined,
         recommendationTitle: recommendationTitle || undefined,
         recommendationDescription: recommendationDescription || undefined,
@@ -807,6 +816,11 @@ export default function AdminWayToTravelEdit() {
 
           {/* ── CTA Settings ── */}
           <Section title="CTA Settings">
+          <div className="space-y-4" style={{ marginBottom: "20px" }}>
+            <div><label style={labelStyle}>Title</label><input value={ctaTitle} onChange={e => setCtaTitle(e.target.value)} style={inputStyle} placeholder="So, ready to start?" /></div>
+            <div><label style={labelStyle}>Button Text</label><input value={ctaButtonText} onChange={e => setCtaButtonText(e.target.value)} style={inputStyle} placeholder="Get in Touch" /></div>
+            <div><label style={labelStyle}>Button Link</label><input value={ctaButtonUrl} onChange={e => setCtaButtonUrl(e.target.value)} style={inputStyle} placeholder="/make-an-enquiry or https://..." /></div>
+          </div>
           <div>
             <label style={labelStyle}>Background Color</label>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>

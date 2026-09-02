@@ -101,6 +101,9 @@ export const cities = mysqlTable("cities", {
   culinaryTravelSmall2Description: text("culinaryTravelSmall2Description"),
   // Call to Action section
   ctaBgColor: varchar("ctaBgColor", { length: 7 }).default("#a84900"),
+  ctaTitle: varchar("ctaTitle", { length: 255 }).default("So, ready to start?"),
+  ctaButtonText: varchar("ctaButtonText", { length: 100 }).default("Get in Touch"),
+  ctaButtonUrl: varchar("ctaButtonUrl", { length: 512 }).default("/make-an-enquiry"),
   sortOrder: int("sortOrder").default(0),
   isActive: boolean("isActive").default(true).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -165,6 +168,9 @@ export const experiences = mysqlTable("experiences", {
   gallery: text("gallery"),            // JSON array of image URLs
   description: text("description"),    // 简单描述
   ctaBgColor: varchar("ctaBgColor", { length: 7 }).default("#1a1a1a"),  // CTA 背景色
+  ctaTitle: varchar("ctaTitle", { length: 255 }).default("So, ready to start?"),
+  ctaButtonText: varchar("ctaButtonText", { length: 100 }).default("Get in Touch"),
+  ctaButtonUrl: varchar("ctaButtonUrl", { length: 512 }).default("/make-an-enquiry"),
   recommendationImage: varchar("recommendationImage", { length: 512 }),  // 推荐卡片预览图
   recommendationTitle: varchar("recommendationTitle", { length: 200 }),  // 推荐卡片标题
   recommendationDescription: text("recommendationDescription"),  // 推荐卡片描述
@@ -237,6 +243,9 @@ export const waysToTravel = mysqlTable("ways_to_travel", {
   gallery: text("gallery"),
   description: text("description"),
   ctaBgColor: varchar("ctaBgColor", { length: 7 }).default("#1a1a1a"),
+  ctaTitle: varchar("ctaTitle", { length: 255 }).default("So, ready to start?"),
+  ctaButtonText: varchar("ctaButtonText", { length: 100 }).default("Get in Touch"),
+  ctaButtonUrl: varchar("ctaButtonUrl", { length: 512 }).default("/make-an-enquiry"),
   recommendationImage: varchar("recommendationImage", { length: 512 }),
   recommendationTitle: varchar("recommendationTitle", { length: 200 }),
   recommendationDescription: text("recommendationDescription"),

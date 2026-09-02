@@ -604,10 +604,8 @@ export default function WayToTravelDetail() {
       <section style={{ position: 'relative', width: '100%', height: 'clamp(260px, 30vw, 275px)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', background: (exp as any)?.ctaBgColor || '#1a1a1a' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: ctaTexture ? `url(${ctaTexture})` : '', backgroundRepeat: 'repeat', backgroundSize: '420px 420px', opacity: ctaTextureOpacity, mixBlendMode: 'normal', filter: 'contrast(1.45) brightness(1.08)' }} />
         <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '28px', textAlign: 'center', padding: '0 24px' }}>
-          <h2 style={{ fontFamily: EXP_DISPLAY, fontSize: '45px', fontWeight: 400, color: '#ffffff', letterSpacing: '2.25px', textTransform: 'uppercase', margin: 0, lineHeight: 1 }}>
-            So, ready to start?
-          </h2>
-          <Link href="/make-an-enquiry">
+          {((exp as any)?.ctaTitle ?? 'So, ready to start?') && <h2 style={{ fontFamily: EXP_DISPLAY, fontSize: '45px', fontWeight: 400, color: '#ffffff', letterSpacing: '2.25px', textTransform: 'uppercase', margin: 0, lineHeight: 1 }}>{(exp as any)?.ctaTitle ?? 'So, ready to start?'}</h2>}
+          {((exp as any)?.ctaButtonText ?? 'Get in Touch') && ((exp as any)?.ctaButtonUrl ?? '/make-an-enquiry') && <a href={(exp as any)?.ctaButtonUrl ?? '/make-an-enquiry'} target={/^https?:\/\//i.test((exp as any)?.ctaButtonUrl ?? '') ? '_blank' : undefined} rel="noopener noreferrer">
             <button
               style={{ backgroundColor: '#111111', color: '#ffffff', fontFamily: EXP_SANS, fontSize: '13px', fontWeight: 700, letterSpacing: '0.85px', lineHeight: 1.5, textTransform: 'uppercase', padding: '14px 36px', border: '2px solid #111111', cursor: 'pointer', transition: 'background-color 0.2s, color 0.2s, transform 0.1s' }}
               onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.color = '#111111'; }}
@@ -615,9 +613,9 @@ export default function WayToTravelDetail() {
               onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.95)')}
               onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
             >
-              Get in Touch
+              {(exp as any)?.ctaButtonText ?? 'Get in Touch'}
             </button>
-          </Link>
+          </a>}
         </div>
       </section>
       )}

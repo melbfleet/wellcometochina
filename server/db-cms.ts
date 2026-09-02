@@ -101,7 +101,35 @@ export async function backfillEntityTags() {
 }
 
 // ─── Cities ───────────────────────────────────────────────────────────────────
+let editableCtaColumnsPromise: Promise<void> | null = null;
+
+export async function ensureEditableCtaColumns() {
+  if (editableCtaColumnsPromise) return editableCtaColumnsPromise;
+  editableCtaColumnsPromise = (async () => {
+    const pool = await getPool();
+    if (!pool) throw new Error("DB unavailable");
+    for (const tableName of ["cities", "experiences", "ways_to_travel"]) {
+      const columns = await getTableColumns(pool, tableName);
+      const additions = [
+        ["ctaTitle", "varchar(255) NULL DEFAULT 'So, ready to start?'"],
+        ["ctaButtonText", "varchar(100) NULL DEFAULT 'Get in Touch'"],
+        ["ctaButtonUrl", "varchar(512) NULL DEFAULT '/make-an-enquiry'"],
+      ] as const;
+      for (const [column, definition] of additions) {
+        if (!columns.has(column)) {
+          await pool.execute(`ALTER TABLE \`${tableName}\` ADD COLUMN \`${column}\` ${definition}`);
+        }
+      }
+    }
+  })().catch(error => {
+    editableCtaColumnsPromise = null;
+    throw error;
+  });
+  return editableCtaColumnsPromise;
+}
+
 export async function listCities(includeInactive = false) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return [];
   const cityRows = includeInactive
@@ -122,6 +150,7 @@ export async function listCities(includeInactive = false) {
 }
 
 export async function listCitiesWithExperiences() {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return [];
 
@@ -165,6 +194,7 @@ export async function listCitiesWithExperiences() {
 }
 
 export async function getCityBySlug(slug: string) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return null;
   const rows = await db.select().from(cities).where(eq(cities.slug, slug)).limit(1);
@@ -172,6 +202,7 @@ export async function getCityBySlug(slug: string) {
 }
 
 export async function getCityById(id: number) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return null;
   const rows = await db.select().from(cities).where(eq(cities.id, id)).limit(1);
@@ -207,6 +238,7 @@ export async function getCityById(id: number) {
 }
 
 export async function createCity(data: Omit<InsertCity, "slug"> & { slug?: string }) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
   const slug = data.slug || toSlug(data.name);
@@ -216,6 +248,7 @@ export async function createCity(data: Omit<InsertCity, "slug"> & { slug?: strin
 }
 
 export async function updateCity(id: number, data: Partial<InsertCity>) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
   await db.update(cities).set({ ...data, updatedAt: new Date() }).where(eq(cities.id, id));
@@ -411,6 +444,7 @@ export async function listExperienceTypesWithNav() {
 
 // ─── Experiences (第二层) ─────────────────────────────────────────────────────
 export async function listExperiences(includeInactive = false) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return [];
   if (!includeInactive) {
@@ -420,18 +454,21 @@ export async function listExperiences(includeInactive = false) {
 }
 
 export async function listExperiencesByType(typeId: number) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return [];
   return await db.select().from(experiences).where(eq(experiences.typeId, typeId)).orderBy(experiences.sortOrder, experiences.name);
 }
 
 export async function listExperiencesByCity(cityId: number) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return [];
   return await db.select().from(experiences).where(eq(experiences.cityId, cityId)).orderBy(experiences.sortOrder, experiences.name);
 }
 
 export async function getExperienceById(id: number) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return null;
   const rows = await db.select().from(experiences).where(eq(experiences.id, id)).limit(1);
@@ -439,6 +476,7 @@ export async function getExperienceById(id: number) {
 }
 
 export async function getExperienceBySlug(slug: string) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return null;
   const rows = await db.select().from(experiences).where(eq(experiences.slug, slug)).limit(1);
@@ -453,6 +491,7 @@ export async function getExperienceTagIds(experienceId: number): Promise<number[
 }
 
 export async function createExperience(data: Omit<InsertExperience, "slug"> & { slug?: string }, tagIds: number[] = []) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
   const slug = data.slug || toSlug(data.name);
@@ -465,6 +504,7 @@ export async function createExperience(data: Omit<InsertExperience, "slug"> & { 
 }
 
 export async function updateExperience(id: number, data: Partial<InsertExperience>, tagIds?: number[]) {
+  await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
   await db.update(experiences).set({ ...data, updatedAt: new Date() }).where(eq(experiences.id, id));
@@ -594,6 +634,7 @@ export async function getRecommendedExperiences(experienceId: number, limit = 8)
 let wayToTravelCompanyColumnsPromise: Promise<void> | null = null;
 
 export async function ensureWayToTravelCompanyDisplayColumns() {
+  await ensureEditableCtaColumns();
   if (wayToTravelCompanyColumnsPromise) return wayToTravelCompanyColumnsPromise;
 
   wayToTravelCompanyColumnsPromise = (async () => {

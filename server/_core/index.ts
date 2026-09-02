@@ -15,7 +15,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { UPLOADS_ROOT } from "../storage.js";
-import { backfillEntityTags } from "../db-cms";
+import { backfillEntityTags, ensureEditableCtaColumns } from "../db-cms";
 import { getActiveHomepageAsset } from "../db-media";
 import { recordWayToTravelLinkClick } from "../db-link-clicks";
 
@@ -64,6 +64,12 @@ async function startServer() {
     if (created > 0) console.log(`[Startup] Created ${created} missing entity tag(s)`);
   } catch (err) {
     console.error(`[Startup] Warning: Could not backfill entity tags: ${err}`);
+  }
+
+  try {
+    await ensureEditableCtaColumns();
+  } catch (err) {
+    console.error(`[Startup] Warning: Could not add editable CTA fields: ${err}`);
   }
 
   // ── Ensure uploads directory exists on startup ────────────────────────────
