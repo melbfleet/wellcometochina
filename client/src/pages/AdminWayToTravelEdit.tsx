@@ -640,40 +640,44 @@ export default function AdminWayToTravelEdit() {
                 onBlur={e => { e.target.style.borderColor = "#ddd"; }}
               />
             </div>
-            <div>
-              <label style={labelStyle}>When</label>
-              <input
-                value={when}
-                onChange={e => setWhen(e.target.value)}
-                placeholder="e.g. Year-round / Spring"
-                style={inputStyle}
-                onFocus={e => { e.target.style.borderColor = "#F5569B"; }}
-                onBlur={e => { e.target.style.borderColor = "#ddd"; }}
-              />
-            </div>
-            <div>
-              <label style={labelStyle}>Price</label>
-              <input
-                value={price}
-                onChange={e => setPrice(e.target.value)}
-                placeholder="e.g. From $200pp"
-                style={inputStyle}
-                onFocus={e => { e.target.style.borderColor = "#F5569B"; }}
-                onBlur={e => { e.target.style.borderColor = "#ddd"; }}
-              />
-            </div>
-            <div>
-              <label style={labelStyle}>How Long</label>
-              <input
-                value={duration}
-                onChange={e => setDuration(e.target.value)}
-                placeholder="e.g. Half day / 3 hours"
-                style={inputStyle}
-                onFocus={e => { e.target.style.borderColor = "#F5569B"; }}
-                onBlur={e => { e.target.style.borderColor = "#ddd"; }}
-              />
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", paddingTop: "24px" }}>
+            {!isCompanyDisplay && (
+              <>
+                <div>
+                  <label style={labelStyle}>When</label>
+                  <input
+                    value={when}
+                    onChange={e => setWhen(e.target.value)}
+                    placeholder="e.g. Year-round / Spring"
+                    style={inputStyle}
+                    onFocus={e => { e.target.style.borderColor = "#F5569B"; }}
+                    onBlur={e => { e.target.style.borderColor = "#ddd"; }}
+                  />
+                </div>
+                <div>
+                  <label style={labelStyle}>Price</label>
+                  <input
+                    value={price}
+                    onChange={e => setPrice(e.target.value)}
+                    placeholder="e.g. From $200pp"
+                    style={inputStyle}
+                    onFocus={e => { e.target.style.borderColor = "#F5569B"; }}
+                    onBlur={e => { e.target.style.borderColor = "#ddd"; }}
+                  />
+                </div>
+                <div>
+                  <label style={labelStyle}>How Long</label>
+                  <input
+                    value={duration}
+                    onChange={e => setDuration(e.target.value)}
+                    placeholder="e.g. Half day / 3 hours"
+                    style={inputStyle}
+                    onFocus={e => { e.target.style.borderColor = "#F5569B"; }}
+                    onBlur={e => { e.target.style.borderColor = "#ddd"; }}
+                  />
+                </div>
+              </>
+            )}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", paddingTop: isCompanyDisplay ? "4px" : "24px" }}>
               <input
                 type="checkbox"
                 id="isActive"
@@ -687,7 +691,7 @@ export default function AdminWayToTravelEdit() {
             </div>
           </div>
 
-          <div style={{ marginTop: "16px" }}>
+          {!isCompanyDisplay && <div style={{ marginTop: "16px" }}>
             <SectionTitle>Short Description</SectionTitle>
             <div style={{ marginBottom: "16px" }}>
               <label style={labelStyle}>Title</label>
@@ -710,13 +714,13 @@ export default function AdminWayToTravelEdit() {
               onFocus={e => { e.target.style.borderColor = "#F5569B"; }}
               onBlur={e => { e.target.style.borderColor = "#ddd"; }}
             />
-          </div>
+          </div>}
         </Section>
 
         {/* ── Gallery ── */}
-        <Section title="Gallery Images">
+        {!isCompanyDisplay && <Section title="Gallery Images">
           <GalleryManager gallery={gallery} onChange={setGallery} />
-        </Section>
+        </Section>}
 
         {/* ── Detail Blocks ── */}
         <Section title="Detail Blocks">
@@ -749,13 +753,15 @@ export default function AdminWayToTravelEdit() {
           </button>
         </Section>
 
-        {/* ── Similar Recommendations ── */}
-        <Section title="Similar Recommendations (Labels)">
-          <LabelTagInput labels={labels} onChange={setLabels} />
-        </Section>
+        {!isCompanyDisplay && (
+          <>
+          {/* ── Similar Recommendations ── */}
+          <Section title="Similar Recommendations (Labels)">
+            <LabelTagInput labels={labels} onChange={setLabels} />
+          </Section>
 
-        {/* ── Recommendation Card ── */}
-        <Section title="Recommendation Card">
+          {/* ── Recommendation Card ── */}
+          <Section title="Recommendation Card">
           <div className="space-y-4">
             {/* Recommendation Image */}
             <div>
@@ -797,10 +803,10 @@ export default function AdminWayToTravelEdit() {
             </div>
 
           </div>
-        </Section>
+          </Section>
 
-        {/* ── CTA Settings ── */}
-        <Section title="CTA Settings">
+          {/* ── CTA Settings ── */}
+          <Section title="CTA Settings">
           <div>
             <label style={labelStyle}>Background Color</label>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
@@ -825,7 +831,9 @@ export default function AdminWayToTravelEdit() {
               </div>
             </div>
           </div>
-        </Section>
+          </Section>
+          </>
+        )}
 
         {/* Bottom Save + Copy to */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "16px", borderTop: "1px solid #e8e8e8", gap: "16px" }}>
