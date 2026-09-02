@@ -103,6 +103,29 @@ function SectionHeader({ title, visible, onToggle }: { title: string; visible: b
   );
 }
 
+type HomepageVisibilityKey = "plan_your_trip" | "explore_trips" | "why_us" | "ready_to_start";
+
+function VisibilityOnlySection({
+  title,
+  description,
+  visible,
+  onToggle,
+}: {
+  title: string;
+  description: string;
+  visible: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div style={{ ...cardStyle, marginBottom: 32 }}>
+      <SectionHeader title={title} visible={visible} onToggle={onToggle} />
+      <p style={{ fontFamily: "Lato, sans-serif", fontSize: 12, color: "#888", margin: "-12px 0 0" }}>
+        {description}
+      </p>
+    </div>
+  );
+}
+
 // ─── Field ────────────────────────────────────────────────────────────────────
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -255,6 +278,20 @@ export default function AdminHomepage() {
   const intro = introQuery.data;
   const introEdit = introForm ?? { title: intro?.title ?? "", content: intro?.content ?? "", isVisible: intro?.isVisible ?? true };
   const setIntro = (k: string, v: any) => setIntroForm(f => ({ ...(f ?? introEdit), [k]: v }));
+
+  // ── Homepage Section Visibility ──────────────────────────────────────────
+  const sectionVisibilityQuery = trpc.homepage.getSectionVisibility.useQuery();
+  const updateSectionVisibility = trpc.homepage.updateSectionVisibility.useMutation({
+    onSuccess: () => {
+      sectionVisibilityQuery.refetch();
+      toast.success("Section visibility updated");
+    },
+  });
+  const sectionVisibility = sectionVisibilityQuery.data;
+  const toggleSectionVisibility = (sectionKey: HomepageVisibilityKey) => {
+    const isVisible = sectionVisibility?.[sectionKey] ?? true;
+    updateSectionVisibility.mutate({ sectionKey, isVisible: !isVisible });
+  };
 
   // ── Way to Travel Homepage Section ───────────────────────────────────────
   const wayToTravelSectionQuery = trpc.homepage.getStorySection.useQuery({ sectionType: "way_to_travel" });
@@ -475,6 +512,14 @@ export default function AdminHomepage() {
         </div>
       </div>
 
+      {/* ── Start Your Journey ────────────────────────────────────────────── */}
+      <VisibilityOnlySection
+        title="Start Your Journey"
+        description="Controls the destination and experience card grid shown below the introduction."
+        visible={sectionVisibility?.plan_your_trip ?? true}
+        onToggle={() => toggleSectionVisibility("plan_your_trip")}
+      />
+
       {/* ── Way to Travel Homepage Section ────────────────────────────────── */}
       <div style={{ ...cardStyle, marginBottom: 32 }}>
         <SectionHeader
@@ -541,6 +586,14 @@ export default function AdminHomepage() {
           </button>
         </div>
       </div>
+
+      {/* ── Explore Our Trips ─────────────────────────────────────────────── */}
+      <VisibilityOnlySection
+        title="Explore Our Trips"
+        description="Controls the itinerary cards displayed in the Explore Our Trips section."
+        visible={sectionVisibility?.explore_trips ?? true}
+        onToggle={() => toggleSectionVisibility("explore_trips")}
+      />
 
       {/* ── Section 1: Image Stories ─────────────────────────────────────────── */}
       <div style={{ ...cardStyle, marginBottom: 32 }}>
@@ -809,6 +862,22 @@ export default function AdminHomepage() {
           onChange={e => handleSponsorFiles(e.target.files)}
         />
       </div>
+
+      {/* ── Why Us ────────────────────────────────────────────────────────── */}
+      <VisibilityOnlySection
+        title="Why Wellcometochina"
+        description="Controls the Why Wellcometochina benefits section near the bottom of the homepage."
+        visible={sectionVisibility?.why_us ?? true}
+        onToggle={() => toggleSectionVisibility("why_us")}
+      />
+
+      {/* ── Ready to Start CTA ────────────────────────────────────────────── */}
+      <VisibilityOnlySection
+        title="Ready to Start CTA"
+        description="Controls the final enquiry call-to-action section above the footer."
+        visible={sectionVisibility?.ready_to_start ?? true}
+        onToggle={() => toggleSectionVisibility("ready_to_start")}
+      />
 
       {/* ── Modals ────────────────────────────────────────────────────────────── */}
       {videoStoryModal !== null && (

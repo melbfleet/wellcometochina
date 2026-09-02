@@ -20,8 +20,12 @@ import {
 } from "./db-media";
 import { storagePut, UPLOADS_ROOT, storageDelete } from "./storage";
 import { generateStaticPages, generateNavData, clearStaticCache, STATIC_CACHE_DIR } from "./staticGenerator";
-import { createWayToTravelStarterContent } from "./way-to-travel-templates";
 import { getContactSettings, updateContactSettings } from "./db-contact-settings";
+import {
+  HOMEPAGE_VISIBILITY_KEYS,
+  getHomepageSectionVisibility,
+  updateHomepageSectionVisibility,
+} from "./db-homepage-visibility";
 import {
   listTags, createTag, updateTag, deleteTag,
   listCities, getCityById, createCity, updateCity, deleteCity, reorderCity, listCitiesWithExperiences,
@@ -892,11 +896,6 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    createWayToTravelStarterContent: publicProcedure.mutation(async ({ ctx }) => {
-      await requireAdmin(ctx);
-      return createWayToTravelStarterContent();
-    }),
-
     // ── Team Members ───────────────────────────────────────────────────────
     listTeamMembers: publicProcedure.query(async ({ ctx }) => {
       await requireAdmin(ctx);
@@ -1594,7 +1593,7 @@ export const appRouter = router({
   homepage: router({
     // Public: get all homepage data for frontend rendering
     getAll: publicProcedure.query(async () => {
-      const [hero, intro, stories, sponsors, imageSection, videoSection, wayToTravelSection] = await Promise.all([
+      const [hero, intro, stories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility] = await Promise.all([
         getHomepageHero(),
         getHomepageIntro(),
         listHomepageStories(),
@@ -1602,8 +1601,9 @@ export const appRouter = router({
         getHomepageStorySection("image"),
         getHomepageStorySection("video"),
         getHomepageStorySection("way_to_travel"),
+        getHomepageSectionVisibility(),
       ]);
-      return { hero, intro, stories, sponsors, imageSection, videoSection, wayToTravelSection };
+      return { hero, intro, stories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility };
     }),
 
     // Public: Homepage data for frontend
@@ -1611,7 +1611,7 @@ export const appRouter = router({
       try {
         console.log('[homepage.getPublicData] Starting query...');
         
-        const [hero, intro, allStories, sponsors, imageSection, videoSection, wayToTravelSection] = await Promise.all([
+        const [hero, intro, allStories, sponsors, imageSection, videoSection, wayToTravelSection, sectionVisibility] = await Promise.all([
           getHomepageHero().catch(e => {
             console.error('[homepage.getPublicData] getHomepageHero failed:', e.message);
             return null;
@@ -1640,6 +1640,15 @@ export const appRouter = router({
             console.error('[homepage.getPublicData] getHomepageStorySection(way_to_travel) failed:', e.message);
             return null;
           }),
+          getHomepageSectionVisibility().catch(e => {
+            console.error('[homepage.getPublicData] getHomepageSectionVisibility failed:', e.message);
+            return {
+              plan_your_trip: true,
+              explore_trips: true,
+              why_us: true,
+              ready_to_start: true,
+            };
+          }),
         ]);
         
         console.log('[homepage.getPublicData] All queries completed');
@@ -1656,6 +1665,7 @@ export const appRouter = router({
           imageSection,
           videoSection,
           wayToTravelSection,
+          sectionVisibility,
         };
       } catch (error) {
         console.error('[homepage.getPublicData] Unexpected error:', error);
@@ -1694,6 +1704,20 @@ export const appRouter = router({
       .mutation(async ({ ctx, input }) => {
         await requireAdmin(ctx);
         return upsertHomepageIntro(input);
+      }),
+
+    // Public visibility for Homepage sections whose content comes from other modules.
+    getSectionVisibility: publicProcedure.query(async () => {
+      return getHomepageSectionVisibility();
+    }),
+    updateSectionVisibility: publicProcedure
+      .input(z.object({
+        sectionKey: z.enum(HOMEPAGE_VISIBILITY_KEYS),
+        isVisible: z.boolean(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await requireAdmin(ctx);
+        return updateHomepageSectionVisibility(input.sectionKey, input.isVisible);
       }),
 
     // Admin: Stories

@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import AdminLayout from "@/components/AdminLayout";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { Pencil, Trash2, Plus, ArrowRight, Upload, X, GripVertical, Sparkles } from "lucide-react";
+import { Pencil, Trash2, Plus, ArrowRight, Upload, X, GripVertical } from "lucide-react";
 import { normalizeSlug, SLUG_HELP_TEXT } from "@/lib/slug";
 
 // ─── Type Form Modal ──────────────────────────────────────────────────────────
@@ -230,29 +230,9 @@ export default function AdminWaysToTravel() {
   const [editItem, setEditItem] = useState<{ id: number; name: string; coverImage?: string | null; sortOrder?: number | null } | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
   const [draggedTypeId, setDraggedTypeId] = useState<number | null>(null);
-  const [creatingTemplates, setCreatingTemplates] = useState(false);
-
   const { data: types = [], refetch, isLoading } = trpc.admin.listWayToTravelTypes.useQuery();
   const deleteMut = trpc.admin.deleteWayToTravelType.useMutation();
   const reorderMut = trpc.admin.reorderWayToTravelType.useMutation();
-  const createTemplatesMut = trpc.admin.createWayToTravelStarterContent.useMutation();
-
-  async function handleCreateTemplates() {
-    setCreatingTemplates(true);
-    try {
-      const result = await createTemplatesMut.mutateAsync();
-      await refetch();
-      toast.success(
-        result.createdItems > 0
-          ? `Created ${result.createdItems} pages in ${result.createdTypes || 4} groups using ${result.reusedImageCount} existing images.`
-          : `All 19 starter pages already exist. ${result.skippedItems} pages were left unchanged.`,
-      );
-    } catch (e: any) {
-      toast.error(e.message ?? "Unable to create starter content");
-    } finally {
-      setCreatingTemplates(false);
-    }
-  }
 
   async function handleDelete(id: number) {
     try {
@@ -297,20 +277,6 @@ export default function AdminWaysToTravel() {
             <p style={{ fontSize: "13px", color: "#888", marginTop: "4px" }}>Manage way to travel types and their content</p>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <button
-              onClick={handleCreateTemplates}
-              disabled={creatingTemplates}
-              title="Create the four starter groups and 19 editable pages. Existing slugs are not overwritten."
-              style={{
-                display: "flex", alignItems: "center", gap: "8px",
-                padding: "10px 20px", fontSize: "12px", letterSpacing: "0.1em", textTransform: "uppercase",
-                background: "#1a1a1a", color: "#fff", border: "none", cursor: creatingTemplates ? "wait" : "pointer",
-                opacity: creatingTemplates ? 0.55 : 1,
-              }}
-            >
-              <Sparkles size={14} />
-              {creatingTemplates ? "Creating..." : "Create 19 Templates"}
-            </button>
             <button
               onClick={() => navigate("/ways-to-travel")}
               style={{

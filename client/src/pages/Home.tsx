@@ -235,6 +235,7 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section - Full Screen Image Background */}
+      {homepageData?.hero?.isVisible !== false && (
       <section className="relative w-full h-screen bg-black overflow-hidden">
         {/* Image Background */}
         <div className="relative w-full h-full">
@@ -322,19 +323,23 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Luxury Travel Experts Section */}
+      {homepageData?.intro?.isVisible !== false && (
       <div className="bg-[#F5F3EF]">
         <LuxuryTravelExperts />
       </div>
+      )}
 
       {/* Plan Your Trip Section */}
-      <PlanYourTrip />
+      {homepageData?.sectionVisibility?.plan_your_trip !== false && <PlanYourTrip />}
 
       {/* Way to Travel first-level categories */}
       <HomepageWayToTravel settings={homepageData?.wayToTravelSection} />
 
       {/* Explore Our Trips Section - native DOM scrollLeft, zero jank */}
+      {homepageData?.sectionVisibility?.explore_trips !== false && (
       <div
         className="w-full relative flex flex-col lg:flex-row lg:items-center"
         style={{
@@ -476,6 +481,7 @@ export default function Home() {
           </button>
         )}
       </div>
+      )}
 
       {/* Discover China Carousel Section */}
       <CarouselSection />
@@ -486,10 +492,10 @@ export default function Home() {
       </div>
 
       {/* Why Into China Section */}
-      <WhyIntoChinaSection />
+      {homepageData?.sectionVisibility?.why_us !== false && <WhyIntoChinaSection />}
 
       {/* Ready To Start CTA */}
-      <ReadyToStart />
+      {homepageData?.sectionVisibility?.ready_to_start !== false && <ReadyToStart />}
 
       {/* Footer */}
       <Footer />

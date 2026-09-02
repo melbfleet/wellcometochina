@@ -466,6 +466,15 @@ export const homepageStorySections = mysqlTable("homepage_story_sections", {
 export type HomepageStorySection = typeof homepageStorySections.$inferSelect;
 export type InsertHomepageStorySection = typeof homepageStorySections.$inferInsert;
 
+// Homepage sections whose content is sourced elsewhere but whose visibility
+// is controlled from the Homepage admin page.
+export const homepageSectionVisibility = mysqlTable("homepage_section_visibility", {
+  sectionKey: varchar("sectionKey", { length: 64 }).primaryKey(),
+  isVisible: boolean("isVisible").default(true).notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type HomepageSectionVisibility = typeof homepageSectionVisibility.$inferSelect;
+
 // 赞助商 Logo（多行，可排序）+ 背景纹理
 export const homepageSponsors = mysqlTable("homepage_sponsors", {
   id: int("id").autoincrement().primaryKey(),
