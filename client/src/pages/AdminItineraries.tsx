@@ -434,6 +434,7 @@ function ItineraryForm({ initial, onSave, onCancel, saving, title }: {
   };
   const normalizedForm = {
     ...form,
+    days: totalDays || form.days,
     slug: normalizeSlug(form.slug || form.name),
     sections: normalizeSections(form.sections),
   };
