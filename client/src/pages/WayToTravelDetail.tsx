@@ -273,7 +273,7 @@ function HeroCarousel({ images }: { images: string[] }) {
   );
 }
 
-// ── More Ways to Travel Carousel ───────────────────────────────────────────────
+// ── More Travel Services Carousel ───────────────────────────────────────────────
 function SimilarCarousel({ items, bgImage }: { items: any[]; bgImage: string }) {
   const getObjectPosition = useMediaObjectPosition();
   const [showLeft, setShowLeft] = useState(false);
@@ -333,7 +333,7 @@ function SimilarCarousel({ items, bgImage }: { items: any[]; bgImage: string }) 
       <div className="absolute inset-0" style={{ backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)', backgroundColor: 'rgba(10,10,10,0.85)', zIndex: 0 }} />
 
       <div className="lg:hidden w-full px-6 mb-6 relative z-10">
-        <h2 style={{ fontFamily: EXP_DISPLAY, fontWeight: 400, fontSize: '36px', color: 'white', textTransform: 'uppercase', letterSpacing: '2.25px', marginBottom: '12px', lineHeight: 1 }}>More Ways to Travel</h2>
+        <h2 style={{ fontFamily: EXP_DISPLAY, fontWeight: 400, fontSize: '36px', color: 'white', textTransform: 'uppercase', letterSpacing: '2.25px', marginBottom: '12px', lineHeight: 1 }}>More Travel Services</h2>
       </div>
 
       {isDesktop && showLeft && (
@@ -355,7 +355,7 @@ function SimilarCarousel({ items, bgImage }: { items: any[]; bgImage: string }) 
           {isDesktop && <div style={{ width: '20vw', flexShrink: 0 }} />}
           {isDesktop && (
             <div style={{ width: '260px', flexShrink: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingTop: '8px' }}>
-              <h2 style={{ fontFamily: EXP_DISPLAY, fontWeight: 400, fontSize: '45px', color: 'white', textTransform: 'uppercase', letterSpacing: '2.25px', marginBottom: '16px', lineHeight: 1 }}>More Ways to Travel</h2>
+              <h2 style={{ fontFamily: EXP_DISPLAY, fontWeight: 400, fontSize: '45px', color: 'white', textTransform: 'uppercase', letterSpacing: '2.25px', marginBottom: '16px', lineHeight: 1 }}>More Travel Services</h2>
               <p style={{ fontFamily: EXP_SANS, fontSize: '17px', color: 'rgba(255,255,255,0.78)', fontStyle: 'italic', fontWeight: 400, letterSpacing: '0.85px', lineHeight: 1.5 }}>Explore more ways to travel from our collection.</p>
             </div>
           )}
@@ -458,8 +458,8 @@ export default function WayToTravelDetail() {
       <div style={{ fontFamily: EXP_SANS, background: '#fff', minHeight: '100vh' }}>
         <Navigation />
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', color: '#888' }}>
-          <p style={{ fontSize: '18px', marginBottom: '16px' }}>Way to travel item not found</p>
-          <Link href="/ways-to-travel" style={{ color: '#F5569B', textDecoration: 'none', fontSize: '14px' }}>← Back to Ways to Travel</Link>
+          <p style={{ fontSize: '18px', marginBottom: '16px' }}>Travel service not found</p>
+          <Link href="/ways-to-travel" style={{ color: '#F5569B', textDecoration: 'none', fontSize: '14px' }}>← Back to Travel Services</Link>
         </div>
       </div>
     );
@@ -481,7 +481,7 @@ export default function WayToTravelDetail() {
         <p style={{ fontFamily: EXP_SANS, fontSize: 12, fontWeight: 600, letterSpacing: '0.85px', textTransform: 'uppercase', color: '#999', marginBottom: 0, textAlign: 'left', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', paddingTop: '20px', paddingBottom: '0' }}>
           <Link href="/" style={{ color: '#999', textDecoration: 'none' }}>Home</Link>
           <span style={{ margin: '0 6px', color: '#ccc' }}>/</span>
-          <Link href="/ways-to-travel" style={{ color: '#999', textDecoration: 'none' }}>Way to Travel</Link>
+          <Link href="/ways-to-travel" style={{ color: '#999', textDecoration: 'none' }}>Travel Services</Link>
           <span style={{ margin: '0 6px', color: '#ccc' }}>/</span>
           <span style={{ color: '#555' }}>{exp?.name}</span>
         </p>
@@ -609,7 +609,7 @@ export default function WayToTravelDetail() {
         })}
       </div>
 
-      {/* ── More Ways to Travel ── */}
+      {/* ── More Travel Services ── */}
       {!isCompanyDisplay && recommended.length > 0 && <SimilarCarousel items={recommended} bgImage={bgImage} />}
 
       {/* ── Bottom CTA ── */}

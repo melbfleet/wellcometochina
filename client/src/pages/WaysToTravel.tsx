@@ -60,19 +60,19 @@ export default function WaysToTravel() {
       <Navigation darkText />
       <main>
         <header className="wtt-intro">
-          <h1>Ways to Travel</h1>
+          <h1>Travel Services</h1>
           <p className="wtt-lead">
-            Plan a private journey in China around what brings you here, from a family holiday or cultural experience to business travel and specialist visits.
+            See how our local team can help plan a private holiday, coordinate a business visit or arrange specialist support in China.
           </p>
         </header>
 
         {isLoading ? (
-          <div className="wtt-loading">Loading ways to travel...</div>
+          <div className="wtt-loading">Loading travel services...</div>
         ) : types.length === 0 ? (
-          <div className="wtt-loading">New ways to travel are coming soon.</div>
+          <div className="wtt-loading">New travel services are coming soon.</div>
         ) : (
           <>
-            <section className="wtt-directory" aria-label="Ways to Travel categories">
+            <section className="wtt-directory" aria-label="Travel Services categories">
               {types.map(type => {
                 const image = type.coverImage || getItemImage(type.items[0]);
                 return (
