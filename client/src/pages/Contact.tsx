@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { trpc } from '@/lib/trpc';
 import { toast } from 'sonner';
-import { Phone, Clock, ChevronDown } from 'lucide-react';
+import { Phone, Clock } from 'lucide-react';
+import { useSearch } from 'wouter';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import CustomSelect from '@/components/CustomSelect';
@@ -136,6 +137,7 @@ function ContactPartnerLogos() {
 
 // 全球国家区号数据（ISO 两字母代码 + 国家名 + 区号）
 const COUNTRIES = [
+  { iso: 'au', name: 'Australia', code: '+61' },
   { iso: 'cn', name: 'China', code: '+86' },
   { iso: 'us', name: 'United States', code: '+1' },
   { iso: 'gb', name: 'United Kingdom', code: '+44' },
@@ -143,7 +145,6 @@ const COUNTRIES = [
   { iso: 'de', name: 'Germany', code: '+49' },
   { iso: 'jp', name: 'Japan', code: '+81' },
   { iso: 'kr', name: 'South Korea', code: '+82' },
-  { iso: 'au', name: 'Australia', code: '+61' },
   { iso: 'ca', name: 'Canada', code: '+1' },
   { iso: 'in', name: 'India', code: '+91' },
   { iso: 'br', name: 'Brazil', code: '+55' },
@@ -273,28 +274,23 @@ const COUNTRIES = [
 
 export default function Contact() {
   const { data: contactSettings } = trpc.siteContact.get.useQuery();
-  const publicPhone = contactSettings?.phone || '+86 130 0812 2836';
+  const publicPhone = contactSettings?.phone || '';
   const phoneHref = publicPhone.replace(/[^\d+]/g, '');
-  const phoneAvailabilityText = contactSettings?.phoneAvailabilityText || "We're open at 9.00am";
-  const officeHours = contactSettings?.officeHours?.length ? contactSettings.officeHours : [
-    { day: 'Monday', hours: '2:00pm - 5:30pm' },
-    { day: 'Tuesday', hours: '9:00am - 11:00pm' },
-    { day: 'Wednesday', hours: '9:00am - 11:00pm' },
-    { day: 'Thursday', hours: '9:00am - 11:00pm' },
-    { day: 'Friday', hours: '9:00am - 11:00pm' },
-    { day: 'Saturday', hours: 'Closed' },
-    { day: 'Sunday', hours: 'Closed' },
-  ];
-  const officeHoursNote = contactSettings?.officeHoursNote || '(excluding national holidays)';
+  const officeHours = contactSettings?.officeHours || [];
+  const officeHoursNote = contactSettings?.officeHoursNote;
+
+  const query = new URLSearchParams(useSearch());
+  const experience = query.get('experience')?.trim().slice(0, 180);
+  const destination = query.get('destination')?.trim().slice(0, 120);
 
   const [formData, setFormData] = useState({
-    destination: '',
+    destination: destination || '',
     month: '',
     year: '',
     duration: '',
     travelers: '',
     budget: '',
-    comments: '',
+    comments: experience ? `I’m interested in ${experience}.` : '',
     firstName: '',
     lastName: '',
     email: '',
@@ -306,8 +302,16 @@ export default function Contact() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [dialCode, setDialCode] = useState(COUNTRIES[0]);
-  const [dialOpen, setDialOpen] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const phoneRowRef = useRef<HTMLDivElement>(null);
+  const fieldProps = (field: string) => ({
+    id: field,
+    'aria-invalid': !!errors[field] || undefined,
+    'aria-describedby': errors[field] ? `${field}-error` : undefined,
+  });
+  const fieldError = (field: string) => errors[field] && (
+    <p id={`${field}-error`} className="mt-2 text-sm text-red-700">{errors[field]}</p>
+  );
 
   // 今天起一周后的最早可选日期
   const minDate = new Date();
@@ -326,7 +330,6 @@ export default function Contact() {
     }
     return false;
   };
-  const isYearDisabled = (yearVal: string) => parseInt(yearVal) < minYear;
 
   // Select options (defined after helper functions)
   const monthOptions = [
@@ -336,9 +339,10 @@ export default function Contact() {
     {value:'oct',label:'October'},{value:'nov',label:'November'},{value:'dec',label:'December'},
   ].map(o => ({...o, disabled: isMonthDisabled(o.value, formData.year)}));
 
-  const yearOptions = ['2025','2026','2027','2028']
-    .filter(y => !isYearDisabled(y))
-    .map(y => ({value: y, label: y}));
+  const yearOptions = Array.from({ length: 4 }, (_, index) => {
+    const year = String(minYear + index);
+    return { value: year, label: year };
+  });
 
   const durationOptions = [
     {value:'1-3',label:'1-3 days'},{value:'4-7',label:'4-7 days'},
@@ -370,7 +374,7 @@ export default function Contact() {
     const newErrors: Record<string, string> = {};
 
     // Required fields validation
-    if (!formData.destination.trim()) newErrors.destination = 'Please select a destination';
+    if (!formData.destination.trim()) newErrors.destination = 'Enter a destination or write “Not sure yet”.';
     if (!formData.month) newErrors.month = 'Please select a month';
     if (!formData.year) newErrors.year = 'Please select a year';
     if (!formData.duration) newErrors.duration = 'Please select a duration';
@@ -378,8 +382,13 @@ export default function Contact() {
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (formRef.current?.querySelector<HTMLInputElement>('#email')?.validity.typeMismatch) {
+      newErrors.email = 'Enter a valid email address';
+    }
     if (!formData.confirmEmail.trim()) newErrors.confirmEmail = 'Please confirm your email';
-    if (formData.email !== formData.confirmEmail) newErrors.confirmEmail = 'Emails do not match';
+    else if (formData.email.trim().toLowerCase() !== formData.confirmEmail.trim().toLowerCase()) {
+      newErrors.confirmEmail = 'Emails do not match';
+    }
     if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
 
     setErrors(newErrors);
@@ -412,14 +421,17 @@ export default function Contact() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitMutation.isPending) return;
     if (validateForm()) {
+      const phone = formData.phone.trim();
+      const localPhone = dialCode.iso === 'au' ? phone.replace(/^\(?0\)?(?=[\d\s])/, '').trimStart() : phone;
       submitMutation.mutate({
         firstName: formData.firstName,
         lastName: formData.lastName,
-        email: formData.email,
-        phone: `${dialCode.code} ${formData.phone}`,
+        email: formData.email.trim(),
+        phone: phone.startsWith('+') ? phone : `${dialCode.code} ${localPhone}`,
         destination: formData.destination,
         month: formData.month,
         year: formData.year,
@@ -429,10 +441,17 @@ export default function Contact() {
         hearAboutUs: formData.source,
         message: formData.comments,
       });
+    } else {
+      requestAnimationFrame(() => {
+        const firstInvalidField = formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]');
+        firstInvalidField?.focus({ preventScroll: true });
+        firstInvalidField?.scrollIntoView({ block: 'center' });
+      });
     }
   };
 
   const budgetOptions = [
+    { value: 'Not sure yet', label: 'Not sure yet' },
     { value: '$30,000+ per person', label: '$30,000+ per person' },
     { value: '$20,000 - 30,000 per person', label: '$20,000 - 30,000 per person' },
     { value: '$10,000 - 20,000 per person', label: '$10,000 - 20,000 per person' },
@@ -443,7 +462,7 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Navigation />
+      <Navigation darkText />
       
       <div className="flex-1 pt-24 pb-[50px] relative bg-white">
         <div className="container max-w-7xl mx-auto px-4">
@@ -453,53 +472,59 @@ export default function Contact() {
               Plan Your Journey
             </h1>
             <p className="text-[#555555] max-w-2xl mx-auto text-lg leading-relaxed" style={{color: '#6b6b6b', fontSize: '15px', fontFamily: 'Lato, sans-serif'}}>
-              We'll be in touch shortly after you submit the form, matching you with a Travel Expert and setting up a time to talk – over email, phone or video call. For an immediate conversation, simply call us.
+              Tell us a little about your trip and we’ll be in touch to discuss the details.
             </p>
+            {experience && <p className="mt-4 text-sm font-semibold text-[#333333]">Enquiring about {experience}</p>}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             {/* Main Form */}
             <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-6">
                 {/* Your Trip Section */}
-                <div className="space-y-6 bg-[#f2f2f2] p-8">
+                <div className="space-y-6 bg-[#f2f2f2] p-4 sm:p-8">
                   <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1a1a1a]">Your Trip</h2>
                   
                   {/* Where would you like to go */}
                   <div>
-                    <label className="block text-base mb-3 text-[#333333]">
+                    <label htmlFor="destination" className="block text-base mb-3 text-[#333333]">
                       Where would you like to go?<span className="text-[#333333]">*</span>
                     </label>
                     <input
                       type="text"
                       name="destination"
+                      {...fieldProps('destination')}
                       value={formData.destination}
                       onChange={handleInputChange}
-                      placeholder="Select as many options as you want"
+                      placeholder="Enter cities or regions"
                       className={`w-full px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.destination ? '!border-red-400' : ''}`}
                     />
-                    {errors.destination && (
-                      <p className="text-red-500 text-sm mt-2">{errors.destination}</p>
-                    )}
+                    {fieldError('destination')}
                   </div>
 
                   {/* When, Year and Duration - All in one row */}
-                  <div className="flex flex-wrap gap-4 items-end">
-                    <div className="flex-1 min-w-[140px]">
-                      <label className="block text-base mb-3 text-[#333333]">
-                        <span className="whitespace-nowrap">When would you like to go?<span className="text-[#333333]">*</span></span>
-                      </label>
+                  <fieldset>
+                    <legend className="mb-3 text-base text-[#333333]">When would you like to go?*</legend>
+                    <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                    <div>
                       <CustomSelect
+                        id="month"
+                        label="Travel month"
+                        errorId={errors.month ? 'month-error' : undefined}
                         options={monthOptions}
                         value={formData.month}
                         onChange={v => setFormData(p => ({...p, month: v}))}
                         placeholder="Select a month"
                         hasError={!!errors.month}
                       />
+                      {fieldError('month')}
                     </div>
                     
-                    <div className="flex-1 min-w-[140px]">
+                    <div>
                       <CustomSelect
+                        id="year"
+                        label="Travel year"
+                        errorId={errors.year ? 'year-error' : undefined}
                         options={yearOptions}
                         value={formData.year}
                         onChange={v => setFormData(p => {
@@ -516,45 +541,51 @@ export default function Contact() {
                         placeholder="Select a year"
                         hasError={!!errors.year}
                       />
+                      {fieldError('year')}
                     </div>
+                    </div>
+                  </fieldset>
 
-                    <div className="flex-1 min-w-[140px]">
-                      <label className="block text-base mb-3 text-[#333333]">
+                    <div>
+                      <label htmlFor="duration" className="block text-base mb-3 text-[#333333]">
                         How long for?<span className="text-[#333333]">*</span>
                       </label>
                       <CustomSelect
+                        id="duration"
+                        errorId={errors.duration ? 'duration-error' : undefined}
                         options={durationOptions}
                         value={formData.duration}
                         onChange={v => setFormData(p => ({...p, duration: v}))}
                         placeholder="Duration of trip"
                         hasError={!!errors.duration}
                       />
+                      {fieldError('duration')}
                     </div>
-                  </div>
 
                   {/* Travelers */}
                   <div>
-                    <label className="block text-base mb-3 text-[#333333]">
+                    <label htmlFor="travelers" className="block text-base mb-3 text-[#333333]">
                       How many people are travelling?<span className="text-[#333333]">*</span>
                     </label>
                     <CustomSelect
+                      id="travelers"
+                      errorId={errors.travelers ? 'travelers-error' : undefined}
                       options={travelersOptions}
                       value={formData.travelers}
                       onChange={v => setFormData(p => ({...p, travelers: v}))}
                       placeholder="Select a number"
                       hasError={!!errors.travelers}
                     />
-                    {errors.travelers && (
-                      <p className="text-red-500 text-sm mt-2">{errors.travelers}</p>
-                    )}
+                    {fieldError('travelers')}
                   </div>
 
                   {/* Budget Dropdown */}
                   <div>
-                    <label className="block text-base mb-3 text-[#333333]">
-                      How much would you like to spend <strong>per person</strong>?<span className="text-[#333333]">*</span>
+                    <label htmlFor="budget" className="block text-base mb-3 text-[#333333]">
+                      Budget per person <span className="text-sm text-[#666666]">(optional)</span>
                     </label>
                     <CustomSelect
+                      id="budget"
                       options={budgetOptions}
                       value={formData.budget}
                       onChange={v => setFormData(p => ({...p, budget: v}))}
@@ -564,10 +595,11 @@ export default function Contact() {
 
                   {/* Comments */}
                   <div>
-                    <label className="block text-base mb-3 text-[#333333]">
+                    <label htmlFor="comments" className="block text-base mb-3 text-[#333333]">
                       Any other comments or requests?
                     </label>
                     <textarea
+                      id="comments"
                       name="comments"
                       value={formData.comments}
                       onChange={handleInputChange}
@@ -578,91 +610,92 @@ export default function Contact() {
                 </div>
 
                 {/* Your Details Section */}
-                <div className="space-y-6 bg-[#f2f2f2] p-8">
+                <div className="space-y-6 bg-[#f2f2f2] p-4 sm:p-8">
                   <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1a1a1a]">Your Details</h2>
 
                   {/* Name */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-0 sm:gap-y-4 gap-x-4">
                     <div>
-                      <label className="block text-base mb-3 text-[#333333]">
-                        Your Name<span className="text-[#333333]">*</span>
+                      <label htmlFor="firstName" className="block text-base mb-3 text-[#333333]">
+                        First name<span className="text-[#333333]">*</span>
                       </label>
                     <input
                       type="text"
                       name="firstName"
+                      {...fieldProps('firstName')}
+                      autoComplete="given-name"
                       value={formData.firstName}
                       onChange={handleInputChange}
                       placeholder="First Name"
                       className={`w-full px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.firstName ? '!border-red-400' : ''}`}
                     />
-                    {errors.firstName && (
-                      <p className="text-red-500 text-sm mt-2">{errors.firstName}</p>
-                    )}
+                    {fieldError('firstName')}
                     </div>
                     <div className="mt-3 sm:mt-0">
-                      <label className="block text-base mb-3 text-[#333333] invisible select-none sm:block hidden">
-                        &nbsp;
+                      <label htmlFor="lastName" className="block text-base mb-3 text-[#333333]">
+                        Last name<span className="text-[#333333]">*</span>
                       </label>
                     <input
                       type="text"
                       name="lastName"
+                      {...fieldProps('lastName')}
+                      autoComplete="family-name"
                       value={formData.lastName}
                       onChange={handleInputChange}
                       placeholder="Last Name"
                       className={`w-full px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.lastName ? '!border-red-400' : ''}`}
                     />
-                    {errors.lastName && (
-                      <p className="text-red-500 text-sm mt-2">{errors.lastName}</p>
-                    )}
+                    {fieldError('lastName')}
                     </div>
                   </div>
 
                   {/* Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-base mb-3 text-[#333333]">
+                      <label htmlFor="email" className="block text-base mb-3 text-[#333333]">
                         Email address<span className="text-[#333333]">*</span>
                       </label>
                       <input
                         type="email"
                         name="email"
+                        {...fieldProps('email')}
+                        autoComplete="email"
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="your@email.com"
                         className={`w-full px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.email ? '!border-red-400' : ''}`}
                       />
-                      {errors.email && (
-                        <p className="text-red-500 text-sm mt-2">{errors.email}</p>
-                      )}
+                      {fieldError('email')}
                     </div>
                     <div>
-                      <label className="block text-base mb-3 text-[#333333]">
+                      <label htmlFor="confirmEmail" className="block text-base mb-3 text-[#333333]">
                         Confirm email address<span className="text-[#333333]">*</span>
                       </label>
                       <input
                         type="email"
                         name="confirmEmail"
+                        {...fieldProps('confirmEmail')}
+                        autoComplete="email"
                         value={formData.confirmEmail}
                         onChange={handleInputChange}
                         placeholder="your@email.com"
                         className={`w-full px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.confirmEmail ? '!border-red-400' : ''}`}
                       />
-                      {errors.confirmEmail && (
-                        <p className="text-red-500 text-sm mt-2">{errors.confirmEmail}</p>
-                      )}
+                      {fieldError('confirmEmail')}
                     </div>
                   </div>
 
                   {/* Phone */}
                   <div>
                     <div>
-                      <label className="block text-base mb-3 text-[#333333]">
+                      <label htmlFor="phone" className="block text-base mb-3 text-[#333333]">
                         Phone number<span className="text-[#333333]">*</span>
                       </label>
                       <div className="flex gap-2 relative min-w-0" ref={phoneRowRef}>
                         {/* Custom dial code picker */}
-                        <div className="relative w-[140px] flex-shrink-0">
+                        <div className="relative w-28 shrink-0 sm:w-[140px]">
                           <CustomSelect
+                            label="Country calling code"
                             options={COUNTRIES.map(c => ({
                               value: c.code + '|' + c.name,
                               label: `${c.name} (${c.code})`,
@@ -685,34 +718,34 @@ export default function Contact() {
                               const found = COUNTRIES.find(c => c.code + '|' + c.name === v);
                               if (found) setDialCode(found);
                             }}
-                            placeholder="+86"
+                            placeholder="+61"
                             searchable={true}
-                            className="w-[140px]"
                             dropdownContainerRef={phoneRowRef}
                           />
                         </div>
                         <input
                           type="tel"
                           name="phone"
+                          {...fieldProps('phone')}
+                          autoComplete="tel-national"
                           value={formData.phone}
                           onChange={handleInputChange}
                           placeholder="Phone number"
                           className={`flex-1 min-w-0 px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.phone ? '!border-red-400' : ''}`}
                         />
                       </div>
-                      {errors.phone && (
-                        <p className="text-red-500 text-sm mt-2">{errors.phone}</p>
-                      )}
+                      {fieldError('phone')}
                     </div>
 
                   </div>
 
                   {/* Source - separate row */}
                   <div>
-                    <label className="block text-base mb-3 text-[#333333]">
+                    <label htmlFor="source" className="block text-base mb-3 text-[#333333]">
                       How did you hear about us?
                     </label>
                     <CustomSelect
+                      id="source"
                       options={sourceOptions}
                       value={formData.source}
                       onChange={v => setFormData(p => ({...p, source: v}))}
@@ -721,53 +754,30 @@ export default function Contact() {
                   </div>
 
                 </div>
+                <div className="text-center">
+                  <button type="submit" disabled={submitMutation.isPending} className="min-h-11 rounded-sm bg-[#ad205b] px-8 py-3 text-sm font-semibold uppercase tracking-wider text-white hover:bg-[#8b1547] focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60">
+                    {submitMutation.isPending ? 'Sending…' : 'Submit enquiry'}
+                  </button>
+                </div>
               </form>
 
             </div>
 
               {/* Sidebar */}
-            <div className="sticky top-[55px]">
-              {/* Mobile-only Submit Button — appears above phone card on portrait screens */}
-              <div className="flex justify-center mb-6 lg:hidden">
-                <button
-                  type="button"
-                  disabled={submitMutation.isPending}
-                  onClick={handleSubmit as any}
-                  style={{ backgroundColor: '#F5569B', color: '#ffffff', borderColor: '#F5569B' }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.backgroundColor = '#ffffff';
-                    e.currentTarget.style.color = '#F5569B';
-                    e.currentTarget.style.borderColor = '#F5569B';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.backgroundColor = '#F5569B';
-                    e.currentTarget.style.color = '#ffffff';
-                    e.currentTarget.style.borderColor = '#F5569B';
-                  }}
-                  className="px-8 py-3 text-sm font-semibold tracking-wider uppercase border rounded-sm transition-all duration-300 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  {submitMutation.isPending ? 'Sending...' : 'Submit Enquiry'}
-                </button>
-              </div>
+            {(publicPhone || officeHours.length > 0) && (
+            <div className="lg:sticky lg:top-[55px]">
               {/* Combined Call Today & Office Hours Card */}
-              <div className="bg-[#f2f2f2] flex flex-col items-center text-center mx-auto" style={{maxWidth:'425px',width:'100%',height:'580px'}}>
+              <div className="mx-auto flex w-full max-w-[425px] flex-col items-center bg-[#f2f2f2] text-center">
                 {/* Call Today Section */}
-                <div className="w-full flex flex-col items-center px-8 pt-6 pb-4">
+                {publicPhone && <div className="w-full flex flex-col items-center px-8 pt-6 pb-4">
                   <Phone className="w-6 h-6 text-[#1a1a1a] mb-2" />
                   <h3 className="font-bold uppercase tracking-widest text-sm mb-2 text-[#1a1a1a]">Call Us Today</h3>
                   <a href={`tel:${phoneHref}`} className="font-bold text-lg hover:underline block mb-2" style={{color:'#e0457b', fontFamily: 'Brandon Grotesque', letterSpacing: '0.12em'}}>{publicPhone}</a>
-                  <p className="text-sm text-[#666666]" style={{letterSpacing: '0.03em'}}>
-                    {phoneAvailabilityText}
-                  </p>
-                </div>
-
-                {/* Divider */}
-                <div className="flex justify-center py-1">
-                  <div className="border-t border-gray-300" style={{width:'80px'}}></div>
-                </div>
+                  {officeHours.length > 0 && <div className="mt-3 w-20 border-t border-gray-300" />}
+                </div>}
 
                 {/* Office Hours Section */}
-                <div className="w-full flex flex-col items-center px-8 pt-5 pb-5 flex-1">
+                {officeHours.length > 0 && <div className="w-full flex flex-col items-center px-8 pt-5 pb-5 flex-1">
                   <Clock className="w-6 h-6 text-[#1a1a1a] mb-3" strokeWidth={1.2} />
                   <h3 className="font-bold uppercase tracking-widest text-sm mb-4 text-[#1a1a1a]">Office Hours</h3>
                   <div className="space-y-[15px] w-full">
@@ -781,34 +791,10 @@ export default function Contact() {
                   {officeHoursNote && (
                     <p className="text-[#999999] mt-4" style={{fontSize:'15px', letterSpacing: '0.06em'}}>{officeHoursNote}</p>
                   )}
-                </div>
+                </div>}
               </div>
             </div>
-          </div>
-
-          {/* Submit Button - desktop only (mobile version is above phone card in sidebar) */}
-          <div className="hidden lg:grid grid-cols-1 lg:grid-cols-3 gap-12 mt-6">
-            <div className="lg:col-span-2 flex justify-center">
-              <button
-                type="button"
-                disabled={submitMutation.isPending}
-                onClick={handleSubmit as any}
-                style={{ backgroundColor: '#F5569B', color: '#ffffff', borderColor: '#F5569B' }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.backgroundColor = '#ffffff';
-                  e.currentTarget.style.color = '#F5569B';
-                  e.currentTarget.style.borderColor = '#F5569B';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.backgroundColor = '#F5569B';
-                  e.currentTarget.style.color = '#ffffff';
-                  e.currentTarget.style.borderColor = '#F5569B';
-                }}
-                className="px-8 py-3 text-sm font-semibold tracking-wider uppercase border rounded-sm transition-all duration-300 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {submitMutation.isPending ? 'Sending...' : 'Submit Enquiry'}
-              </button>
-            </div>
+            )}
           </div>
         </div>
       </div>

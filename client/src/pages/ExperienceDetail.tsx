@@ -377,6 +377,7 @@ export default function ExperienceDetail() {
     { slug },
     { enabled: !!slug }
   );
+  const { data: cities = [] } = trpc.cms.listCities.useQuery(undefined, { enabled: !!exp });
 
   // Fetch CTA background image from Media Library
   const { data: homepageAssets } = trpc.media.getHomepageAssets.useQuery();
@@ -407,10 +408,16 @@ export default function ExperienceDetail() {
   const details = (exp as any)?.details || [];
   const recommended = (exp as any)?.recommended || [];
   const labels: string[] = (exp as any)?.labels || [];
+  const city = cities.find(city => city.id === exp?.cityId)
+    ?? cities.find(city => labels.some(label => label.toLowerCase() === city.name.toLowerCase()));
+  const enquiryParams = new URLSearchParams();
+  if (exp?.name) enquiryParams.set('experience', exp.name);
+  if (city) enquiryParams.set('destination', city.name);
+  const enquiryHref = exp?.name ? `/make-an-enquiry?${enquiryParams}` : '/make-an-enquiry';
 
   return (
     <div style={{ fontFamily: EXP_SANS, background: '#fff', color: EXP_TEXT }}>
-      <Navigation />
+      <Navigation darkText enquiryHref={enquiryHref} />
 
       {/* ── Header Info Block ── */}
       <div style={{ paddingTop: '55px', background: '#fff' }}>
@@ -543,8 +550,9 @@ export default function ExperienceDetail() {
         <div style={{ position: 'absolute', inset: 0, backgroundImage: ctaTexture ? `url(${ctaTexture})` : '', backgroundRepeat: 'repeat', backgroundSize: '420px 420px', opacity: ctaTextureOpacity, mixBlendMode: 'normal', filter: 'contrast(1.45) brightness(1.08)' }} />
         <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '28px', textAlign: 'center', padding: '0 24px' }}>
           {((exp as any)?.ctaTitle ?? 'So, ready to start?') && <h2 style={{ fontFamily: EXP_DISPLAY, fontSize: '45px', fontWeight: 400, color: '#ffffff', letterSpacing: '2.25px', textTransform: 'uppercase', margin: 0, lineHeight: 1 }}>{(exp as any)?.ctaTitle ?? 'So, ready to start?'}</h2>}
-          {((exp as any)?.ctaButtonText ?? 'Get in Touch') && <a href="/make-an-enquiry">
-            <button
+          {((exp as any)?.ctaButtonText ?? 'Get in Touch') && (
+            <Link href={enquiryHref}
+              className="inline-flex min-h-11 items-center text-center"
               style={{ backgroundColor: '#111111', color: '#ffffff', fontFamily: EXP_SANS, fontSize: '13px', fontWeight: 700, letterSpacing: '0.85px', lineHeight: 1.5, textTransform: 'uppercase', padding: '14px 36px', border: '2px solid #111111', cursor: 'pointer', transition: 'background-color 0.2s, color 0.2s, transform 0.1s' }}
               onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.color = '#111111'; }}
               onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#111111'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.transform = 'scale(1)'; }}
@@ -552,8 +560,8 @@ export default function ExperienceDetail() {
               onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
             >
               {(exp as any)?.ctaButtonText ?? 'Get in Touch'}
-            </button>
-          </a>}
+            </Link>
+          )}
         </div>
       </section>
 

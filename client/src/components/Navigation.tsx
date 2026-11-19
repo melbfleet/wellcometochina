@@ -49,9 +49,10 @@ const NAV_DISPLAY = "var(--font-travel-condensed, 'League Gothic', 'Arial Narrow
 interface NavigationProps {
   forceHide?: boolean;
   darkText?: boolean;
+  enquiryHref?: string;
 }
 
-export default function Navigation({ forceHide = false, darkText = false }: NavigationProps) {
+export default function Navigation({ forceHide = false, darkText = false, enquiryHref = '/make-an-enquiry' }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<'destinations' | 'experiences' | 'wayToTravel' | 'about' | null>(null);
   const [navVisible, setNavVisible] = useState(true);
@@ -210,7 +211,10 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
   // Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setActiveMenu(null);
+      if (e.key === 'Escape') {
+        setActiveMenu(null);
+        setIsOpen(false);
+      }
     };
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
@@ -235,6 +239,11 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
   };
 
   const closeMenu = () => setActiveMenu(null);
+  const openEnquiry = () => {
+    closeMenu();
+    setIsOpen(false);
+    setLocation(enquiryHref);
+  };
 
   // Nav bar text color: white on transparent bg, dark when overlay open
   const textColor = (anyOverlayOpen || darkText) ? '#111' : '#fff';
@@ -352,6 +361,9 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
           .bt-preview-col, .bt-landscape-layout,
           .exp-preview-col, .exp-landscape-layout { display: none !important; }
           .bt-portrait-layout, .exp-portrait-layout { display: flex !important; }
+          .exp-portrait-layout .exp-cat-row, .exp-portrait-layout .exp-sub-row {
+            min-height: 44px; white-space: normal; text-align: left;
+          }
         }
         .bt-portrait-layout, .exp-portrait-layout { display: none; }
       `}</style>
@@ -426,7 +438,7 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
               style={{ position: 'absolute', right: 'clamp(28px, calc(-645px + 49.82vw), 305px)' }}
             >
               <button
-                onClick={() => setLocation('/make-an-enquiry')}
+                onClick={openEnquiry}
                 style={{
                   background: '#F5569B', color: '#fff',
                   fontFamily: NAV_SANS, fontSize: '10px',
@@ -452,9 +464,10 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
             {/* Mobile: Enquire + hamburger */}
             <div className="md:hidden flex items-center gap-2 ml-auto pr-3">
               <button
-                onClick={() => setLocation('/make-an-enquiry')}
+                onClick={openEnquiry}
+                className="min-h-11"
                 style={{
-                  background: '#F5569B', color: '#fff',
+                  background: '#ad205b', color: '#fff',
                   fontFamily: NAV_SANS, fontSize: '10px',
                   letterSpacing: '0.05em', textTransform: 'uppercase',
                   padding: '6px 12px', border: 'none', cursor: 'pointer', fontWeight: 500,
@@ -463,11 +476,16 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
                 Enquire
               </button>
               <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => {
+                  if (anyOverlayOpen) closeMenu();
+                  else setIsOpen(open => !open);
+                }}
                 aria-label="Toggle menu"
+                aria-expanded={isOpen || anyOverlayOpen}
+                className="min-h-11 min-w-11"
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px 6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
-                <div className={`flex flex-col gap-[5px] ${isOpen ? 'hamburger-open' : ''}`}>
+                <div className={`flex flex-col gap-[5px] ${isOpen || anyOverlayOpen ? 'hamburger-open' : ''}`} aria-hidden="true">
                   <span className="hamburger-line line-top" />
                   <span className="hamburger-line line-mid" />
                   <span className="hamburger-line line-bot" />
@@ -531,6 +549,9 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
           {/* Close button */}
           <button
             onClick={closeMenu}
+            type="button"
+            aria-label="Close navigation"
+            className="flex size-11 items-center justify-center"
             style={{
               position: 'absolute', top: '12px',
               right: 'clamp(28px, calc(-645px + 49.82vw), 305px)',
@@ -824,10 +845,10 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
                       <span>Browse all experiences</span><span className="exp-arr" aria-hidden="true">›</span>
                     </Link>
                     {categories.map(cat => (
-                      <div key={cat.id} className="exp-cat-row" onClick={() => { setActiveCategory(cat); setExpPortraitPage(2); }}>
+                      <button key={cat.id} type="button" className="exp-cat-row" onClick={() => { setActiveCategory(cat); setExpPortraitPage(2); }}>
                         <span>{cat.name}</span>
-                        <span className="exp-arr">›</span>
-                      </div>
+                        <span className="exp-arr" aria-hidden="true">›</span>
+                      </button>
                     ))}
                   </div>
                 )}
