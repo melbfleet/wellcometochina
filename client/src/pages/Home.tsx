@@ -90,7 +90,7 @@ export default function Home() {
     ? heroBackgroundImages
     : (apiBanners && apiBanners.length > 0) ? apiBanners.map((b) => b.url) : [FALLBACK_BANNER];
   const heroTitle = homepageData?.hero?.title || 'Private, Tailor-Made Journeys Across China';
-  const heroSubtitle = homepageData?.hero?.subtitle || 'We plan private trips for couples, families and business travellers, with local knowledge and careful attention to the details that matter to you.';
+  const heroSubtitle = homepageData?.hero?.subtitle || 'Choose one of our multi-day itineraries, or have our local team design a private trip elsewhere in China around your group, interests and needs.';
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -206,7 +206,7 @@ export default function Home() {
           <div className="mx-auto max-w-6xl">
             <h2 id="sample-trips-heading" className="mb-3 font-display text-4xl uppercase md:text-5xl">Explore Our Trips</h2>
             <p className="mb-7 max-w-xl text-[#EEE8E1]">
-              Use these sample routes as a starting point. Our local team can tailor the dates, experiences and pace to your private trip.
+              Explore our planned multi-day routes for a clear idea of what each trip includes. Our local team can adjust a route for you or design a private itinerary for another destination.
             </p>
             <SampleTripCards trips={exploreTrips} />
           </div>
