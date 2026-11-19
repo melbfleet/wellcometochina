@@ -2,15 +2,7 @@ import { useParams, useLocation } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-
-function toSlug(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
+import { toRouteSlug } from '@/lib/slug';
 
 export default function ExperienceCategoryPage() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
@@ -19,7 +11,7 @@ export default function ExperienceCategoryPage() {
   const { data: navData } = trpc.cms.listExperienceTypesWithNav.useQuery();
 
   // 找到匹配的类型
-  const category = navData?.find(t => toSlug(t.name) === categorySlug);
+  const category = navData?.find(t => toRouteSlug(t.name) === categorySlug);
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', display: 'flex', flexDirection: 'column' }}>

@@ -324,13 +324,12 @@ export default function TeaMountains() {
           <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' }}>
             {[
               { label: 'WHEN', value: 'March – May & Sept – Nov', color: '#f49e0b' },
-              { label: 'PRICE', value: 'From $550 per person', sub: '(based on 2 sharing)', color: '#1d902b' },
+              { label: 'PRICE', value: 'From $550 per person', color: '#1d902b' },
               { label: 'HOW LONG', value: '3 – 5 days ideal', color: '#2c6faa' },
             ].map(m => (
               <div key={m.label} style={{ textAlign: 'center', flex: 1 }}>
                 <p style={{ fontSize: 18, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: m.color, marginBottom: 10 }}>{m.label}</p>
                 <p style={{ fontFamily: 'Manrope', fontStyle: 'italic', fontSize: 15, color: '#6B6B6B', lineHeight: 1.5 }}>{m.value}</p>
-                {m.sub && <p style={{ fontFamily: "Georgia, serif", fontStyle: 'italic', fontSize: 13, color: '#888', marginTop: 4 }}>{m.sub}</p>}
               </div>
             ))}
           </div>
