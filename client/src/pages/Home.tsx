@@ -204,7 +204,7 @@ export default function Home() {
                   <span>
                     <span className="block text-base font-semibold leading-tight">View Multi-Day Itineraries</span>
                     <span className="mt-1 block text-sm leading-tight text-[#58524D]">
-                      {featuredTrips.length === familySampleTripSlugs.size ? 'Changzhou & Zhuhai' : 'Explore our planned routes'}
+                      Explore our signature multi-day trip
                     </span>
                   </span>
                   <ArrowRight size={19} className="shrink-0" aria-hidden="true" />
