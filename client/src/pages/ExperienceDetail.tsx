@@ -451,7 +451,6 @@ export default function ExperienceDetail() {
               <div style={{ textAlign: 'center', flex: 1 }}>
                 <p style={{ fontFamily: EXP_DISPLAY, fontSize: 30, fontWeight: 400, letterSpacing: '2.6px', lineHeight: 1, textTransform: 'uppercase', color: EXP_GREEN, marginBottom: 10 }}>Price</p>
                 <p style={{ fontFamily: EXP_SANS, fontStyle: 'italic', fontSize: 17, fontWeight: 400, letterSpacing: '0.85px', color: EXP_TEXT, lineHeight: 1.5 }}>{exp?.price}</p>
-                <p style={{ fontFamily: EXP_SANS, fontStyle: 'italic', fontSize: 13, color: '#888', marginTop: 4, letterSpacing: '0.85px' }}>(based on 2 sharing)</p>
               </div>
             )}
             {exp?.duration && (

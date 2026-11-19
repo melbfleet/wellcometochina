@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { trpc } from '@/lib/trpc';
 import { Link, useLocation } from 'wouter';
 import { X, ChevronLeft } from 'lucide-react';
+import { toRouteSlug as toSlug } from '@/lib/slug';
 
 /**
  * Navigation Component — Detached overlay architecture
@@ -17,16 +18,6 @@ interface Destination {
   experiences: string[];
   route?: string;
   experienceRoutes?: { label: string; route: string }[];
-}
-
-// ── Slug helper ────────────────────────────────────────────────────────────
-function toSlug(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+|-+$/g, '');
 }
 
 // ── Experiences data (dynamic) ─────────────────────────────────────────────
@@ -776,7 +767,10 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
               {/* Landscape */}
               <div className="exp-landscape-layout" style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
                 {/* Col 1 */}
-                <div style={{ flexShrink: 0, overflowY: 'hidden', paddingTop: '60px', paddingBottom: '40px', paddingRight: '20px', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', width: '320px', boxSizing: 'content-box', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                <div style={{ flexShrink: 0, overflowY: 'auto', paddingTop: '60px', paddingBottom: '40px', paddingRight: '20px', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', width: '320px', boxSizing: 'content-box', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                  <Link href="/experiences" className="exp-cat-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
+                    <span>Browse all experiences</span><span className="exp-arr" aria-hidden="true">›</span>
+                  </Link>
                   {categories.length === 0 ? (
                     <div style={{ color: '#aaa', fontFamily: NAV_SANS, fontSize: '13px', paddingTop: '8px' }}>Loading...</div>
                   ) : categories.map(cat => (
@@ -826,6 +820,9 @@ export default function Navigation({ forceHide = false, darkText = false }: Navi
               <div className="exp-portrait-layout" style={{ flex: 1, flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
                 {expPortraitPage === 1 && (
                   <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', paddingTop: '60px', paddingBottom: '40px', paddingLeft: '32px', paddingRight: '64px', display: 'flex', flexDirection: 'column' }}>
+                    <Link href="/experiences" className="exp-cat-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
+                      <span>Browse all experiences</span><span className="exp-arr" aria-hidden="true">›</span>
+                    </Link>
                     {categories.map(cat => (
                       <div key={cat.id} className="exp-cat-row" onClick={() => { setActiveCategory(cat); setExpPortraitPage(2); }}>
                         <span>{cat.name}</span>
