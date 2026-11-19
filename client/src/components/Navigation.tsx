@@ -366,7 +366,7 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
               {[
                 { label: 'Destinations', key: 'destinations' as const },
                 { label: 'Experiences', key: 'experiences' as const },
-                { label: 'Travel Services', key: 'wayToTravel' as const },
+                { label: 'Signature Extras', key: 'wayToTravel' as const },
               ].map(item => (
                 <button
                   key={item.key}
@@ -462,7 +462,7 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
                 {[
                   { label: 'Destinations', key: 'destinations' as const },
                   { label: 'Experiences', key: 'experiences' as const },
-                  { label: 'Travel Services', key: 'wayToTravel' as const },
+                  { label: 'Signature Extras', key: 'wayToTravel' as const },
                 ].map(item => (
                   <button
                     key={item.key}
@@ -559,7 +559,7 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
                 {/* Col 1 */}
                 <div style={{ flexShrink: 0, overflowY: 'hidden', paddingTop: '60px', paddingBottom: '40px', paddingRight: '20px', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', width: '320px', boxSizing: 'content-box', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
                   <Link href="/ways-to-travel" className="exp-cat-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
-                    <span>View all travel services</span><span className="exp-arr" aria-hidden="true">›</span>
+                    <span>View all signature extras</span><span className="exp-arr" aria-hidden="true">›</span>
                   </Link>
                   {wayToTravelCategories.length === 0 ? (
                     <div style={{ color: '#aaa', fontFamily: NAV_SANS, fontSize: '13px', paddingTop: '8px' }}>Loading...</div>
@@ -611,7 +611,7 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
                 {wayToTravelPortraitPage === 1 && (
                   <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', paddingTop: '60px', paddingBottom: '40px', paddingLeft: '32px', paddingRight: '64px', display: 'flex', flexDirection: 'column' }}>
                     <Link href="/ways-to-travel" className="exp-cat-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
-                      <span>View all travel services</span><span className="exp-arr" aria-hidden="true">›</span>
+                      <span>View all signature extras</span><span className="exp-arr" aria-hidden="true">›</span>
                     </Link>
                     {wayToTravelCategories.map(cat => (
                       <div key={cat.id} className="exp-cat-row" onClick={() => { setActiveWayToTravelCategory(cat); setWayToTravelPortraitPage(2); }}>
