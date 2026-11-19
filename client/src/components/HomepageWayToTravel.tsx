@@ -42,7 +42,7 @@ export default function HomepageWayToTravel({ settings }: HomepageWayToTravelPro
             margin: 0,
           }}
         >
-          {settings?.title || "Travel Services"}
+          {settings?.title || "Signature Extras"}
         </h2>
 
         {settings?.subtitle && (
