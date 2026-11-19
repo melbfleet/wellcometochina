@@ -280,6 +280,7 @@ export default function Contact() {
   const officeHoursNote = contactSettings?.officeHoursNote;
 
   const query = new URLSearchParams(useSearch());
+  const isTailorMade = query.get('trip') === 'tailor-made';
   const experience = query.get('experience')?.trim().slice(0, 180);
   const destination = query.get('destination')?.trim().slice(0, 120);
 
@@ -469,10 +470,12 @@ export default function Contact() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-5xl md:text-6xl font-bold mb-3 uppercase tracking-widest text-[#1a1a1a]" style={{color: '#2e2e2e', fontSize: '35px', fontFamily: 'Manrope'}}>
-              Plan Your Journey
+              {isTailorMade ? 'Plan Your Private Trip' : 'Plan Your Journey'}
             </h1>
             <p className="text-[#555555] max-w-2xl mx-auto text-lg leading-relaxed" style={{color: '#6b6b6b', fontSize: '15px', fontFamily: 'Lato, sans-serif'}}>
-              Tell us a little about your trip and we’ll be in touch to discuss the details.
+              {isTailorMade
+                ? 'Tell us where in China you’d like to go, who’s travelling and what you enjoy. Our local team will be in touch to discuss a trip tailored to you.'
+                : 'Tell us a little about your trip and we’ll be in touch to discuss the details.'}
             </p>
             {experience && <p className="mt-4 text-sm font-semibold text-[#333333]">Enquiring about {experience}</p>}
           </div>
@@ -496,7 +499,7 @@ export default function Contact() {
                       {...fieldProps('destination')}
                       value={formData.destination}
                       onChange={handleInputChange}
-                      placeholder="Enter cities or regions"
+                      placeholder={isTailorMade ? 'Enter cities, regions or “Not sure yet”' : 'Enter cities or regions'}
                       className={`w-full px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.destination ? '!border-red-400' : ''}`}
                     />
                     {fieldError('destination')}
