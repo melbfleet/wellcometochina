@@ -148,6 +148,10 @@ async function startServer() {
     if (req.path.startsWith("/admin") || req.path.startsWith("/api") || req.path.startsWith("/manus-storage") || req.path.startsWith("/uploads")) {
       return next();
     }
+    // These details use live publication status rather than stored page snapshots.
+    if (/^\/(?:destinations|itinerary)\//i.test(req.path)) {
+      return next();
+    }
     const routePath = req.path === "/" ? "/index.html" : `${req.path.replace(/\/$/, "")}/index.html`;
     const filePath = path.join(staticCacheDir, routePath);
     if (fs.existsSync(filePath)) {
