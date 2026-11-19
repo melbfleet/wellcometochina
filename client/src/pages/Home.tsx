@@ -195,30 +195,30 @@ export default function Home() {
             >
               {heroSubtitle}
             </p>
-            <div className="mx-auto mt-6 grid w-full max-w-sm gap-3 text-left sm:max-w-[38rem] sm:grid-flow-col sm:auto-cols-fr">
+            <div className="mx-auto mt-4 grid w-[92%] max-w-72 gap-2 text-left sm:mt-6 sm:w-full sm:max-w-[38rem] sm:grid-flow-col sm:auto-cols-fr sm:gap-3">
               {showExploreTrips && (
                 <a
                   href="#sample-trips-heading"
-                  className="group flex min-h-16 items-center justify-between gap-3 rounded-sm border border-white bg-white px-4 py-2.5 text-[#24201D] hover:bg-[#F5F3EF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="group flex min-h-12 items-center justify-between gap-2 rounded-sm sm:min-h-16 sm:gap-3 border border-white bg-white px-3 py-1.5 sm:px-4 sm:py-2.5 text-[#24201D] hover:bg-[#F5F3EF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   <span>
-                    <span className="block text-base font-semibold leading-tight">View Multi-Day Itineraries</span>
-                    <span className="mt-1 block text-sm leading-tight text-[#58524D]">
+                    <span className="block text-sm font-semibold leading-tight sm:text-base">View Multi-Day Itineraries</span>
+                    <span className="mt-0.5 block text-xs leading-tight sm:mt-1 sm:text-sm text-[#58524D]">
                       Explore our signature multi-day trip
                     </span>
                   </span>
-                  <ArrowRight size={19} className="shrink-0" aria-hidden="true" />
+                  <ArrowRight size={19} className="size-4 shrink-0 sm:size-[19px]" aria-hidden="true" />
                 </a>
               )}
               <Link
                 href="/make-an-enquiry?trip=tailor-made"
-                className="group flex min-h-16 items-center justify-between gap-3 rounded-sm border border-white/80 bg-[#24201D] px-4 py-2.5 text-white hover:bg-[#37302B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="group flex min-h-12 items-center justify-between gap-2 rounded-sm sm:min-h-16 sm:gap-3 border border-white/80 bg-[#24201D] px-3 py-1.5 sm:px-4 sm:py-2.5 text-white hover:bg-[#37302B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 <span>
-                  <span className="block text-base font-semibold leading-tight">Enquire About a Private Trip</span>
-                  <span className="mt-1 block text-sm leading-tight text-[#EEE8E1]">Tailor-made trips to other cities</span>
+                  <span className="block text-sm font-semibold leading-tight sm:text-base">Enquire About a Private Trip</span>
+                  <span className="mt-0.5 block text-xs leading-tight sm:mt-1 sm:text-sm text-[#EEE8E1]">Tailor-made trips to other cities</span>
                 </span>
-                <ArrowRight size={19} className="shrink-0" aria-hidden="true" />
+                <ArrowRight size={19} className="size-4 shrink-0 sm:size-[19px]" aria-hidden="true" />
               </Link>
             </div>
           </div>
