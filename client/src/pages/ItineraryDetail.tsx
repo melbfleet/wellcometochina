@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useParams } from 'wouter';
+import { useLocation, useParams, useSearch } from 'wouter';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -508,8 +508,9 @@ export default function ItineraryDetail() {
   const [activeSection, setActiveSection] = useState('overview');
   const getObjectPosition = useMediaObjectPosition();
 
+  const preview = new URLSearchParams(useSearch()).get('preview') === '1';
   const { data: itin, isLoading, error } = trpc.cms.getItineraryBySlug.useQuery(
-    { slug: slug! },
+    { slug: slug!, preview },
     { enabled: !!slug }
   );
   const { data: homepageAssets } = trpc.media.getHomepageAssets.useQuery();

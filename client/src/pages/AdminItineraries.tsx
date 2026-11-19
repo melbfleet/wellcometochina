@@ -442,7 +442,7 @@ function ItineraryForm({ initial, onSave, onCancel, saving, title }: {
   const SaveBar = () => (
     <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
       <a
-        href={form.slug ? `/itinerary/${form.slug}` : undefined}
+        href={form.slug ? `/itinerary/${form.slug}?preview=1` : undefined}
         target="_blank"
         rel="noopener noreferrer"
         onClick={e => { if (!form.slug) e.preventDefault(); }}
@@ -870,7 +870,7 @@ export default function AdminItineraries() {
                     ) : (
                       <>
                         <button
-                          onClick={() => navigate(`/itinerary/${itin.slug}`)}
+                          onClick={() => navigate(`/itinerary/${itin.slug}?preview=1`)}
                           style={{ background: "none", border: "1px solid #ddd", cursor: "pointer", color: "#888", padding: "5px 8px", fontSize: "11px" }}
                         >
                           Preview

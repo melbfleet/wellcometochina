@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useParams } from 'wouter';
+import { useLocation, useParams, useSearch } from 'wouter';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -150,8 +150,9 @@ export default function CityPage() {
   const getObjectPosition = useMediaObjectPosition();
 
   // Fetch city data by slug
+  const preview = new URLSearchParams(useSearch()).get('preview') === '1';
   const { data: city, isLoading: cityLoading, error: cityError } = trpc.cms.getCityBySlug.useQuery(
-    { slug: slug || '' },
+    { slug: slug || '', preview },
     { enabled: !!slug }
   );
 

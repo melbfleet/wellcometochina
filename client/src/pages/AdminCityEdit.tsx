@@ -189,7 +189,12 @@ export default function AdminCityEdit() {
 
   const handleSave = () => {
     setSaving(true);
-    updateCity.mutate({ id: cityId, ...form, slug: normalizeSlug(form.slug || form.name) });
+    const enteredSlug = form.slug.trim();
+    // Preserve existing valid URLs, including ones with consecutive hyphens.
+    const slug = /^[a-z0-9]+(?:-+[a-z0-9]+)*$/.test(enteredSlug)
+      ? enteredSlug
+      : normalizeSlug(enteredSlug || form.name);
+    updateCity.mutate({ id: cityId, ...form, slug });
   };
 
   const [addExpId, setAddExpId] = useState<number | null>(null);
@@ -269,7 +274,7 @@ export default function AdminCityEdit() {
               <TextInput value={form.name} onChange={v => set("name", v)} placeholder="e.g. Chengdu" />
             </Field>
             <Field label="URL Slug *">
-              <TextInput value={form.slug} onChange={v => set("slug", normalizeSlug(v))} placeholder="e.g. chengdu" />
+              <TextInput value={form.slug} onChange={v => set("slug", v)} placeholder="e.g. chengdu" />
               <p style={{ margin: "6px 0 0", fontSize: "11px", lineHeight: 1.5, color: "#999" }}>
                 {SLUG_HELP_TEXT}
               </p>
@@ -582,7 +587,7 @@ export default function AdminCityEdit() {
           </button>
           {city?.slug && (
             <button
-              onClick={() => window.open(`/destinations/${city.slug}`, '_blank')}
+              onClick={() => window.open(`/destinations/${city.slug}?preview=1`, '_blank')}
               style={{
                 display: "flex", alignItems: "center", gap: "8px",
                 padding: "10px 28px", fontSize: "12px", letterSpacing: "0.1em", textTransform: "uppercase",
