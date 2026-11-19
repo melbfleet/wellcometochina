@@ -12,6 +12,7 @@ interface SampleTrip {
   name: string;
   place: string | null;
   howLong: string | null;
+  shortDescription: string | null;
   coverImage: string | null;
   bannerImage: string | null;
 }
@@ -45,6 +46,7 @@ export default function SampleTripCards({ trips }: { trips: SampleTrip[] }) {
               <div className="flex flex-1 flex-col items-start gap-2 p-5 sm:p-6">
                 {tripDetails && <p className="text-sm text-[#58524D]">{tripDetails}</p>}
                 <h3 className="font-display text-2xl leading-tight">{trip.name}</h3>
+                {trip.shortDescription && <p className="text-sm leading-relaxed text-[#58524D]">{trip.shortDescription}</p>}
                 <span className="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-semibold group-hover:underline">
                   View itinerary <ArrowRight size={16} aria-hidden="true" />
                 </span>
