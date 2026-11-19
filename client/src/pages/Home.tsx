@@ -89,8 +89,8 @@ export default function Home() {
   const activeBanners = heroBackgroundImages.length > 0
     ? heroBackgroundImages
     : (apiBanners && apiBanners.length > 0) ? apiBanners.map((b) => b.url) : [FALLBACK_BANNER];
-  const heroTitle = homepageData?.hero?.title || 'The Immersive China Experts';
-  const heroSubtitle = homepageData?.hero?.subtitle || 'Tailor-made experiences, crafted with local insight.';
+  const heroTitle = homepageData?.hero?.title || 'Private, Tailor-Made Journeys Across China';
+  const heroSubtitle = homepageData?.hero?.subtitle || 'We plan private trips for couples, families and business travellers, with local knowledge and careful attention to the details that matter to you.';
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -193,8 +193,8 @@ export default function Home() {
             >
               {heroSubtitle}
             </p>
-            <Link href="/experiences" className="mt-6 inline-flex min-h-11 items-center rounded-sm bg-white px-5 text-sm font-semibold text-[#24201d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:hidden">
-              Explore experiences
+            <Link href="/make-an-enquiry" className="mt-6 inline-flex min-h-11 items-center rounded-sm bg-white px-6 text-sm font-semibold text-[#24201d] hover:bg-[#F5F3EF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+              Discuss Your Trip
             </Link>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function Home() {
           <div className="mx-auto max-w-6xl">
             <h2 id="sample-trips-heading" className="mb-3 font-display text-4xl uppercase md:text-5xl">Explore Our Trips</h2>
             <p className="mb-7 max-w-xl text-[#EEE8E1]">
-              Browse our sample itineraries for ideas for your own tailor-made trip to China.
+              Use these sample routes as a starting point. Our local team can tailor the dates, experiences and pace to your private trip.
             </p>
             <SampleTripCards trips={exploreTrips} />
           </div>

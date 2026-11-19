@@ -8,12 +8,14 @@ import { trpc } from "@/lib/trpc";
 import { useMediaObjectPosition } from "@/lib/media-position";
 import "./WaysToTravel.css";
 
-const CATEGORY_COPY: Record<string, { eyebrow: string }> = {
+const CATEGORY_COPY: Record<string, { eyebrow: string; description?: string }> = {
   "family-educational-travel": {
-    eyebrow: "Featured Collection",
+    eyebrow: "Travel Together",
+    description: "Private family holidays and educational programmes, shaped around the ages, interests and needs of your group.",
   },
   "business-concierge": {
-    eyebrow: "Business Access",
+    eyebrow: "Business Travel in China",
+    description: "Tailor-made programmes for business travellers and delegations, with local support for company visits, meetings, interpretation and transport.",
   },
   "culture-heritage-experiences": {
     eyebrow: "Curated Experiences",
@@ -60,7 +62,7 @@ export default function WaysToTravel() {
         <header className="wtt-intro">
           <h1>Ways to Travel</h1>
           <p className="wtt-lead">
-            Discover China through curated experiences, cultural immersion, business access and restorative journeys.
+            Plan a private journey in China around what brings you here, from a family holiday or cultural experience to business travel and specialist visits.
           </p>
         </header>
 
@@ -103,6 +105,7 @@ export default function WaysToTravel() {
                     <div className="wtt-collection-copy">
                       <p className="wtt-collection-kicker">{copy?.eyebrow || "Curated Collection"}</p>
                       <h2>{type.name}</h2>
+                      {copy?.description && <p className="mb-5 max-w-prose leading-relaxed">{copy.description}</p>}
                       <div className="wtt-link-list">
                         {type.items.map(item => (
                           <Link

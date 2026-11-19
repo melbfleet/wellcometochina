@@ -551,7 +551,7 @@ export default function WayToTravelDetail() {
         {exp && !isCompanyDisplay && familyTrips.length > 0 && (
           <section className="mx-auto mb-12 max-w-6xl px-4 sm:px-8" aria-labelledby="family-itineraries-heading">
             <h2 id="family-itineraries-heading" className="mb-3 font-display text-4xl uppercase text-black">Sample Family Itineraries</h2>
-            <p className="mb-6 text-[#58524D]">Explore these example routes as a starting point for your family's trip.</p>
+            <p className="mb-6 text-[#58524D]">See how a private family holiday might work. We can adapt either route to your children’s ages, your interests and the pace you prefer.</p>
             <SampleTripCards trips={familyTrips} />
           </section>
         )}
