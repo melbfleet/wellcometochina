@@ -9,6 +9,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useParams } from 'wouter';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import SampleTripCards, { familySampleTripSlugs } from '@/components/SampleTripCards';
 import { trpc } from '@/lib/trpc';
 import { useMediaObjectPosition } from '@/lib/media-position';
 
@@ -434,6 +435,10 @@ export default function WayToTravelDetail() {
     { enabled: !!slug }
   );
 
+  const isFamilyTravel = slug === 'family-travel';
+  const { data: itineraries = [] } = trpc.cms.listItineraries.useQuery(undefined, { enabled: isFamilyTravel });
+  const familyTrips = isFamilyTravel ? itineraries.filter(trip => familySampleTripSlugs.has(trip.slug)) : [];
+
   // Fetch CTA background image from Media Library
   const { data: homepageAssets } = trpc.media.getHomepageAssets.useQuery();
   const ctaTexture = (homepageAssets as any)?.cta?.url || '';
@@ -541,6 +546,14 @@ export default function WayToTravelDetail() {
               </p>
             )}
           </div>
+        )}
+
+        {exp && !isCompanyDisplay && familyTrips.length > 0 && (
+          <section className="mx-auto mb-12 max-w-6xl px-4 sm:px-8" aria-labelledby="family-itineraries-heading">
+            <h2 id="family-itineraries-heading" className="mb-3 font-display text-4xl uppercase text-black">Sample Family Itineraries</h2>
+            <p className="mb-6 text-[#58524D]">Explore these example routes as a starting point for your family's trip.</p>
+            <SampleTripCards trips={familyTrips} />
+          </section>
         )}
 
         {/* Detail blocks — auto alternating left/right */}
