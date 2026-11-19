@@ -172,6 +172,7 @@ export async function listCitiesWithExperiences() {
     .from(cityExperiences)
     .leftJoin(experiences, eq(cityExperiences.experienceId, experiences.id))
     .leftJoin(experienceTypes, eq(experiences.typeId, experienceTypes.id))
+    .where(eq(experiences.isActive, true))
     .orderBy(cityExperiences.cityId, cityExperiences.sortOrder);
 
   // Group experiences by cityId
@@ -267,7 +268,7 @@ export async function reorderCity(id: number, newSortOrder: number) {
 }
 
 // ─── City Experiences (城市与体验项目的关联) ────────────────────────────────────────────────────────────────
-export async function listCityExperiences(cityId: number) {
+export async function listCityExperiences(cityId: number, includeInactive = true) {
   const db = await getDb();
   if (!db) return [];
   const rows = await db
@@ -284,7 +285,7 @@ export async function listCityExperiences(cityId: number) {
     })
     .from(cityExperiences)
     .leftJoin(experiences, eq(cityExperiences.experienceId, experiences.id))
-    .where(eq(cityExperiences.cityId, cityId))
+    .where(and(eq(cityExperiences.cityId, cityId), includeInactive ? undefined : eq(experiences.isActive, true)))
     .orderBy(cityExperiences.sortOrder);
   return rows;
 }
@@ -309,7 +310,7 @@ export async function removeCityExperience(id: number) {
 }
 
 // ─── City What to See and Do ──────────────────────────────────────────────────────
-export async function listCityWhatToSee(cityId: number) {
+export async function listCityWhatToSee(cityId: number, includeInactive = true) {
   const db = await getDb();
   if (!db) return [];
   const rows = await db
@@ -328,7 +329,7 @@ export async function listCityWhatToSee(cityId: number) {
     .from(cityWhatToSee)
     .leftJoin(experiences, eq(cityWhatToSee.experienceId, experiences.id))
     .leftJoin(experienceTypes, eq(experiences.typeId, experienceTypes.id))
-    .where(eq(cityWhatToSee.cityId, cityId))
+    .where(and(eq(cityWhatToSee.cityId, cityId), includeInactive ? undefined : eq(experiences.isActive, true)))
     .orderBy(cityWhatToSee.sortOrder);
   return rows;
 }
@@ -452,11 +453,13 @@ export async function listExperiences(includeInactive = false) {
   return await db.select().from(experiences).orderBy(experiences.sortOrder, experiences.name);
 }
 
-export async function listExperiencesByType(typeId: number) {
+export async function listExperiencesByType(typeId: number, includeInactive = true) {
   await ensureEditableCtaColumns();
   const db = await getDb();
   if (!db) return [];
-  return await db.select().from(experiences).where(eq(experiences.typeId, typeId)).orderBy(experiences.sortOrder, experiences.name);
+  return await db.select().from(experiences)
+    .where(and(eq(experiences.typeId, typeId), includeInactive ? undefined : eq(experiences.isActive, true)))
+    .orderBy(experiences.sortOrder, experiences.name);
 }
 
 export async function listExperiencesByCity(cityId: number) {

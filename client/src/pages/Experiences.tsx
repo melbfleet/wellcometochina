@@ -36,7 +36,7 @@ export default function Experiences() {
         <header className="mx-auto max-w-5xl px-6 pb-10 pt-28 text-center sm:pt-36">
           <h1 className="font-display text-[clamp(1.95rem,10vw,3rem)] uppercase tracking-wide sm:text-6xl">Experiences</h1>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[#5b554f] sm:text-lg">
-            Explore the things you can do on a tailor-made trip through China, from tea hills and village crafts to coastal walks and family days out.
+            Find individual activities to add to your China itinerary, from visiting tea growers and learning local crafts to coastal walks and family days out.
           </p>
           {categories.length > 0 && (
             <nav aria-label="Experience categories" className="mt-8 flex flex-wrap justify-center gap-2.5">

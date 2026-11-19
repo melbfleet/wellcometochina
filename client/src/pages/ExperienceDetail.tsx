@@ -6,7 +6,8 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link, useParams } from 'wouter';
+import { Link, Redirect, useParams } from 'wouter';
+import { CHANGZHOU_FAMILY_ITINERARY_SLUG } from '@shared/const';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { trpc } from '@/lib/trpc';
@@ -370,11 +371,18 @@ function SimilarCarousel({ items, bgImage }: { items: any[]; bgImage: string }) 
 // ── Main Page ──────────────────────────────────────────────────────────────────
 export default function ExperienceDetail() {
   const params = useParams<{ id?: string; categorySlug?: string; slug?: string }>();
-  const slug = params.id ?? params.slug ?? params.categorySlug ?? '';
+  const slug = params.id ?? params.slug ?? '';
+  if (params.id === CHANGZHOU_FAMILY_ITINERARY_SLUG) {
+    return <Redirect to={`/itinerary/${CHANGZHOU_FAMILY_ITINERARY_SLUG}`} replace />;
+  }
+  return <ExperienceDetailContent slug={slug} preview={Boolean(params.slug)} />;
+}
+
+function ExperienceDetailContent({ slug, preview }: { slug: string; preview: boolean }) {
   const getObjectPosition = useMediaObjectPosition();
 
   const { data: exp, isLoading, isError } = trpc.cms.getExperienceBySlug.useQuery(
-    { slug },
+    { slug, preview },
     { enabled: !!slug }
   );
 

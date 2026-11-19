@@ -10,16 +10,6 @@ import { toRouteSlug as toSlug } from '@/lib/slug';
  * Logo: Only shows when fully loaded, blank otherwise.
  */
 
-// ── Destinations data ──────────────────────────────────────────────────────
-interface Destination {
-  id: string;
-  name: string;
-  previewImage: string;
-  experiences: string[];
-  route?: string;
-  experienceRoutes?: { label: string; route: string }[];
-}
-
 // ── Experiences data (dynamic) ─────────────────────────────────────────────
 interface ExperienceItem {
   label: string;
@@ -108,38 +98,12 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
     }));
   }, [aboutSections]);
 
-  // 动态加载城市列表及其体验（不使用静态 fallback，避免闪现）
-  const { data: citiesData } = trpc.cms.listCitiesWithExperiences.useQuery();
-  const activeDestinations: Destination[] = useMemo(() => {
-    if (!citiesData) return []; // 加载中 → 空数组，不显示静态数据
-    return citiesData
-      .map(city => {
-        const experienceRoutes = city.experiences
-          .filter(e => e.name && e.slug && e.typeName)
-          .map(e => ({ label: e.name || '', route: `/experiences/${toSlug(e.typeName || '')}/${e.slug}` }));
-        return {
-          id: String(city.id),
-          name: city.name,
-          previewImage: city.cityCardImage || city.coverImage || '',
-          route: `/destinations/${city.slug}`,
-          experiences: experienceRoutes.map(e => e.label),
-          experienceRoutes,
-        };
-      })
-      .filter(city => city.experienceRoutes.length > 0);
-  }, [citiesData]);
-
-  const [activeDestination, setActiveDestination] = useState<Destination | null>(null);
-
-  // 当动态数据加载完成后，默认选中第一个
-  useEffect(() => {
-    if (activeDestinations.length > 0 && (!activeDestination || !activeDestinations.some(dest => dest.id === activeDestination.id))) {
-      setActiveDestination(activeDestinations[0]);
-    }
-  }, [activeDestinations, activeDestination]);
+  const { data: destinations = [] } = trpc.cms.listCitiesWithExperiences.useQuery();
+  const [previewDestinationId, setPreviewDestinationId] = useState<number | null>(null);
+  const previewDestination = destinations.find(city => city.id === previewDestinationId) ?? destinations[0];
+  const destinationImage = previewDestination?.cityCardImage || previewDestination?.coverImage;
   const [activeCategory, setActiveCategory] = useState<ExperienceCategory | null>(null);
   const [activeWayToTravelCategory, setActiveWayToTravelCategory] = useState<ExperienceCategory | null>(null);
-  const [destPortraitPage, setDestPortraitPage] = useState<1 | 2>(1);
   const [expPortraitPage, setExpPortraitPage] = useState<1 | 2>(1);
   const [wayToTravelPortraitPage, setWayToTravelPortraitPage] = useState<1 | 2>(1);
 
@@ -226,8 +190,7 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
     } else {
       setActiveMenu(menu);
       if (menu === 'destinations') {
-        setActiveDestination(activeDestinations[0] ?? null);
-        setDestPortraitPage(1);
+        setPreviewDestinationId(null);
       } else if (menu === 'experiences') {
         setActiveCategory(null); // 重置为 null，自动选中第一个
         setExpPortraitPage(1);
@@ -299,21 +262,10 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
           opacity: 1; transform: translateX(4px);
         }
 
-        /* Row styles — dest experiences (col 2) */
-        .bt-exp-row {
-          display: flex; align-items: center; justify-content: space-between;
-          padding: 5px 0; cursor: pointer;
-          font-family: var(--font-travel-sans, 'Cabin', 'Helvetica Neue', Arial, sans-serif);
-          font-size: 17px; font-weight: 500;
-          letter-spacing: 0.05em; color: #444;
-          transition: color 0.15s; white-space: nowrap;
+        .destination-menu-list {
+          width: 320px; box-sizing: content-box; flex-shrink: 0; overflow-y: auto;
+          padding: 60px 20px 40px clamp(28px, calc(-645px + 49.82vw), 305px);
         }
-        .bt-exp-row:hover { color: #F5569B; }
-        .bt-exp-row .bt-arr {
-          font-size: 20px; margin-left: 10px; opacity: 0.4;
-          transition: opacity 0.15s, transform 0.2s; flex-shrink: 0;
-        }
-        .bt-exp-row:hover .bt-arr { opacity: 1; transform: translateX(4px); }
 
         /* Row styles — experiences categories (col 1) */
         .exp-cat-row {
@@ -358,14 +310,16 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
 
         /* Responsive: hide landscape cols on narrow screens */
         @media (max-width: 900px) {
-          .bt-preview-col, .bt-landscape-layout,
+          .bt-preview-col,
           .exp-preview-col, .exp-landscape-layout { display: none !important; }
-          .bt-portrait-layout, .exp-portrait-layout { display: flex !important; }
+          .exp-portrait-layout { display: flex !important; }
+          .destination-menu-list { width: 100%; box-sizing: border-box; padding: 60px 32px 40px; }
+          .destination-menu-list .bt-dest-row { min-height: 44px; white-space: normal; }
           .exp-portrait-layout .exp-cat-row, .exp-portrait-layout .exp-sub-row {
             min-height: 44px; white-space: normal; text-align: left;
           }
         }
-        .bt-portrait-layout, .exp-portrait-layout { display: none; }
+        .exp-portrait-layout { display: none; }
       `}</style>
 
       {/* ── Nav bar — always 55px ── */}
@@ -412,7 +366,7 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
               {[
                 { label: 'Destinations', key: 'destinations' as const },
                 { label: 'Experiences', key: 'experiences' as const },
-                { label: 'Way to Travel', key: 'wayToTravel' as const },
+                { label: 'Travel Services', key: 'wayToTravel' as const },
               ].map(item => (
                 <button
                   key={item.key}
@@ -508,7 +462,7 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
                 {[
                   { label: 'Destinations', key: 'destinations' as const },
                   { label: 'Experiences', key: 'experiences' as const },
-                  { label: 'Way to Travel', key: 'wayToTravel' as const },
+                  { label: 'Travel Services', key: 'wayToTravel' as const },
                 ].map(item => (
                   <button
                     key={item.key}
@@ -564,94 +518,37 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
           </button>
 
           {/* ── DESTINATIONS panel ── */}
-          {activeMenu === 'destinations' && activeDestination && (
-            <>
-              {/* Landscape */}
-              <div className="bt-landscape-layout" style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-                {/* Col 1 */}
-                <div style={{ flexShrink: 0, overflowY: 'auto', paddingTop: '60px', paddingBottom: '40px', paddingRight: '20px', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', width: '320px', boxSizing: 'content-box', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
-                  <Link href="/destinations" className="bt-dest-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
-                    <span>Browse all destinations</span><span className="bt-arr" aria-hidden="true">›</span>
+          {activeMenu === 'destinations' && (
+            <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+              <div className="destination-menu-list">
+                <Link href="/destinations" className="bt-dest-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
+                  <span>Browse all destinations</span><span className="bt-arr" aria-hidden="true">›</span>
+                </Link>
+                {destinations.map(city => (
+                  <Link
+                    key={city.id}
+                    href={`/destinations/${city.slug}`}
+                    className={`bt-dest-row${previewDestination?.id === city.id ? ' bt-active' : ''}`}
+                    style={{ textDecoration: 'none' }}
+                    onMouseEnter={() => setPreviewDestinationId(city.id)}
+                    onFocus={() => setPreviewDestinationId(city.id)}
+                    onClick={closeMenu}
+                  >
+                    <span>{city.name}</span><span className="bt-arr" aria-hidden="true">›</span>
                   </Link>
-                  {activeDestinations.map(dest => (
-                    <div
-                      key={dest.id}
-                      className={`bt-dest-row${activeDestination.id === dest.id ? ' bt-active' : ''}`}
-                      onMouseEnter={() => setActiveDestination(dest)}
-                      onClick={() => { if (dest.route) { closeMenu(); setLocation(dest.route); } }}
-                    >
-                      <span>{dest.name}</span>
-                      <span className="bt-arr">›</span>
-                    </div>
-                  ))}
-                </div>
-                {/* Col 2 */}
-                <div style={{ width: '360px', flexShrink: 0, overflowY: 'hidden', paddingTop: '60px', paddingBottom: '40px', paddingLeft: '14px', paddingRight: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
-                  {(activeDestination.experienceRoutes || activeDestination.experiences.map(e => ({ label: e, route: undefined }))).map((exp, i) => (
-                    <div
-                      key={i}
-                      className="bt-exp-row"
-                      style={{ cursor: (exp as any).route ? 'pointer' : 'default' }}
-                      onClick={() => { if ((exp as any).route) { closeMenu(); setLocation((exp as any).route); } }}
-                    >
-                      <span>{(exp as any).label || exp}</span>
-                      <span className="bt-arr">›</span>
-                    </div>
-                  ))}
-                </div>
-                {/* Col 3 */}
-                <div className="bt-preview-col" style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end', paddingTop: '60px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: 'clamp(28px, calc(-645px + 49.82vw), 305px)', overflow: 'hidden' }}>
-                  <div style={{ position: 'relative', width: '100%', maxWidth: '400px', height: '100%', maxHeight: '600px', overflow: 'hidden', flexShrink: 1 }}>
-                    <img
-                      key={activeDestination.id}
-                      src={activeDestination.previewImage}
-                      alt={activeDestination.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'right', transition: 'opacity 0.4s ease', display: 'block' }}
-                    />
-                  </div>
-                </div>
+                ))}
               </div>
-
-              {/* Portrait */}
-              <div className="bt-portrait-layout" style={{ flex: 1, flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
-                {destPortraitPage === 1 && (
-                  <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', paddingTop: '60px', paddingBottom: '40px', paddingLeft: '32px', paddingRight: '64px', display: 'flex', flexDirection: 'column' }}>
-                    <Link href="/destinations" className="bt-dest-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
-                      <span>Browse all destinations</span><span className="bt-arr" aria-hidden="true">›</span>
-                    </Link>
-                    {activeDestinations.map(dest => (
-                      <div key={dest.id} className="bt-dest-row" onClick={() => { setActiveDestination(dest); setDestPortraitPage(2); }}>
-                        <span>{dest.name}</span>
-                        <span className="bt-arr">›</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {destPortraitPage === 2 && (
-                  <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', paddingTop: '12px', paddingBottom: '40px', paddingLeft: '32px', paddingRight: '64px', display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', height: '32px', marginBottom: '28px' }}>
-                      <button onClick={() => setDestPortraitPage(1)} style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', color: '#222', fontFamily: NAV_SANS, fontSize: '13px', fontWeight: 700, letterSpacing: '0.065em', textTransform: 'uppercase', padding: 0 }}>
-                        <ChevronLeft size={16} /><span>Back</span>
-                      </button>
-                    </div>
-                    <div style={{ fontFamily: NAV_DISPLAY, fontSize: '23px', fontWeight: 400, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#222', marginBottom: '16px' }}>
-                      {activeDestination.name}
-                    </div>
-                    {(activeDestination.experienceRoutes || activeDestination.experiences.map(e => ({ label: e, route: undefined }))).map((exp, i) => (
-                      <div
-                        key={i}
-                        className="bt-exp-row"
-                        style={{ cursor: (exp as any).route ? 'pointer' : 'default' }}
-                        onClick={() => { if ((exp as any).route) { closeMenu(); setLocation((exp as any).route); } }}
-                      >
-                        <span>{(exp as any).label || exp}</span>
-                        <span className="bt-arr">›</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </>
+              {destinationImage && (
+                <div className="bt-preview-col" style={{ flex: 1, display: 'flex', justifyContent: 'center', padding: '60px 32px 32px', overflow: 'hidden' }}>
+                  <img
+                    key={previewDestination?.id}
+                    src={destinationImage}
+                    alt=""
+                    style={{ width: '100%', maxWidth: '400px', height: '100%', maxHeight: '600px', objectFit: 'cover' }}
+                  />
+                </div>
+              )}
+            </div>
           )}
 
           {/* ── WAY TO TRAVEL panel ── */}
@@ -661,6 +558,9 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
               <div className="exp-landscape-layout" style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
                 {/* Col 1 */}
                 <div style={{ flexShrink: 0, overflowY: 'hidden', paddingTop: '60px', paddingBottom: '40px', paddingRight: '20px', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', width: '320px', boxSizing: 'content-box', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                  <Link href="/ways-to-travel" className="exp-cat-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
+                    <span>View all travel services</span><span className="exp-arr" aria-hidden="true">›</span>
+                  </Link>
                   {wayToTravelCategories.length === 0 ? (
                     <div style={{ color: '#aaa', fontFamily: NAV_SANS, fontSize: '13px', paddingTop: '8px' }}>Loading...</div>
                   ) : wayToTravelCategories.map(cat => (
@@ -710,6 +610,9 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
               <div className="exp-portrait-layout" style={{ flex: 1, flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
                 {wayToTravelPortraitPage === 1 && (
                   <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', paddingTop: '60px', paddingBottom: '40px', paddingLeft: '32px', paddingRight: '64px', display: 'flex', flexDirection: 'column' }}>
+                    <Link href="/ways-to-travel" className="exp-cat-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
+                      <span>View all travel services</span><span className="exp-arr" aria-hidden="true">›</span>
+                    </Link>
                     {wayToTravelCategories.map(cat => (
                       <div key={cat.id} className="exp-cat-row" onClick={() => { setActiveWayToTravelCategory(cat); setWayToTravelPortraitPage(2); }}>
                         <span>{cat.name}</span>
