@@ -1,4 +1,4 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 import Navigation from '@/components/Navigation';
@@ -34,14 +34,14 @@ export default function Experiences() {
       <Navigation darkText />
       <main>
         <header className="mx-auto max-w-5xl px-6 pb-10 pt-28 text-center sm:pt-36">
-          <h1 className="font-display text-5xl uppercase tracking-wide sm:text-6xl">Experiences</h1>
+          <h1 className="font-display text-[clamp(1.95rem,10vw,3rem)] uppercase tracking-wide sm:text-6xl">Experiences</h1>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[#5b554f] sm:text-lg">
             Explore the things you can do on a tailor-made trip through China, from tea hills and village crafts to coastal walks and family days out.
           </p>
           {categories.length > 0 && (
             <nav aria-label="Experience categories" className="mt-8 flex flex-wrap justify-center gap-2.5">
               {categories.map(category => (
-                <a key={category.id} href={`#${category.slug}`} className="rounded-full border border-[#d9d2c8] px-4 py-2 text-sm hover:border-[#24201d] hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2">
+                <a key={category.id} href={`#${category.slug}`} className="inline-flex min-h-11 items-center rounded-full border border-[#d9d2c8] px-4 py-2 text-sm hover:border-[#24201d] hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2">
                   {category.name}
                 </a>
               ))}
@@ -76,7 +76,7 @@ export default function Experiences() {
                           )}
                           <div className="flex min-h-16 items-center justify-between gap-3 px-4 py-3">
                             <h3 className="font-sans text-sm font-semibold leading-snug sm:text-base">{item.name}</h3>
-                            <ArrowUpRight aria-hidden="true" size={17} className="shrink-0 text-[#63544a] group-hover:text-[#ad350f]" />
+                            <ArrowRight aria-hidden="true" size={17} className="shrink-0 text-[#63544a] group-hover:text-[#ad350f]" />
                           </div>
                         </Link>
                       </li>

@@ -236,7 +236,7 @@ export default function Home() {
 
       {/* Hero Section - Full Screen Image Background */}
       {homepageData?.hero?.isVisible !== false && (
-      <section className="relative w-full h-screen bg-black overflow-hidden">
+      <section className="relative h-[100svh] min-h-[32rem] w-full overflow-hidden bg-black md:h-screen">
         {/* Image Background */}
         <div className="relative w-full h-full">
           <div className="w-full h-full">
@@ -320,6 +320,9 @@ export default function Home() {
             >
               {heroSubtitle}
             </p>
+            <Link href="/experiences" className="mt-6 inline-flex min-h-11 items-center rounded-sm bg-white px-5 text-sm font-semibold text-[#24201d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:hidden">
+              Explore experiences
+            </Link>
           </div>
         </div>
       </section>
