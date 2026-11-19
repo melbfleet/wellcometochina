@@ -6,7 +6,7 @@ import { sendContactEmail } from "./mailer";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { getDb } from "./db";
-import { enquiries, cityExperiences, experiences } from "../drizzle/schema";
+import { cities, enquiries, cityExperiences, experiences } from "../drizzle/schema";
 import { desc, eq, notInArray } from "drizzle-orm";
 import { ENV } from "./_core/env";
 import { parse as parseCookies } from "cookie";
@@ -1218,10 +1218,17 @@ export const appRouter = router({
         const { getExperienceBySlug } = await import("./db-cms");
         const exp = await getExperienceBySlug(input.slug);
         if (!exp) throw new TRPCError({ code: "NOT_FOUND" });
-        const details = await listExperienceDetails(exp.id);
-        const labels = await getExperienceLabels(exp.id);
-        const recommended = await getRecommendedExperiences(exp.id, 8);
-        return { ...exp, details, labels, recommended };
+        const db = await getDb();
+        const [details, labels, recommended, activeCities] = await Promise.all([
+          listExperienceDetails(exp.id),
+          getExperienceLabels(exp.id),
+          getRecommendedExperiences(exp.id, 8),
+          db ? db.select({ id: cities.id, name: cities.name }).from(cities)
+            .where(eq(cities.isActive, true)).orderBy(cities.sortOrder, cities.name) : [],
+        ]);
+        const destination = activeCities.find(city => city.id === exp.cityId)
+          ?? activeCities.find(city => labels.some(label => label.toLowerCase() === city.name.toLowerCase()));
+        return { ...exp, details, labels, recommended, destinationName: destination?.name ?? null };
       }),
 
     listWayToTravelTypes: publicProcedure.query(() => listWayToTravelTypes()),

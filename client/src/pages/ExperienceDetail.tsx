@@ -377,7 +377,6 @@ export default function ExperienceDetail() {
     { slug },
     { enabled: !!slug }
   );
-  const { data: cities = [] } = trpc.cms.listCities.useQuery(undefined, { enabled: !!exp });
 
   // Fetch CTA background image from Media Library
   const { data: homepageAssets } = trpc.media.getHomepageAssets.useQuery();
@@ -408,11 +407,9 @@ export default function ExperienceDetail() {
   const details = (exp as any)?.details || [];
   const recommended = (exp as any)?.recommended || [];
   const labels: string[] = (exp as any)?.labels || [];
-  const city = cities.find(city => city.id === exp?.cityId)
-    ?? cities.find(city => labels.some(label => label.toLowerCase() === city.name.toLowerCase()));
   const enquiryParams = new URLSearchParams();
   if (exp?.name) enquiryParams.set('experience', exp.name);
-  if (city) enquiryParams.set('destination', city.name);
+  if (exp?.destinationName) enquiryParams.set('destination', exp.destinationName);
   const enquiryHref = exp?.name ? `/make-an-enquiry?${enquiryParams}` : '/make-an-enquiry';
 
   return (
