@@ -480,7 +480,7 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
                   if (anyOverlayOpen) closeMenu();
                   else setIsOpen(open => !open);
                 }}
-                aria-label="Toggle menu"
+                aria-label={isOpen || anyOverlayOpen ? 'Close navigation' : 'Open navigation'}
                 aria-expanded={isOpen || anyOverlayOpen}
                 className="min-h-11 min-w-11"
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px 6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -551,11 +551,11 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
             onClick={closeMenu}
             type="button"
             aria-label="Close navigation"
-            className="flex size-11 items-center justify-center"
+            className="hidden size-11 items-center justify-center md:flex"
             style={{
               position: 'absolute', top: '12px',
               right: 'clamp(28px, calc(-645px + 49.82vw), 305px)',
-              zIndex: 10, display: 'flex', alignItems: 'center',
+              zIndex: 10, alignItems: 'center',
               background: 'none', border: 'none', cursor: 'pointer',
               color: '#222', padding: '4px',
             }}
