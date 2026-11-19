@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import { CHANGZHOU_FAMILY_ITINERARY_SLUG } from "@shared/const";
 import { createServer } from "http";
 import net from "net";
 import fs from "fs";
@@ -188,6 +189,10 @@ async function startServer() {
       createContext,
     })
   );
+  app.get(`/experiences/:categorySlug/${CHANGZHOU_FAMILY_ITINERARY_SLUG}`, (_req, res) => {
+    res.redirect(301, `/itinerary/${CHANGZHOU_FAMILY_ITINERARY_SLUG}`);
+  });
+
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
