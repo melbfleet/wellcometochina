@@ -569,7 +569,10 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
               {/* Landscape */}
               <div className="bt-landscape-layout" style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
                 {/* Col 1 */}
-                <div style={{ flexShrink: 0, overflowY: 'hidden', paddingTop: '60px', paddingBottom: '40px', paddingRight: '20px', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', width: '320px', boxSizing: 'content-box', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                <div style={{ flexShrink: 0, overflowY: 'auto', paddingTop: '60px', paddingBottom: '40px', paddingRight: '20px', paddingLeft: 'clamp(28px, calc(-645px + 49.82vw), 305px)', width: '320px', boxSizing: 'content-box', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                  <Link href="/destinations" className="bt-dest-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
+                    <span>Browse all destinations</span><span className="bt-arr" aria-hidden="true">›</span>
+                  </Link>
                   {activeDestinations.map(dest => (
                     <div
                       key={dest.id}
@@ -613,6 +616,9 @@ export default function Navigation({ forceHide = false, darkText = false, enquir
               <div className="bt-portrait-layout" style={{ flex: 1, flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
                 {destPortraitPage === 1 && (
                   <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', paddingTop: '60px', paddingBottom: '40px', paddingLeft: '32px', paddingRight: '64px', display: 'flex', flexDirection: 'column' }}>
+                    <Link href="/destinations" className="bt-dest-row" style={{ textDecoration: 'none' }} onClick={closeMenu}>
+                      <span>Browse all destinations</span><span className="bt-arr" aria-hidden="true">›</span>
+                    </Link>
                     {activeDestinations.map(dest => (
                       <div key={dest.id} className="bt-dest-row" onClick={() => { setActiveDestination(dest); setDestPortraitPage(2); }}>
                         <span>{dest.name}</span>
