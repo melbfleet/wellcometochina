@@ -1,5 +1,4 @@
-import React from 'react';
-import { Award, Lightbulb, CreditCard, Phone, Users } from 'lucide-react';
+import { CalendarCheck, ClipboardList, MapPin, Route, Users } from 'lucide-react';
 
 /**
  * Why Into China Section
@@ -8,43 +7,31 @@ import { Award, Lightbulb, CreditCard, Phone, Users } from 'lucide-react';
  * Features: Clean, minimal design with icon-based visual hierarchy
  */
 
-interface FeatureCard {
-  id: number;
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
-
-const features: FeatureCard[] = [
+const features = [
   {
-    id: 1,
-    icon: <Award style={{width: 36, height: 36, color: '#374151'}} strokeWidth={1.5} />,
-    title: 'Award-winning planners',
-    description: '',
+    icon: MapPin,
+    title: 'Local experiences',
+    description: 'Meet traditional makers and explore the markets and neighbourhoods where local life happens.',
   },
   {
-    id: 2,
-    icon: <Lightbulb style={{width: 36, height: 36, color: '#374151'}} strokeWidth={1.5} />,
-    title: 'No-obligation quotes',
-    description: '',
+    icon: Route,
+    title: 'Routes at your pace',
+    description: 'Build in time for the places and activities you’re most interested in.',
   },
   {
-    id: 3,
-    icon: <CreditCard style={{width: 36, height: 36, color: '#374151'}} strokeWidth={1.5} />,
-    title: 'No planning fees',
-    description: '',
+    icon: Users,
+    title: 'Family-friendly planning',
+    description: 'Shape travel days and activities around your children’s ages.',
   },
   {
-    id: 4,
-    icon: <Phone style={{width: 36, height: 36, color: '#374151'}} strokeWidth={1.5} />,
-    title: '24/7 on the ground support',
-    description: '',
+    icon: CalendarCheck,
+    title: 'Specialist visit coordination',
+    description: 'We request access for specialist visits and check availability for your dates.',
   },
   {
-    id: 5,
-    icon: <Users style={{width: 36, height: 36, color: '#374151'}} strokeWidth={1.5} />,
-    title: 'Expert private guides',
-    description: '',
+    icon: ClipboardList,
+    title: 'Clear trip details',
+    description: 'Review your itinerary, what’s included and any optional extras before you book.',
   },
 ];
 
@@ -62,19 +49,18 @@ export default function WhyIntoChinaSection() {
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-6">
-          {features.map((feature) => (
-            <div key={feature.id} className="flex flex-col items-center text-center">
+          {features.map(({ icon: Icon, title, description }) => (
+            <div key={title} className="flex flex-col items-center text-center">
               {/* Icon */}
               <div className="mb-6 flex items-center justify-center">
-                {feature.icon}
+                <Icon aria-hidden="true" size={36} color="#374151" strokeWidth={1.5} />
               </div>
 
               {/* Title */}
               <h3 className="font-sans mb-3 font-semibold tracking-wide" style={{color: '#666666', fontSize: '14px'}}>
-                {feature.title}
+                {title}
               </h3>
-
-
+              <p className="max-w-[15rem] font-sans text-sm leading-relaxed text-[#52575c]">{description}</p>
             </div>
           ))}
         </div>
