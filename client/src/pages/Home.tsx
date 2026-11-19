@@ -76,10 +76,12 @@ export default function Home() {
   // Load published itineraries for Explore Our Trips.
   const { data: itineraries = [] } = trpc.cms.listItineraries.useQuery();
   
+  const featuredTrips = itineraries.filter(trip => familySampleTripSlugs.has(trip.slug));
   const exploreTrips = [
-    ...itineraries.filter(trip => familySampleTripSlugs.has(trip.slug)),
+    ...featuredTrips,
     ...itineraries.filter(trip => !familySampleTripSlugs.has(trip.slug)),
   ];
+  const showExploreTrips = homepageData?.sectionVisibility?.explore_trips !== false && exploreTrips.length > 0;
   // 始终使用静态图片作为 fallback，只有 API 返回且有数据时才替换
   const FALLBACK_BANNER = '';
   const apiBanners = homepageAssets?.banners as Array<{ url: string; id: number }> | undefined;
@@ -193,18 +195,41 @@ export default function Home() {
             >
               {heroSubtitle}
             </p>
-            <Link href="/make-an-enquiry" className="mt-6 inline-flex min-h-11 items-center rounded-sm bg-white px-6 text-sm font-semibold text-[#24201d] hover:bg-[#F5F3EF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-              Discuss Your Trip
-            </Link>
+            <div className="mx-auto mt-6 grid w-full max-w-sm gap-3 text-left sm:max-w-[38rem] sm:grid-flow-col sm:auto-cols-fr">
+              {showExploreTrips && (
+                <a
+                  href="#sample-trips-heading"
+                  className="group flex min-h-16 items-center justify-between gap-3 rounded-sm border border-white bg-white px-4 py-2.5 text-[#24201D] hover:bg-[#F5F3EF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  <span>
+                    <span className="block text-base font-semibold leading-tight">View Multi-Day Itineraries</span>
+                    <span className="mt-1 block text-sm leading-tight text-[#58524D]">
+                      {featuredTrips.length === familySampleTripSlugs.size ? 'Changzhou & Zhuhai' : 'Explore our planned routes'}
+                    </span>
+                  </span>
+                  <ArrowRight size={19} className="shrink-0" aria-hidden="true" />
+                </a>
+              )}
+              <Link
+                href="/make-an-enquiry?trip=tailor-made"
+                className="group flex min-h-16 items-center justify-between gap-3 rounded-sm border border-white/80 bg-[#24201D] px-4 py-2.5 text-white hover:bg-[#37302B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                <span>
+                  <span className="block text-base font-semibold leading-tight">Enquire About a Private Trip</span>
+                  <span className="mt-1 block text-sm leading-tight text-[#EEE8E1]">Tailor-made trips to other cities</span>
+                </span>
+                <ArrowRight size={19} className="shrink-0" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
       )}
 
-      {homepageData?.sectionVisibility?.explore_trips !== false && exploreTrips.length > 0 && (
+      {showExploreTrips && (
         <section className="bg-[#24201D] px-4 py-12 text-white sm:px-8 md:py-16" aria-labelledby="sample-trips-heading">
           <div className="mx-auto max-w-6xl">
-            <h2 id="sample-trips-heading" className="mb-3 font-display text-4xl uppercase md:text-5xl">Explore Our Trips</h2>
+            <h2 id="sample-trips-heading" tabIndex={-1} className="mb-3 scroll-mt-24 font-display text-4xl uppercase md:text-5xl">Explore Our Trips</h2>
             <p className="mb-7 max-w-xl text-[#EEE8E1]">
               Explore our planned multi-day routes for a clear idea of what each trip includes. Our local team can adjust a route for you or design a private itinerary for another destination.
             </p>
