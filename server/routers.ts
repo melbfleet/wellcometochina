@@ -98,6 +98,16 @@ function requireAdmin(ctx: { req: { headers: Record<string, string | string[] | 
   }
 }
 
+function requireVisibleDetail<T extends { isActive: boolean }>(
+  item: T | null | undefined,
+  allowPreview = false,
+): T {
+  if (!item || (!item.isActive && !allowPreview)) {
+    throw new TRPCError({ code: "NOT_FOUND" });
+  }
+  return item;
+}
+
 // ─── Zod schemas ─────────────────────────────────────────────────────────────
 const tagInput = z.object({
   name: z.string().min(1),
@@ -1180,12 +1190,11 @@ export const appRouter = router({
       .query(({ input }) => listCityExperiences(input.cityId)),
 
     getCityBySlug: publicProcedure
-      .input(z.object({ slug: z.string() }))
-      .query(async ({ input }) => {
+      .input(z.object({ slug: z.string(), preview: z.boolean().optional() }))
+      .query(async ({ ctx, input }) => {
         const { getCityBySlug } = await import("./db-cms");
-        const city = await getCityBySlug(input.slug);
-        if (!city) throw new TRPCError({ code: "NOT_FOUND" });
-        return city;
+        const allowPreview = input.preview && isValidAdminSession(getAdminSessionId(ctx.req));
+        return requireVisibleDetail(await getCityBySlug(input.slug), allowPreview);
       }),
 
     listExperienceTypes: publicProcedure.query(() => listExperienceTypes()),
@@ -1245,15 +1254,16 @@ export const appRouter = router({
       .query(({ input }) => listItinerariesByCityTag(input.cityName, input.citySlug)),
 
     getItineraryBySlug: publicProcedure
-      .input(z.object({ slug: z.string() }))
-      .query(async ({ input }) => {
+      .input(z.object({ slug: z.string(), preview: z.boolean().optional() }))
+      .query(async ({ ctx, input }) => {
         const db = await getDb();
         if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
         const { itineraries } = await import("../drizzle/schema");
         const rows = await db.select().from(itineraries).where(eq(itineraries.slug, input.slug)).limit(1);
-        if (!rows[0]) throw new TRPCError({ code: "NOT_FOUND" });
-        const tagIds = await getItineraryTagIds(rows[0].id);
-        return { ...rows[0], tagIds };
+        const allowPreview = input.preview && isValidAdminSession(getAdminSessionId(ctx.req));
+        const itinerary = requireVisibleDetail(rows[0], allowPreview);
+        const tagIds = await getItineraryTagIds(itinerary.id);
+        return { ...itinerary, tagIds };
       }),
 
     listStories: publicProcedure.query(() => listStories(false)),
@@ -1286,11 +1296,7 @@ export const appRouter = router({
     // City by ID
     getCity: publicProcedure
       .input(z.object({ id: z.number() }))
-      .query(async ({ input }) => {
-        const city = await getCityById(input.id);
-        if (!city) throw new TRPCError({ code: "NOT_FOUND" });
-        return city;
-      }),
+      .query(async ({ input }) => requireVisibleDetail(await getCityById(input.id))),
     // Experience by ID
     getExperience: publicProcedure
       .input(z.object({ id: z.number() }))
@@ -1303,8 +1309,7 @@ export const appRouter = router({
     getItinerary: publicProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
-        const itin = await getItineraryById(input.id);
-        if (!itin) throw new TRPCError({ code: "NOT_FOUND" });
+        const itin = requireVisibleDetail(await getItineraryById(input.id));
         const tagIds = await getItineraryTagIds(input.id);
         return { ...itin, tagIds };
       }),
