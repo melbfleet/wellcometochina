@@ -1187,7 +1187,7 @@ export const appRouter = router({
 
     listCityExperiences: publicProcedure
       .input(z.object({ cityId: z.number() }))
-      .query(({ input }) => listCityExperiences(input.cityId)),
+      .query(({ input }) => listCityExperiences(input.cityId, false)),
 
     getCityBySlug: publicProcedure
       .input(z.object({ slug: z.string(), preview: z.boolean().optional() }))
@@ -1203,21 +1203,21 @@ export const appRouter = router({
 
     listExperiencesByType: publicProcedure
       .input(z.object({ typeId: z.number() }))
-      .query(({ input }) => listExperiencesByType(input.typeId)),
+      .query(({ input }) => listExperiencesByType(input.typeId, false)),
 
     listExperiences: publicProcedure
       .input(z.object({ typeId: z.number().optional() }))
       .query(async ({ input }) => {
-        if (input.typeId) return listExperiencesByType(input.typeId);
+        if (input.typeId) return listExperiencesByType(input.typeId, false);
         return listExperiences(false);
       }),
 
     getExperienceBySlug: publicProcedure
-      .input(z.object({ slug: z.string() }))
-      .query(async ({ input }) => {
+      .input(z.object({ slug: z.string(), preview: z.boolean().optional() }))
+      .query(async ({ ctx, input }) => {
         const { getExperienceBySlug } = await import("./db-cms");
-        const exp = await getExperienceBySlug(input.slug);
-        if (!exp) throw new TRPCError({ code: "NOT_FOUND" });
+        const allowPreview = input.preview && isValidAdminSession(getAdminSessionId(ctx.req));
+        const exp = requireVisibleDetail(await getExperienceBySlug(input.slug), allowPreview);
         const db = await getDb();
         const [details, labels, recommended, activeCities] = await Promise.all([
           listExperienceDetails(exp.id),
@@ -1291,7 +1291,7 @@ export const appRouter = router({
 
     listCityWhatToSee: publicProcedure
       .input(z.object({ cityId: z.number() }))
-      .query(({ input }) => listCityWhatToSee(input.cityId)),
+      .query(({ input }) => listCityWhatToSee(input.cityId, false)),
     // Team Members (by ID)
     getTeamMember: publicProcedure
       .input(z.object({ id: z.number() }))
