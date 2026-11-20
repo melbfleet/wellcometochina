@@ -34,106 +34,28 @@ interface ExploreTripCard {
   href: string;
 }
 
-// ExperienceItem component for What to See and Do section
 function ExperienceItem({ item, index, onExplore }: { item: any; index: number; onExplore: () => void }) {
-  const isEven = index % 2 === 0;
-  const image = item.cityDisplayImage || item.experienceSlug;
+  const image = item.cityDisplayImage;
   const title = item.experienceTitle || item.experienceName;
-  const description = item.experienceDescription || '';
   const getObjectPosition = useMediaObjectPosition();
 
-  const ExploreButton = () => (
-    <button
-      className="px-6 py-3 bg-black text-white text-xs font-semibold uppercase tracking-wider transition-all duration-300 w-fit"
-      style={{ cursor: 'pointer', fontFamily: CITY_SANS, fontSize: '13px', fontWeight: 700, letterSpacing: '0.85px', lineHeight: 1.5 }}
-      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'white'; e.currentTarget.style.color = 'black'; e.currentTarget.style.boxShadow = 'inset 0 0 0 2px black'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'black'; e.currentTarget.style.color = 'white'; e.currentTarget.style.boxShadow = 'none'; }}
-      onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.95)'; }}
-      onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
-      onClick={onExplore}
-    >
-      EXPLORE
-    </button>
-  );
-
   return (
-    <div className="w-full bg-white py-0">
-      <div className="relative">
-        {/* Mobile: Image on top, text below */}
-        <div className="lg:hidden w-full">
-          {image && (
-            <img
-              src={image}
-              alt={title}
-              className="w-full object-cover"
-              style={{ height: '375px', objectFit: 'cover', objectPosition: getObjectPosition(image) }}
-            />
-          )}
-          <div className="px-6 py-6">
-            <h3 className="text-sm md:text-base font-semibold uppercase tracking-widest text-gray-800 mb-6" style={{ fontFamily: CITY_SANS, fontSize: '18px', fontWeight: 700, letterSpacing: '1.8px', lineHeight: 1.28, color: '#000' }}>
-              {title}
-            </h3>
-            <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-8" style={{ fontFamily: CITY_SANS, fontSize: '17px', fontWeight: 400, letterSpacing: '0.85px', lineHeight: 1.5, color: CITY_TEXT }}>
-              {description}
-            </p>
-            <ExploreButton />
-          </div>
+    <article className={`mx-auto mb-6 grid max-w-7xl overflow-hidden bg-[#F5F3EF] lg:mb-9 ${image ? 'lg:grid-cols-2' : ''}`}>
+      {image && (
+        <div className={`aspect-[16/10] w-full overflow-hidden lg:aspect-[4/3] ${index % 2 === 0 ? 'lg:order-last' : ''}`}>
+          <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" style={{ objectPosition: getObjectPosition(image) }} />
         </div>
-
-        {/* Desktop: alternating layout */}
-        {isEven ? (
-          // Text left, image right
-          <div className="hidden lg:flex items-center" style={{ minHeight: '380px' }}>
-            <div className="w-1/2 px-3 flex flex-col justify-center items-center">
-              <div className="max-w-md">
-                <h3 className="text-sm md:text-base font-semibold uppercase tracking-widest text-gray-800 mb-6" style={{ fontFamily: CITY_SANS, fontSize: '18px', fontWeight: 700, letterSpacing: '1.8px', lineHeight: 1.28, color: '#000' }}>
-                  {title}
-                </h3>
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-8" style={{ fontFamily: CITY_SANS, fontSize: '17px', fontWeight: 400, letterSpacing: '0.85px', lineHeight: 1.5, color: CITY_TEXT }}>
-                  {description}
-                </p>
-                <ExploreButton />
-              </div>
-            </div>
-            <div className="flex items-center" style={{ minHeight: '380px', marginRight: '-9999px', paddingRight: '9999px', width: 'calc(50% + 9999px)' }}>
-              {image && (
-                <img
-                  src={image}
-                  alt={title}
-                  className="object-cover"
-                  style={{ width: '940px', height: '630px', objectFit: 'cover', objectPosition: getObjectPosition(image) }}
-                />
-              )}
-            </div>
-          </div>
-        ) : (
-          // Image left, text right
-          <div className="hidden lg:flex items-center" style={{ minHeight: '380px' }}>
-            <div className="flex items-center" style={{ minHeight: '380px', marginLeft: '-9999px', paddingLeft: '9999px', width: 'calc(50% + 9999px)' }}>
-              {image && (
-                <img
-                  src={image}
-                  alt={title}
-                  className="object-cover"
-                  style={{ width: '940px', height: '630px', objectFit: 'cover', objectPosition: getObjectPosition(image) }}
-                />
-              )}
-            </div>
-            <div className="w-1/2 px-3 flex flex-col justify-center items-center">
-              <div className="max-w-md">
-                <h3 className="text-sm md:text-base font-semibold uppercase tracking-widest text-gray-800 mb-6" style={{ fontFamily: CITY_SANS, fontSize: '18px', fontWeight: 700, letterSpacing: '1.8px', lineHeight: 1.28, color: '#000' }}>
-                  {title}
-                </h3>
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-8" style={{ fontFamily: CITY_SANS, fontSize: '17px', fontWeight: 400, letterSpacing: '0.85px', lineHeight: 1.5, color: CITY_TEXT }}>
-                  {description}
-                </p>
-                <ExploreButton />
-              </div>
-            </div>
-          </div>
-        )}
+      )}
+      <div className="min-w-0 self-center px-5 py-6 sm:p-8 lg:px-12">
+        <h3 className="mb-3 text-xl font-semibold leading-tight text-black">{title}</h3>
+        <p className="mb-5 whitespace-pre-line text-base leading-relaxed [overflow-wrap:anywhere]" style={{ color: CITY_TEXT }}>
+          {item.experienceDescription || ''}
+        </p>
+        <button type="button" onClick={onExplore} className="min-h-11 bg-black px-5 text-xs font-semibold uppercase tracking-wider text-white hover:bg-[#35302C] focus-visible:outline-2 focus-visible:outline-offset-2">
+          Explore
+        </button>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -146,7 +68,6 @@ export default function CityPage() {
   const [tripsShowLeftBtn, setTripsShowLeftBtn] = useState(false);
   const [tripsShowRightBtn, setTripsShowRightBtn] = useState(true);
   const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 1024);
-  const [bannerImageLoaded, setBannerImageLoaded] = useState(false);
   const getObjectPosition = useMediaObjectPosition();
 
   // Fetch city data by slug
@@ -334,55 +255,34 @@ export default function CityPage() {
     <div className="w-full bg-white min-h-screen">
       <Navigation />
 
-      {/* Hero Section */}
-      {bannerImageLoaded && (
-        <div className="relative w-full bg-cover bg-center" style={{
-          backgroundImage: `url(${(city as any).coverImage || ''})`,
-          backgroundAttachment: 'scroll',
-          backgroundPosition: getObjectPosition((city as any).coverImage),
-          backgroundSize: 'cover',
-          height: '400px',
-        }}>
-          <div className="absolute inset-0 bg-black/20"></div>
-          <div className="relative h-full flex items-center justify-center">
-            <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-white uppercase text-center px-6" style={{
-              fontFamily: CITY_DISPLAY,
-              fontSize: 'clamp(46px, 6vw, 60px)',
-              letterSpacing: '3px',
-              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.5)',
-              fontWeight: 400,
-              lineHeight: 0.9,
-              maxWidth: '980px'
-            }}>
-              {(city as any).bannerTitle}
-            </h1>
-          </div>
-        </div>
-      )}
-      {/* Hidden image to detect if banner image loads successfully */}
-      {(city as any).coverImage && (
-        <img
-          src={(city as any).coverImage}
-          alt=""
-          style={{ display: 'none' }}
-          onLoad={() => setBannerImageLoaded(true)}
-          onError={() => setBannerImageLoaded(false)}
-        />
-      )}
-      {/* Blank space while loading */}
-      {!bannerImageLoaded && (
-        <div style={{ height: '400px', backgroundColor: 'transparent' }}></div>
-      )}
+      <header className="relative isolate flex h-[clamp(17rem,40svh,24rem)] w-full items-end justify-center overflow-hidden bg-[#292723] px-5 pb-7 pt-16 sm:px-8 md:h-[400px] md:pb-10">
+        {city.coverImage && (
+          <img
+            src={city.coverImage}
+            alt=""
+            fetchPriority="high"
+            className="absolute inset-0 -z-20 h-full w-full object-cover"
+            style={{ objectPosition: getObjectPosition(city.coverImage) }}
+          />
+        )}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/80 via-black/15 to-black/30" />
+        <h1
+          className="max-w-5xl text-center text-[clamp(2rem,8vw,3rem)] leading-none tracking-wide text-white uppercase md:text-[clamp(2.75rem,4.4vw,3.75rem)]"
+          style={{ fontFamily: CITY_DISPLAY, fontWeight: 400, textShadow: '0 2px 8px rgba(0,0,0,0.45)' }}
+        >
+          {city.bannerTitle || cityName}
+        </h1>
+      </header>
 
       {/* Navigation Tabs */}
-      <div className="w-full" style={{ height: '48px', backgroundColor: '#F3F3F3' }}>
+      <div className="w-full bg-[#F3F3F3]">
         <style>{`
           .tab-underline { position: relative; padding-bottom: 2px; }
           .tab-underline::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #F5569B; transition: width 0.25s ease; }
           .tab-underline:hover::after, .tab-underline.tab-active::after { width: 100%; }
         `}</style>
         <div className="h-full flex items-center justify-center px-4 md:px-0">
-          <nav className="flex gap-3 md:gap-12 h-full items-center flex-wrap md:flex-nowrap justify-center">
+          <nav aria-label="Destination sections" className="flex min-h-12 flex-wrap items-center justify-center gap-x-4 md:gap-x-12">
             {cityTabs.map((tab) => (
               <button
                 key={tab.label}
@@ -391,7 +291,7 @@ export default function CityPage() {
                   const element = document.getElementById(tab.id);
                   if (element) element.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className={`tab-underline text-xs font-semibold uppercase tracking-wider text-black flex-shrink-0 ${activeTab === tab.label ? 'tab-active' : ''}`}
+                className={`tab-underline min-h-11 text-xs font-semibold uppercase tracking-wider text-black flex-shrink-0 ${activeTab === tab.label ? 'tab-active' : ''}`}
               >
                 {tab.label}
               </button>
@@ -401,12 +301,12 @@ export default function CityPage() {
       </div>
 
       {/* Overview Section */}
-      <div id="overview" className="w-full bg-white py-8 md:py-12" style={{ minHeight: '250px', display: 'flex', alignItems: 'center', marginBottom: '0' }}>
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <div id="overview" className="w-full scroll-mt-16 bg-white py-8 md:py-12">
+        <div className="mx-auto w-full min-w-0 max-w-3xl px-5 text-center sm:px-8">
           <h2 className="text-sm md:text-base font-semibold uppercase tracking-widest text-gray-800 mb-6" style={{ fontFamily: CITY_DISPLAY, fontSize: 'clamp(36px, 4vw, 45px)', fontWeight: 400, letterSpacing: '2.25px', lineHeight: 1, color: CITY_DARK }}>
             {(city as any).introductionTitle || `Why Should You Travel to ${cityName} With Us?`}
           </h2>
-          <p className="text-base md:text-lg text-gray-500 leading-relaxed" style={{ fontFamily: CITY_SANS, fontSize: '17px', fontWeight: 400, letterSpacing: '0.85px', lineHeight: 1.5, color: CITY_TEXT }}>
+          <p className="whitespace-pre-line text-left text-base leading-relaxed [overflow-wrap:anywhere] md:text-lg" style={{ fontFamily: CITY_SANS, color: CITY_TEXT }}>
             {(city as any).introductionDescription || ''}
           </p>
         </div>
@@ -518,7 +418,7 @@ export default function CityPage() {
 
       {/* What to See and Do Section */}
       {whatToSeeItems.length > 0 && (
-        <div id="see-do" className="w-full bg-white py-0" style={{ marginTop: '100px' }}>
+        <div id="see-do" className="mt-12 w-full scroll-mt-16 bg-white px-4 md:mt-20 md:px-8">
           <div className="max-w-7xl mx-auto px-6">
             <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-widest text-black mb-12 text-center font-display" style={{ fontFamily: CITY_DISPLAY, fontSize: 'clamp(36px, 4vw, 45px)', fontWeight: 400, letterSpacing: '2.25px', lineHeight: 1, color: '#000' }}>
               What to See and Do in {cityName}
@@ -612,7 +512,7 @@ export default function CityPage() {
                 src={(city as any).culinaryTravelLargeImage}
                 alt={`${cityName} Cuisine`}
                 className="w-full object-cover"
-                style={{ height: '375px', objectFit: 'cover', objectPosition: getObjectPosition((city as any).culinaryTravelLargeImage) }}
+                style={{ aspectRatio: '16 / 10', objectPosition: getObjectPosition((city as any).culinaryTravelLargeImage) }}
               />
             )}
             <div className="p-6">
