@@ -26,9 +26,9 @@ export default function LuxuryTravelExperts() {
     },
     {
       id: 2,
-      quote: "From the moment we arrived, we felt like locals. The cultural immersion was absolutely unforgettable.",
-      author: "Jennifer",
-      location: "Beijing",
+      quote: "The high-tech companies Wellcome to China introduced me to in Guangzhou opened my eyes to China’s new technology and innovations.",
+      author: "Phillip",
+      location: "Guangzhou",
     },
     {
       id: 3,
