@@ -50,9 +50,9 @@ export default function LuxuryTravelExperts() {
     },
     {
       id: 6,
-      quote: "The local insights and connections made all the difference. A truly authentic experience.",
-      author: "Robert",
-      location: "Chengdu",
+      quote: "Thank you to Wellcome to China. Their extensive local network in Beijing made a real difference to my business.",
+      author: "Harrison",
+      location: "Beijing",
     },
     {
       id: 7,
