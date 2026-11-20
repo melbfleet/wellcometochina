@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 
-const defaultIntro = 'Wellcometochina plans tailor-made journeys in China for families, couples and private groups. Visit the tea hills, learn a traditional craft with local makers, or pair Zhuhai’s waterfront and villages with two days at Chimelong.\n\nTell us your dates, who’s travelling and what you’d like to do. We’ll suggest a route that suits your pace and confirm the arrangements with you before you book.';
+const defaultIntro = "We design private journeys in China for families, couples and business groups. Explore our signature multi-day itineraries in Changzhou and Zhuhai, or have us create a tailor-made trip to another destination.\n\nTell us who’s travelling, what interests you and how you like to travel. Our local team will shape the route around your group and confirm the arrangements with you before you book.";
 
 export default function LuxuryTravelExperts() {
   const { data: homepageData } = trpc.homepage.getPublicData.useQuery();
