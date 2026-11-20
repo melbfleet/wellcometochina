@@ -657,7 +657,7 @@ export default function ItineraryDetail() {
                     {section.title}
                   </h2>
                   {section.description && (
-                    <p style={{ fontSize: '17px', color: BT_TEXT, lineHeight: 1.58, fontFamily: ITIN_SANS, letterSpacing: '0.03em', maxWidth: '640px' }}>
+                    <p className="[overflow-wrap:anywhere]" style={{ fontSize: '17px', color: BT_TEXT, lineHeight: 1.58, fontFamily: ITIN_SANS, letterSpacing: '0.03em', maxWidth: '640px' }}>
                       {section.description}
                     </p>
                   )}
