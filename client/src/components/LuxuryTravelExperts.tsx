@@ -38,9 +38,9 @@ export default function LuxuryTravelExperts() {
     },
     {
       id: 4,
-      quote: "This wasn't just a trip—it was a transformation. We returned home with a completely new perspective on travel.",
-      author: "Emma",
-      location: "Yunnan",
+      quote: "I was amazed by how smart Shenzhen is. Seeing driverless taxis on the streets and food delivered by drone made me feel like I’d stepped into the future.",
+      author: "Will",
+      location: "Shenzhen",
     },
     {
       id: 5,
