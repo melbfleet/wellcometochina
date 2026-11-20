@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useParams, useSearch } from 'wouter';
+import { Link, useLocation, useParams, useSearch } from 'wouter';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -28,11 +28,8 @@ interface ItinerarySection {
 
 const ITIN_DISPLAY = "var(--font-travel-condensed, 'League Gothic', 'Arial Narrow', Impact, sans-serif)";
 const ITIN_SANS = "var(--font-travel-sans, 'Cabin', 'Helvetica Neue', Arial, sans-serif)";
-const BT_PINK = '#e7247a';
 const BT_GREEN = '#379c8a';
-const BT_BLUE = '#5160a6';
 const BT_TEXT = '#444444';
-const BT_DARK = '#2f2f2f';
 
 // ─── Gallery Strip ────────────────────────────────────────────────────────────
 
@@ -227,7 +224,7 @@ function ImageCarousel({ images, alt }: { images: string[]; alt: string }) {
 
 interface Trip {
   id: string | number;
-  nights?: number;
+  duration?: string | null;
   title: string;
   buttonText: string;
   image: string;
@@ -253,7 +250,7 @@ function SimilarTripsSection({ currentSlug }: { currentSlug: string }) {
     .filter(i => i.slug !== currentSlug)
     .map((itin) => ({
       id: itin.id,
-      nights: itin.days,
+      duration: itin.howLong || (itin.days ? `${itin.days} ${itin.days === 1 ? 'day' : 'days'}` : null),
       title: itin.name,
       buttonText: 'Explore Trip',
       image: itin.coverImage || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
@@ -423,7 +420,7 @@ function SimilarTripsSection({ currentSlug }: { currentSlug: string }) {
               <img src={trip.image} alt={trip.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: getObjectPosition(trip.image) }} draggable={false} />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
               <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
-                {trip.nights && <div className="text-xs font-bold uppercase tracking-wider text-yellow-300 text-right" style={{ fontFamily: ITIN_SANS, color: '#ffffff', fontWeight: 700, letterSpacing: '0.1em' }}>{trip.nights} NIGHTS</div>}
+                {trip.duration && <div className="text-xs font-bold uppercase tracking-wider text-yellow-300 text-right" style={{ fontFamily: ITIN_SANS, color: '#ffffff', fontWeight: 700, letterSpacing: '0.1em' }}>{trip.duration}</div>}
                 <div>
                   <h3 className="text-base font-bold uppercase tracking-wider mb-4 leading-tight opacity-85" style={{ fontFamily: ITIN_SANS, fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1.25 }}>{trip.title}</h3>
                   <button
@@ -451,36 +448,6 @@ function SimilarTripsSection({ currentSlug }: { currentSlug: string }) {
               </div>
             </div>
           ))}
-          {/* View More */}
-          <div className="flex-shrink-0" style={{ width: '155px', height: '550px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <button
-              style={{
-                backgroundColor: '#111111',
-                color: '#ffffff',
-                fontFamily: ITIN_SANS,
-                fontSize: '12px',
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                padding: '14px 36px',
-                border: '2px solid #111111',
-                cursor: 'pointer',
-                transition: 'background-color 0.2s, color 0.2s, transform 0.1s',
-                whiteSpace: 'nowrap',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.backgroundColor = '#ffffff';
-                e.currentTarget.style.color = '#111111';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.backgroundColor = '#111111';
-                e.currentTarget.style.color = '#ffffff';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
-              onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.95)')}
-              onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
-            >View More</button>
-          </div>
         </div>
       </div>
 
@@ -562,7 +529,17 @@ export default function ItineraryDetail() {
     );
   }
 
-  const timelineColor = (itin as any).timelineColor || '#52b788';
+  const timelineColor = itin.timelineColor || '#52b788';
+  const tripDuration = itin.howLong || (itin.days ? `${itin.days} ${itin.days === 1 ? 'day' : 'days'}` : null);
+  const overviewParagraphs = itin.description?.trim().split(/\r?\n\s*\r?\n/).filter(Boolean) ?? [];
+  const enquiry = new URLSearchParams({ trip: 'itinerary', itinerary: itin.name });
+  if (itin.place) enquiry.set('destination', itin.place);
+  const enquiryHref = `/make-an-enquiry?${enquiry}`;
+  const summaryFacts = [
+    { label: 'Duration', value: tripDuration },
+    { label: 'Price', value: itin.price },
+    { label: 'When to go', value: itin.when },
+  ].filter(fact => fact.value);
 
   return (
     <div className="bg-white min-h-screen" style={{ fontFamily: ITIN_SANS, color: BT_TEXT }}>
@@ -577,10 +554,10 @@ export default function ItineraryDetail() {
         }
       `}</style>
 
-      <Navigation />
+      <Navigation enquiryHref={enquiryHref} />
 
       {/* ── HERO BANNER ── */}
-      <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+      <div className="relative h-[55svh] min-h-72 w-full overflow-hidden md:h-screen">
         {itin.bannerImage ? (
           <img src={itin.bannerImage} alt={itin.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: getObjectPosition(itin.bannerImage) }} />
         ) : (
@@ -588,7 +565,7 @@ export default function ItineraryDetail() {
         )}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.35)' }} />
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
-          <h1 style={{ color: '#fff', fontSize: 'clamp(46px, 6vw, 60px)', letterSpacing: '3px', fontFamily: ITIN_DISPLAY, fontWeight: 400, lineHeight: 0.9, margin: '0 0 20px', maxWidth: '980px', textTransform: 'uppercase', textShadow: '2px 2px 8px rgba(0, 0, 0, 0.5)' }}>
+          <h1 className="text-[clamp(2rem,10vw,2.875rem)] md:text-[clamp(46px,6vw,60px)]" style={{ color: '#fff', letterSpacing: '3px', fontFamily: ITIN_DISPLAY, fontWeight: 400, lineHeight: 0.9, margin: '0 0 20px', maxWidth: '980px', textTransform: 'uppercase', textShadow: '2px 2px 8px rgba(0, 0, 0, 0.5)' }}>
             {itin.name}
           </h1>
           {itin.shortDescription && (
@@ -600,19 +577,19 @@ export default function ItineraryDetail() {
       </div>
 
       {/* ── SECTION NAV ── */}
-      <div className="w-full" style={{ height: '48px', backgroundColor: '#F3F3F3' }}>
+      <div className="w-full bg-[#F3F3F3]">
         <style>{`
           .tab-underline { position: relative; padding-bottom: 2px; }
           .tab-underline::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #F5569B; transition: width 0.25s ease; }
           .tab-underline:hover::after, .tab-underline.tab-active::after { width: 100%; }
         `}</style>
         <div className="h-full flex items-center justify-center px-4 md:px-0">
-          <nav className="flex gap-3 md:gap-12 h-full items-center flex-wrap md:flex-nowrap justify-center">
+          <nav aria-label="Itinerary sections" className="flex min-h-12 flex-wrap items-center justify-center gap-x-4 md:gap-12">
             {navSections.map(s => (
               <button
                 key={s.id}
                 onClick={() => scrollToSection(s.id)}
-                className={`tab-underline text-xs font-semibold uppercase tracking-wider text-black flex-shrink-0 ${activeSection === s.id ? 'tab-active' : ''}`}
+                className={`tab-underline min-h-11 px-1 text-xs font-semibold uppercase tracking-wider text-black flex-shrink-0 ${activeSection === s.id ? 'tab-active' : ''}`}
               >
                 {s.label}
               </button>
@@ -621,52 +598,46 @@ export default function ItineraryDetail() {
         </div>
       </div>
 
-      {/* ── OVERVIEW ── */}
-      <div id="overview" style={{ maxWidth: '760px', margin: '0 auto', padding: '64px 24px', textAlign: 'center', scrollMarginTop: '60px' }}>
-        <h2 style={{ fontSize: 'clamp(34px, 5vw, 58px)', fontWeight: 400, lineHeight: 0.98, marginBottom: '30px', color: '#000', fontFamily: ITIN_DISPLAY, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-          {itin.overviewTitle || itin.name}
-        </h2>
-        {itin.description && (
-          <p style={{ fontSize: '17px', color: BT_TEXT, lineHeight: 1.58, fontFamily: ITIN_SANS, letterSpacing: '0.03em', marginBottom: '48px' }}>
-            {itin.description}
-          </p>
-        )}
-
-        {/* WHEN / PRICE / HOW LONG */}
-        {(itin.when || itin.price || itin.howLong) && (
-          <div>
-            <div style={{ width: 48, height: 1, background: '#ccc', margin: '0 auto 32px' }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' }}>
-              {itin.when && (
-                <div style={{ textAlign: 'center', flex: 1 }}>
-                  <p style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '0.05em', textTransform: 'uppercase', color: BT_PINK, marginBottom: '10px', fontFamily: ITIN_DISPLAY }}>When</p>
-                  <p style={{ fontStyle: 'italic', fontSize: '17px', color: '#666', lineHeight: 1.5, fontFamily: ITIN_SANS }}>{itin.when}</p>
+      <section id="overview" className="mx-auto max-w-[760px] scroll-mt-16 px-5 py-8 text-center sm:px-6 md:py-14">
+        {summaryFacts.length > 0 && (
+          <div className="mb-9 rounded-sm bg-[#F5F3EF] p-5 sm:p-7">
+            <h2 className="mb-4 font-display text-3xl text-black">Trip at a glance</h2>
+            <dl className="flex flex-wrap justify-center gap-x-4 gap-y-3">
+              {summaryFacts.map(fact => (
+                <div key={fact.label} className="min-w-[7.5rem] flex-1">
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-[#58524D]">{fact.label}</dt>
+                  <dd className="mt-1 text-base font-semibold leading-snug text-[#24201D]">{fact.value}</dd>
                 </div>
-              )}
-              {itin.price && (
-                <div style={{ textAlign: 'center', flex: 1 }}>
-                  <p style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '0.05em', textTransform: 'uppercase', color: BT_GREEN, marginBottom: '10px', fontFamily: ITIN_DISPLAY }}>Price</p>
-                  <p style={{ fontStyle: 'italic', fontSize: '17px', color: '#666', lineHeight: 1.5, fontFamily: ITIN_SANS }}>{itin.price}</p>
-                </div>
-              )}
-              {itin.howLong && (
-                <div style={{ textAlign: 'center', flex: 1 }}>
-                  <p style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '0.05em', textTransform: 'uppercase', color: BT_BLUE, marginBottom: '10px', fontFamily: ITIN_DISPLAY }}>How long</p>
-                  <p style={{ fontStyle: 'italic', fontSize: '17px', color: '#666', lineHeight: 1.5, fontFamily: ITIN_SANS }}>{itin.howLong}</p>
-                </div>
-              )}
-            </div>
+              ))}
+            </dl>
+            <Link href={enquiryHref} className="mt-5 inline-flex min-h-11 items-center rounded-sm bg-[#24201D] px-5 py-2.5 text-sm font-semibold text-white hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2">
+              Enquire about this itinerary
+            </Link>
           </div>
         )}
-      </div>
+
+        <h2 className="mb-5 font-display text-3xl text-black sm:text-4xl">{itin.overviewTitle || itin.name}</h2>
+        <div className="space-y-4 text-left text-base leading-relaxed sm:text-[17px]">
+          {overviewParagraphs.map((paragraph, index) => {
+            const [firstLine, ...body] = paragraph.split(/\r?\n/);
+            const isHeading = body.length > 0 && /^[A-Z][A-Z ,&–-]{2,}$/.test(firstLine);
+            return isHeading ? (
+              <div key={index}>
+                <h3 className="mb-1 text-sm font-semibold tracking-wide text-black">{firstLine}</h3>
+                <p className="whitespace-pre-line">{body.join('\n')}</p>
+              </div>
+            ) : <p key={index} className="whitespace-pre-line">{paragraph}</p>;
+          })}
+        </div>
+      </section>
 
       {/* ── ITINERARY SECTIONS ── */}
-      {sections.map((section, si) => (
+      {sections.map(section => (
         <React.Fragment key={section.id}>
           <div id={`section-${section.id}`} style={{ backgroundColor: '#ededed', position: 'relative', scrollMarginTop: '60px' }}>
-            <div style={{ display: 'flex', padding: '0 24px 0 0', maxWidth: '1100px', margin: '0 auto' }}>
+            <div className="mx-auto flex max-w-[1100px] px-4 md:pl-0 md:pr-6">
               {/* Left: timeline */}
-              <div style={{ width: '55px', flexShrink: 0, position: 'relative', alignSelf: 'stretch' }}>
+              <div className="relative hidden w-[55px] shrink-0 self-stretch md:block" aria-hidden="true">
                 <div style={{ position: 'absolute', left: '20px', top: 0, bottom: 0, width: '2px', background: `repeating-linear-gradient(to bottom, ${timelineColor} 0px, ${timelineColor} 3px, transparent 3px, transparent 5px)`, transform: 'translateX(-50%)', zIndex: 0 }} />
                 {section.blocks.map((_, i) => {
                   const HEADER = 210, GAP = 50;
@@ -681,7 +652,7 @@ export default function ItineraryDetail() {
               {/* Right: content */}
               <div style={{ flex: 1, minWidth: 0, maxWidth: '964px' }}>
                 {/* Section header */}
-                <div style={{ paddingTop: '64px', paddingBottom: '32px' }}>
+                <div className="pb-6 pt-9 md:pb-8 md:pt-16">
                   <h2 style={{ fontSize: 'clamp(38px, 5vw, 64px)', fontWeight: 400, textTransform: 'uppercase', letterSpacing: '0.06em', fontFamily: ITIN_DISPLAY, marginBottom: '16px', color: '#000', lineHeight: 0.98 }}>
                     {section.title}
                   </h2>
@@ -698,27 +669,26 @@ export default function ItineraryDetail() {
                 </div>
 
                 {/* Day cards */}
-                <div style={{ paddingBottom: '64px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '50px' }}>
+                <div className="pb-10 md:pb-16">
+                  <div className="flex flex-col gap-5 md:gap-[50px]">
                     {section.blocks.map((block, i) => {
                       const imageLeft = i % 2 === 1;
                       const cardHeight = i % 2 === 0 ? '480px' : '510px';
                       const images = block.images?.length ? block.images : block.image ? [block.image] : [];
                       return (
                         <div key={block.id}>
-                          <div style={{ display: 'flex', flexDirection: imageLeft ? 'row' : 'row-reverse', width: '100%', maxWidth: '964px', background: '#fff', borderRadius: '12px', overflow: 'hidden', boxShadow: '4px 4px 16px rgba(0,0,0,0.13)', height: cardHeight }}>
-                            {/* Image side */}
-                            {images.length > 0 ? (
-                              <div style={{ width: '45%', flexShrink: 0, overflow: 'hidden' }}>
-                                <ImageCarousel images={images} alt={block.title} />
-                              </div>
-                            ) : (
-                              <div style={{ width: '45%', flexShrink: 0, background: '#ddd', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <span style={{ fontSize: '12px', color: '#aaa', letterSpacing: '0.1em' }}>No Image</span>
+                          <article
+                            className={`flex w-full max-w-[964px] flex-col overflow-hidden rounded-xl bg-white shadow-md md:min-h-[var(--day-card-height)] ${imageLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                            style={{ '--day-card-height': cardHeight } as React.CSSProperties}
+                          >
+                            {images.length > 0 && (
+                              <div className="relative aspect-[16/9] shrink-0 overflow-hidden md:aspect-auto md:w-[45%]">
+                                <div className="absolute inset-0">
+                                  <ImageCarousel images={images} alt={block.title} />
+                                </div>
                               </div>
                             )}
-                            {/* Text side */}
-                            <div style={{ flex: 1, padding: '40px 44px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', overflow: 'hidden' }}>
+                            <div className="min-w-0 flex-1 p-5 md:px-11 md:py-10">
                               <p style={{ fontFamily: ITIN_SANS, fontSize: '12px', letterSpacing: '0.1em', color: BT_GREEN, fontWeight: 700, textTransform: 'uppercase', marginBottom: '10px' }}>
                                 DAY {block.dayNumber}
                               </p>
@@ -729,7 +699,7 @@ export default function ItineraryDetail() {
                                 {block.description}
                               </p>
                             </div>
-                          </div>
+                          </article>
                         </div>
                       );
                     })}
@@ -756,17 +726,9 @@ export default function ItineraryDetail() {
           <h2 style={{ fontFamily: ITIN_DISPLAY, fontSize: 'clamp(34px, 5vw, 56px)', fontWeight: 400, color: '#ffffff', letterSpacing: '0.06em', textTransform: 'uppercase', margin: 0, lineHeight: 0.95 }}>
             So, ready to start?
           </h2>
-          <a href="/make-an-enquiry">
-            <button
-              style={{ backgroundColor: '#111111', color: '#ffffff', fontFamily: ITIN_SANS, fontSize: '12px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '14px 36px', border: '2px solid #111111', cursor: 'pointer', transition: 'background-color 0.2s, color 0.2s, transform 0.1s' }}
-              onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.color = '#111111'; }}
-              onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#111111'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.transform = 'scale(1)'; }}
-              onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.95)')}
-              onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
-            >
-              Get in Touch
-            </button>
-          </a>
+          <Link href={enquiryHref} className="inline-flex min-h-11 items-center bg-[#111] px-8 py-3 text-sm font-semibold uppercase tracking-wide text-white hover:bg-white hover:text-[#111] focus-visible:outline-2 focus-visible:outline-offset-2">
+            Enquire about this itinerary
+          </Link>
         </div>
       </section>
 

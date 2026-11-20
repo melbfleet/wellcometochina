@@ -281,6 +281,8 @@ export default function Contact() {
 
   const query = new URLSearchParams(useSearch());
   const isTailorMade = query.get('trip') === 'tailor-made';
+  const itinerary = query.get('trip') === 'itinerary' ? query.get('itinerary')?.trim().slice(0, 180) : undefined;
+  const isTripPlanningEnquiry = isTailorMade || Boolean(itinerary);
   const experience = query.get('experience')?.trim().slice(0, 180);
   const destination = query.get('destination')?.trim().slice(0, 120);
 
@@ -375,20 +377,24 @@ export default function Contact() {
     const newErrors: Record<string, string> = {};
 
     // Required fields validation
-    if (!formData.destination.trim()) newErrors.destination = 'Enter a destination or write “Not sure yet”.';
-    if (!formData.month) newErrors.month = 'Please select a month';
-    if (!formData.year) newErrors.year = 'Please select a year';
-    if (!formData.duration) newErrors.duration = 'Please select a duration';
-    if (!formData.travelers) newErrors.travelers = 'Please select number of travelers';
+    if (!isTripPlanningEnquiry) {
+      if (!formData.destination.trim()) newErrors.destination = 'Enter a destination or write “Not sure yet”.';
+      if (!formData.month) newErrors.month = 'Please select a month';
+      if (!formData.year) newErrors.year = 'Please select a year';
+      if (!formData.duration) newErrors.duration = 'Please select a duration';
+    }
+    if (!formData.travelers) newErrors.travelers = 'Select the number of people travelling';
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (formRef.current?.querySelector<HTMLInputElement>('#email')?.validity.typeMismatch) {
       newErrors.email = 'Enter a valid email address';
     }
-    if (!formData.confirmEmail.trim()) newErrors.confirmEmail = 'Please confirm your email';
-    else if (formData.email.trim().toLowerCase() !== formData.confirmEmail.trim().toLowerCase()) {
-      newErrors.confirmEmail = 'Emails do not match';
+    if (!isTripPlanningEnquiry) {
+      if (!formData.confirmEmail.trim()) newErrors.confirmEmail = 'Please confirm your email';
+      else if (formData.email.trim().toLowerCase() !== formData.confirmEmail.trim().toLowerCase()) {
+        newErrors.confirmEmail = 'Emails do not match';
+      }
     }
     if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
 
@@ -440,7 +446,7 @@ export default function Contact() {
         groupSize: formData.travelers,
         budget: formData.budget,
         hearAboutUs: formData.source,
-        message: formData.comments,
+        message: [itinerary ? `Itinerary: ${itinerary}` : null, formData.comments.trim()].filter(Boolean).join('\n\n'),
       });
     } else {
       requestAnimationFrame(() => {
@@ -470,14 +476,14 @@ export default function Contact() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-5xl md:text-6xl font-bold mb-3 uppercase tracking-widest text-[#1a1a1a]" style={{color: '#2e2e2e', fontSize: '35px', fontFamily: 'Manrope'}}>
-              {isTailorMade ? 'Plan Your Private Trip' : 'Plan Your Journey'}
+              {itinerary ? 'Enquire About This Itinerary' : isTailorMade ? 'Plan Your Private Trip' : 'Plan Your Journey'}
             </h1>
             <p className="text-[#555555] max-w-2xl mx-auto text-lg leading-relaxed" style={{color: '#6b6b6b', fontSize: '15px', fontFamily: 'Lato, sans-serif'}}>
-              {isTailorMade
-                ? 'Tell us where in China you’d like to go, who’s travelling and what you enjoy. Our local team will be in touch to discuss a trip tailored to you.'
+              {isTripPlanningEnquiry
+                ? 'Tell us who’s travelling and share any plans you already have. Our local team will be in touch to discuss your trip.'
                 : 'Tell us a little about your trip and we’ll be in touch to discuss the details.'}
             </p>
-            {experience && <p className="mt-4 text-sm font-semibold text-[#333333]">Enquiring about {experience}</p>}
+            {(itinerary || experience) && <p className="mt-4 text-sm font-semibold text-[#333333]">Enquiring about {itinerary || experience}</p>}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
@@ -487,11 +493,12 @@ export default function Contact() {
                 {/* Your Trip Section */}
                 <div className="space-y-6 bg-[#f2f2f2] p-4 sm:p-8">
                   <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1a1a1a]">Your Trip</h2>
+                  {isTripPlanningEnquiry && <p className="text-sm leading-relaxed text-[#555555]">Still deciding where or when to go? You can leave the destination, dates and duration blank.</p>}
                   
                   {/* Where would you like to go */}
                   <div>
                     <label htmlFor="destination" className="block text-base mb-3 text-[#333333]">
-                      Where would you like to go?<span className="text-[#333333]">*</span>
+                      Where would you like to go? {isTripPlanningEnquiry ? <span className="text-sm text-[#666666]">(optional)</span> : <span>*</span>}
                     </label>
                     <input
                       type="text"
@@ -499,7 +506,7 @@ export default function Contact() {
                       {...fieldProps('destination')}
                       value={formData.destination}
                       onChange={handleInputChange}
-                      placeholder={isTailorMade ? 'Enter cities, regions or “Not sure yet”' : 'Enter cities or regions'}
+                      placeholder={isTripPlanningEnquiry ? 'E.g. Chengdu or Yunnan' : 'Enter cities or regions'}
                       className={`w-full px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.destination ? '!border-red-400' : ''}`}
                     />
                     {fieldError('destination')}
@@ -507,7 +514,7 @@ export default function Contact() {
 
                   {/* When, Year and Duration - All in one row */}
                   <fieldset>
-                    <legend className="mb-3 text-base text-[#333333]">When would you like to go?*</legend>
+                    <legend className="mb-3 text-base text-[#333333]">When would you like to go? {isTripPlanningEnquiry ? <span className="text-sm text-[#666666]">(optional)</span> : <span>*</span>}</legend>
                     <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                     <div>
                       <CustomSelect
@@ -551,7 +558,7 @@ export default function Contact() {
 
                     <div>
                       <label htmlFor="duration" className="block text-base mb-3 text-[#333333]">
-                        How long for?<span className="text-[#333333]">*</span>
+                        How long would you like to travel? {isTripPlanningEnquiry ? <span className="text-sm text-[#666666]">(optional)</span> : <span>*</span>}
                       </label>
                       <CustomSelect
                         id="duration"
@@ -569,6 +576,7 @@ export default function Contact() {
                   <div>
                     <label htmlFor="travelers" className="block text-base mb-3 text-[#333333]">
                       How many people are travelling?<span className="text-[#333333]">*</span>
+                      {isTripPlanningEnquiry && <span className="mt-1 block text-sm text-[#555555]">Include adults and children.</span>}
                     </label>
                     <CustomSelect
                       id="travelers"
@@ -599,14 +607,14 @@ export default function Contact() {
                   {/* Comments */}
                   <div>
                     <label htmlFor="comments" className="block text-base mb-3 text-[#333333]">
-                      Any other comments or requests?
+                      {isTripPlanningEnquiry ? 'Interests or special requests (optional)' : 'Any other comments or requests?'}
                     </label>
                     <textarea
                       id="comments"
                       name="comments"
                       value={formData.comments}
                       onChange={handleInputChange}
-                      placeholder="E.g. special occasion, any must dos or don'ts"
+                      placeholder={isTripPlanningEnquiry ? 'E.g. food and nature, children’s ages or access needs' : "E.g. special occasion, any must dos or don'ts"}
                       className="w-full px-4 py-3 bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 h-32 resize-none placeholder-[#aaaaaa] text-base text-[#2d2d2d]"
                     ></textarea>
                   </div>
@@ -654,7 +662,7 @@ export default function Contact() {
 
                   {/* Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
+                    <div className={isTripPlanningEnquiry ? 'sm:col-span-2' : undefined}>
                       <label htmlFor="email" className="block text-base mb-3 text-[#333333]">
                         Email address<span className="text-[#333333]">*</span>
                       </label>
@@ -670,7 +678,7 @@ export default function Contact() {
                       />
                       {fieldError('email')}
                     </div>
-                    <div>
+                    {!isTripPlanningEnquiry && <div>
                       <label htmlFor="confirmEmail" className="block text-base mb-3 text-[#333333]">
                         Confirm email address<span className="text-[#333333]">*</span>
                       </label>
@@ -685,7 +693,7 @@ export default function Contact() {
                         className={`w-full px-4 h-[50px] bg-white outline-none border border-transparent hover:border-[#777777] focus:border-[#777777] transition-all duration-300 placeholder-[#aaaaaa] text-base text-[#2d2d2d] ${errors.confirmEmail ? '!border-red-400' : ''}`}
                       />
                       {fieldError('confirmEmail')}
-                    </div>
+                    </div>}
                   </div>
 
                   {/* Phone */}
