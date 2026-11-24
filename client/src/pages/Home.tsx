@@ -107,7 +107,7 @@ export default function Home() {
       {/* Homepage hero */}
       {homepageData?.hero?.isVisible !== false && (
       <section className="relative flex min-h-svh w-full flex-col overflow-hidden bg-[#24201D] md:block md:h-screen md:min-h-[32rem] md:bg-black">
-        <div className="relative h-[clamp(13rem,48svh,23rem)] shrink-0 overflow-hidden md:absolute md:inset-0 md:h-full">
+        <div className="relative h-[clamp(13rem,48svh,23rem)] [@media(max-width:767px)_and_(max-height:650px)]:h-[clamp(10rem,34svh,14rem)] shrink-0 overflow-hidden md:absolute md:inset-0 md:h-full">
           {activeBanner && (
             <img
               src={activeBanner}
@@ -124,9 +124,9 @@ export default function Home() {
         <div className="relative z-30 flex grow items-center justify-center px-5 pb-8 pt-3 md:absolute md:inset-0 md:px-6 md:py-0 md:pt-[6vh]">
           <div style={{ width: 'min(980px, 92vw)', textAlign: 'center', color: '#fff' }}>
             <h1
+              className="text-[clamp(36px,6vw,77px)] max-[359px]:text-[2rem]"
               style={{
                 fontFamily: "var(--font-travel-condensed, 'League Gothic', 'Arial Narrow', Impact, sans-serif)",
-                fontSize: 'clamp(36px, 6vw, 77px)',
                 fontWeight: 400,
                 letterSpacing: '0.045em',
                 lineHeight: 0.88,
