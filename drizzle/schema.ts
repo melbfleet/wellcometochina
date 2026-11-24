@@ -442,7 +442,7 @@ export type InsertMediaAsset = typeof mediaAssets.$inferInsert;
 export const homepageHero = mysqlTable("homepage_hero", {
   id: int("id").autoincrement().primaryKey(),
   isVisible: boolean("isVisible").default(true).notNull(),
-  backgroundImage: varchar("backgroundImage", { length: 512 }),
+  backgroundImage: text("backgroundImage"),
   title: varchar("title", { length: 300 }).notNull().default("The Immersive China Experts"),
   subtitle: varchar("subtitle", { length: 500 }).notNull().default("Tailor-made experiences, crafted with local insight."),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
