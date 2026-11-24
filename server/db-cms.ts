@@ -1186,9 +1186,29 @@ export async function getHomepageHero() {
   const newRows = await db.select().from(homepageHero).limit(1);
   return newRows[0] ?? null;
 }
+let homepageHeroStorageReady: Promise<void> | undefined;
+
+function ensureHomepageHeroImageStorage() {
+  homepageHeroStorageReady ??= (async () => {
+    const pool = await getPool();
+    if (!pool) throw new Error("DB unavailable");
+
+    const [rows] = await pool.query("SHOW COLUMNS FROM homepage_hero LIKE 'backgroundImage'");
+    const [column] = rows as Array<{ Type: string }>;
+    if (column?.Type === "varchar(512)") {
+      await pool.execute("ALTER TABLE homepage_hero MODIFY COLUMN backgroundImage TEXT NULL");
+    }
+  })().catch(error => {
+    homepageHeroStorageReady = undefined;
+    throw error;
+  });
+  return homepageHeroStorageReady;
+}
+
 export async function upsertHomepageHero(data: Partial<HomepageHero>) {
   const db = await getDb();
   if (!db) throw new Error("DB unavailable");
+  if (data.backgroundImage !== undefined) await ensureHomepageHeroImageStorage();
   const existing = await db.select().from(homepageHero).limit(1);
   if (existing.length === 0) {
     await db.insert(homepageHero).values({
