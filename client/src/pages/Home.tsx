@@ -63,10 +63,6 @@ export default function Home() {
   // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
   let { user, loading, error, isAuthenticated, logout } = useAuth();
 
-  // Image loading states
-  const [heroBannerLoaded, setHeroBannerLoaded] = useState(false);
-  const [heroLogoLoaded, setHeroLogoLoaded] = useState(false);
-
   // 动态首页资产
   const { data: homepageAssets } = trpc.media.getHomepageAssets.useQuery();
   const getObjectPosition = useMediaObjectPosition();
@@ -85,7 +81,6 @@ export default function Home() {
   // 始终使用静态图片作为 fallback，只有 API 返回且有数据时才替换
   const FALLBACK_BANNER = '';
   const apiBanners = homepageAssets?.banners as Array<{ url: string; id: number }> | undefined;
-  const activeLogo = '';
   // 若 homepage_hero 有 backgroundImage，优先使用；否则回退到 media assets banners
   const heroBackgroundImages = normalizeHeroImages(homepageData?.hero?.backgroundImage);
   const activeBanners = heroBackgroundImages.length > 0
@@ -95,11 +90,11 @@ export default function Home() {
   const heroSubtitle = homepageData?.hero?.subtitle || 'Choose one of our multi-day itineraries, or have our local team design a private trip elsewhere in China around your group, interests and needs.';
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const activeBanner = activeBanners[currentSlide % activeBanners.length];
 
   useEffect(() => {
     if (activeBanners.length <= 1) return;
     const interval = setInterval(() => {
-      setHeroBannerLoaded(false);
       setCurrentSlide((prev) => (prev + 1) % activeBanners.length);
     }, 5000);
     return () => clearInterval(interval);
@@ -109,64 +104,25 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
 
-      {/* Hero Section - Full Screen Image Background */}
+      {/* Homepage hero */}
       {homepageData?.hero?.isVisible !== false && (
-      <section className="relative h-[100svh] min-h-[32rem] w-full overflow-hidden bg-black md:h-screen">
-        {/* Image Background */}
-        <div className="relative w-full h-full">
-          <div className="w-full h-full">
-            {heroBannerLoaded && (
-              <img
-                src={activeBanners[currentSlide % activeBanners.length]}
-                alt="China countryside landscape"
-                className="w-full h-full object-cover object-center"
-                style={{ objectPosition: getObjectPosition(activeBanners[currentSlide % activeBanners.length]) }}
-                onLoad={() => setHeroBannerLoaded(true)}
-                onError={() => setHeroBannerLoaded(false)}
-              />
-            )}
-            {!heroBannerLoaded && (
-              <img
-                src={activeBanners[currentSlide % activeBanners.length]}
-                alt="China countryside landscape"
-                className="w-full h-full object-cover object-center"
-                style={{ display: 'none' }}
-                onLoad={() => setHeroBannerLoaded(true)}
-                onError={() => setHeroBannerLoaded(false)}
-              />
-            )}
-          </div>
-          <div className="absolute inset-0 bg-black/30"></div>
+      <section className="relative flex min-h-svh w-full flex-col overflow-hidden bg-[#24201D] md:block md:h-screen md:min-h-[32rem] md:bg-black">
+        <div className="relative h-[clamp(13rem,48svh,23rem)] shrink-0 overflow-hidden md:absolute md:inset-0 md:h-full">
+          {activeBanner && (
+            <img
+              src={activeBanner}
+              alt=""
+              fetchPriority="high"
+              className="h-full w-full object-cover"
+              style={{ objectPosition: getObjectPosition(activeBanner) }}
+            />
+          )}
+          <div className="absolute inset-0 bg-black/10 md:bg-black/30" />
+          <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#24201D] to-transparent md:hidden" />
         </div>
 
-        {/* Hero Logo - Center */}
-        <div className="absolute inset-0 flex items-center justify-center z-20">
-          <div className="flex flex-col items-center gap-4">
-            {heroLogoLoaded && (
-              <img
-                src={activeLogo || ''}
-                alt="Wellcometochina"
-                style={{ height: 'clamp(60px, 12vw, 160px)', width: 'auto', maxWidth: '60vw', objectFit: 'contain' }}
-                onLoad={() => setHeroLogoLoaded(true)}
-                onError={() => setHeroLogoLoaded(false)}
-              />
-            )}
-            {!heroLogoLoaded && activeLogo && (
-              <img
-                src={activeLogo}
-                alt="Wellcometochina"
-                style={{ height: 'clamp(60px, 12vw, 160px)', width: 'auto', maxWidth: '60vw', objectFit: 'contain', display: 'none' }}
-                onLoad={() => setHeroLogoLoaded(true)}
-                onError={() => setHeroLogoLoaded(false)}
-              />
-            )}
-            {heroLogoLoaded && <div className="w-32 h-px bg-[#F5F3EF]"></div>}
-          </div>
-        </div>
-
-        {/* Hero Text - Center */}
-        <div className="absolute inset-0 flex items-center justify-center z-30 px-6">
-          <div style={{ width: 'min(980px, 92vw)', textAlign: 'center', color: '#fff', transform: 'translateY(3vh)' }}>
+        <div className="relative z-30 flex grow items-center justify-center px-5 pb-8 pt-3 md:absolute md:inset-0 md:px-6 md:py-0 md:pt-[6vh]">
+          <div style={{ width: 'min(980px, 92vw)', textAlign: 'center', color: '#fff' }}>
             <h1
               style={{
                 fontFamily: "var(--font-travel-condensed, 'League Gothic', 'Arial Narrow', Impact, sans-serif)",
@@ -195,7 +151,7 @@ export default function Home() {
             >
               {heroSubtitle}
             </p>
-            <div className="mx-auto mt-4 grid w-[92%] max-w-72 gap-2 text-left sm:mt-6 sm:w-full sm:max-w-[38rem] sm:grid-flow-col sm:auto-cols-fr sm:gap-3">
+            <div className="mx-auto mt-4 grid w-full max-w-72 gap-2 text-left sm:mt-6 sm:max-w-[38rem] sm:grid-flow-col sm:auto-cols-fr sm:gap-3">
               {showExploreTrips && (
                 <a
                   href="#sample-trips-heading"
